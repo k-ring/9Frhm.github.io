@@ -87,7 +87,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/img/Misc-JASEC.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/img/11111.png">
-<meta property="og:updated_time" content="2019-04-15T05:16:50.144Z">
+<meta property="og:updated_time" content="2019-04-17T11:59:26.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="掘安杯writeup">
 <meta name="twitter:description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密">
