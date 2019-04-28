@@ -77,21 +77,21 @@
 
 
 
-<meta name="description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密">
+<meta name="description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头">
 <meta name="keywords" content="CTF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="掘安杯writeup">
 <meta property="og:url" content="http://yoursite.com/2019/04/15/掘安杯writeup/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密">
+<meta property="og:description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/15/img/Misc-JASEC.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/15/img/11111.png">
-<meta property="og:updated_time" content="2019-04-17T11:59:26.322Z">
+<meta property="og:image" content="https://k-ring.github.io/img/Misc-JASEC.png">
+<meta property="og:image" content="https://k-ring.github.io/img/11111.png">
+<meta property="og:updated_time" content="2019-04-28T03:15:44.627Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="掘安杯writeup">
-<meta name="twitter:description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/15/img/Misc-JASEC.png">
+<meta name="twitter:description" content="MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头">
+<meta name="twitter:image" content="https://k-ring.github.io/img/Misc-JASEC.png">
 
 
 
@@ -404,7 +404,9 @@
       
 
       
-        <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h5 id="真的不是图片"><a href="#真的不是图片" class="headerlink" title="真的不是图片"></a>真的不是图片</h5><p>binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头<br><img src="../img/Misc-JASEC.png" alt><br>使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)<br><img src="../img/11111.png" alt><br>那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密码，之前将zip文件头改为了 ja66，使用它解密，解出来有很多文件。每个文件里面都有一个字符，后面就使用脚本取出字符进行base64解密就可以了。<br>关于zip文件的格式：<a href="https://www.cnblogs.com/FTK-buyi/articles/5676652.html" target="_blank" rel="noopener">https://www.cnblogs.com/FTK-buyi/articles/5676652.html</a></p>
+        <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h5 id="真的不是图片"><a href="#真的不是图片" class="headerlink" title="真的不是图片"></a>真的不是图片</h5><p>binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头</p>
+<a id="more"></a>
+<p><img src="https://k-ring.github.io/img/Misc-JASEC.png" alt><br>使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)<br><img src="https://k-ring.github.io/img/11111.png" alt><br>那就是zip文件头的四个字节被改了，改回zip文件头就可以使用binwalk或者foremost分离出zip文件，我这里已经将他改回了zip文件头的十六进制。解压需要密码，之前将zip文件头改为了 ja66，使用它解密，解出来有很多文件。每个文件里面都有一个字符，后面就使用脚本取出字符进行base64解密就可以了。<br>关于zip文件的格式：<a href="https://www.cnblogs.com/FTK-buyi/articles/5676652.html" target="_blank" rel="noopener">https://www.cnblogs.com/FTK-buyi/articles/5676652.html</a></p>
 <h6 id="字典生成工具-crunch-kali"><a href="#字典生成工具-crunch-kali" class="headerlink" title="字典生成工具 crunch (kali)"></a>字典生成工具 crunch (kali)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">举例：生成4位数的数字字典：  crunch 4 4 -t %%%% -o ./4.txt</span><br><span class="line">第一个4表示最小长度为4，第二个4表示最长长度为4，% 表示数字，-o输出文件</span><br><span class="line">(具体功能待探索)</span><br></pre></td></tr></table></figure>
 <h5 id="cap文件加密"><a href="#cap文件加密" class="headerlink" title="cap文件加密"></a>cap文件加密</h5><ul>
 <li><a href="https://blog.csdn.net/Lonelyhat/article/details/88040962" target="_blank" rel="noopener">https://blog.csdn.net/Lonelyhat/article/details/88040962</a></li>

