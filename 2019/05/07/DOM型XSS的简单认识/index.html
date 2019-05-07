@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="MISC,">
+  <meta name="keywords" content="XSS,">
 
 
 
@@ -77,25 +77,24 @@
 
 
 
-<meta name="description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
-<meta name="keywords" content="MISC">
+<meta name="description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
+<meta name="keywords" content="XSS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DDCTF2019 MISC wireshark">
-<meta property="og:url" content="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/index.html">
+<meta property="og:title" content="DOM型XSS的简单认识">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
+<meta property="og:description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://k-ring.github.io/img/wire1.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/wire2.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/wire3.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/wire4.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/wire5.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/wire6.jpg">
-<meta property="og:updated_time" content="2019-04-28T03:18:50.665Z">
+<meta property="og:image" content="http://k-ring.github.io/img/htmldom.gif">
+<meta property="og:image" content="http://k-ring.github.io/img/xss1.jpg">
+<meta property="og:image" content="http://k-ring.github.io/img/xss1.jpg">
+<meta property="og:image" content="http://k-ring.github.io/img/xss3.jpg">
+<meta property="og:image" content="http://k-ring.github.io/img/xss4.jpg">
+<meta property="og:updated_time" content="2019-05-07T14:40:37.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DDCTF2019 MISC wireshark">
-<meta name="twitter:description" content="Wireshark该题的流量包文件：链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤">
-<meta name="twitter:image" content="https://k-ring.github.io/img/wire1.jpg">
+<meta name="twitter:title" content="DOM型XSS的简单认识">
+<meta name="twitter:description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
+<meta name="twitter:image" content="http://k-ring.github.io/img/htmldom.gif">
 
 
 
@@ -125,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/">
 
 
 
 
 
-  <title>DDCTF2019 MISC wireshark | 故人梦</title>
+  <title>DOM型XSS的简单认识 | 故人梦</title>
   
 
 
@@ -288,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -305,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">DDCTF2019 MISC wireshark</h1>
+          <h1 class="post-title" itemprop="name headline">DOM型XSS的简单认识</h1>
         
 
         <div class="post-meta">
@@ -317,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T00:00:00+08:00">
-                2019-04-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-07T00:00:00+08:00">
+                2019-05-07
               </time>
             
 
@@ -340,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -371,7 +370,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  373 字
+                  571 字
                 </span>
               
 
@@ -387,12 +386,16 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
           
 
+          
+              <div class="post-description">
+                  虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。
+              </div>
           
 
         </div>
@@ -408,9 +411,18 @@
       
 
       
-        <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤  </p>
-<a id="more"></a>
-<p><img src="https://k-ring.github.io/img/wire1.jpg" alt><br>跟踪第一个http包的数据流<br><img src="https://k-ring.github.io/img/wire2.jpg" alt><br>发现里面是访问了一个脚本之家的在线图片隐写工具<br><img src="https://k-ring.github.io/img/wire3.jpg" alt><br>猜测是要找到一张隐写的图片和进行解密的密码，再看http请求中有post请求里面就有图片，将所有的http包导出<br><img src="https://k-ring.github.io/img/wire4.jpg" alt><br>图片的文件一般比较大，用winhex查看那些较大的文件，有两个文件发现里面有png图片的数据库，我听其他大佬们说导出来的，具体怎么操作我不太清楚，我就直接手动导出了，在winhex中将png的数据流导出为png文件。<br>导出了两张图，一张图显示了一个钥匙，还有一张是一张风景图，结合前面的在线图片加密，显示钥匙的图片高度较矮，并且使用kali里面的display不能打开图片，应该是修改了图片高度。<br><img src="https://k-ring.github.io/img/wire5.jpg" alt><br>在这里修改图片的高度。修改之后就会发现下面多了一串为key值得字符串<br><img src="https://k-ring.github.io/img/wire6.jpg" alt><br>然后将这串key值和那张风景图拿到上面说的那个在线解密网站进行解密，会得到一串十六进制串，进行解码就可以得到flag。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>以前一直以为self-xss就是所谓的DOM-XSS，直到有一次挖掘漏洞的时候对一个学长说了我认为self-xss就是DOM-XSS，结果被无情地嘲讽了一次。好吧，我还不知道什么是DOM，这里就简单记录一下DOM-XSS。</p>
+<h3 id="什么是DOM"><a href="#什么是DOM" class="headerlink" title="什么是DOM"></a>什么是DOM</h3><p>我从js相关书籍和百度上面了解到的就是：文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。  </p>
+<p>简而言之就是：一个web页面是一个文档，DOM将这个文档解析成一个结构树，然后调用DOM提供的编程接口就可以操作这个结构树上的节点和对象。  </p>
+<p>这里用HTML DOM树作为例子：直接看图，直接明了<br><img src="http://k-ring.github.io/img/htmldom.gif" alt></p>
+<h3 id="简单的DOM-XSS例子"><a href="#简单的DOM-XSS例子" class="headerlink" title="简单的DOM-XSS例子"></a>简单的DOM-XSS例子</h3><p>先举一个小小的例子，更加直观的了解什么是DOM-XSS。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//DOM-XSS.html</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">		var text = location.hash.substr(1);</span><br><span class="line">		eval(text);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>payload: http://127.0.0.1/DOM-XSS.html#alert(1)</code><br><img src="http://k-ring.github.io/img/xss1.jpg" alt></p>
+<p>在location这个接口当中，hash表示获取url中#以及后面的部分，location对象属性：<br><img src="http://k-ring.github.io/img/xss1.jpg" alt></p>
+<h3 id="常见基于DOM的XSS的api"><a href="#常见基于DOM的XSS的api" class="headerlink" title="常见基于DOM的XSS的api"></a>常见基于DOM的XSS的api</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">document.location</span><br><span class="line">document.URL</span><br><span class="line">document.URLUnencoded</span><br><span class="line">document.referrer</span><br><span class="line">window.location</span><br><span class="line">window.name</span><br><span class="line">documen.write</span><br><span class="line">innerHTML属性</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>通过构造一些特殊的payload，插入恶意代码。<br>具体这些DOM接口作用测试一下就知道了。  </p>
+<p>刚好dz有一个DOM-XSS：<br><img src="http://k-ring.github.io/img/xss3.jpg" alt><br>分析它的源代码：<br><img src="http://k-ring.github.io/img/xss4.jpg" alt><br>源码中一行：<br><code>&lt;body onmousedown=&quot;setvalue(document.getElementById(&#39;colorhex&#39;))&quot; scrolling=&quot;no&quot;&gt;</code><br>只要鼠标点击页面就执行setvalue()这个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function setvalue(obj) &#123;</span><br><span class="line">	if(varname) &#123;</span><br><span class="line">		parent.$(varname).style.backgroundColor = setv;</span><br><span class="line">	&#125;</span><br><span class="line">	if(varnamev) &#123;</span><br><span class="line">		parent.$(varnamev).value = setv;</span><br><span class="line">	&#125;</span><br><span class="line">	if(fun) eval(&apos;parent.&apos;+fun+&apos;(&quot;&apos;+setv+&apos;&quot;)&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于varname, varnames的参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">varname = location.search.substr(1);</span><br><span class="line">var varnames = varname.split(&apos;|&apos;);</span><br><span class="line">varname = varnames[0];</span><br><span class="line">varnamev = varnames[1];</span><br><span class="line">fun = varnames[2] || &apos;&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>构造payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload: http://www.xxx.com/static/image/admincp/getcolor.htm?||a;alert(document.cookie)</span><br><span class="line"></span><br><span class="line">payload效果: eval(&apos;parent.a;alert(document.cookie)(&quot;&quot;)&apos;);</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -428,7 +440,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MISC/" rel="tag"># MISC</a>
+            <a href="/tags/XSS/" rel="tag"># XSS</a>
           
         </div>
       
@@ -441,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/20/DDCTF2019 部分web/" rel="next" title="DDCTF2019 web签到题">
-                <i class="fa fa-chevron-left"></i> DDCTF2019 web签到题
+              <a href="/2019/04/26/送给三月的自己/" rel="next" title="送给三月的自己">
+                <i class="fa fa-chevron-left"></i> 送给三月的自己
               </a>
             
           </div>
@@ -450,10 +462,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/26/送给三月的自己/" rel="prev" title="送给三月的自己">
-                送给三月的自己 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -585,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wireshark"><span class="nav-number">1.</span> <span class="nav-text">Wireshark</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是DOM"><span class="nav-number">2.</span> <span class="nav-text">什么是DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的DOM-XSS例子"><span class="nav-number">3.</span> <span class="nav-text">简单的DOM-XSS例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见基于DOM的XSS的api"><span class="nav-number">4.</span> <span class="nav-text">常见基于DOM的XSS的api</span></a></li></ol></div>
             
 
           </div>
