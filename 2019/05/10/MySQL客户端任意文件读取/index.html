@@ -77,13 +77,13 @@
 
 
 
-<meta name="description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞">
+<meta name="description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞2、做一个恶意的MySQL服务器，只要有客户端连接，就读取MySQL客户端任意文件">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL客户端任意文件读取">
 <meta property="og:url" content="http://yoursite.com/2019/05/10/MySQL客户端任意文件读取/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞">
+<meta property="og:description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞2、做一个恶意的MySQL服务器，只要有客户端连接，就读取MySQL客户端任意文件">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://k-ring.github.io/img/mysql1.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/mysql2.jpg">
@@ -91,10 +91,10 @@
 <meta property="og:image" content="https://k-ring.github.io/img/mysql4.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/mysql5.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/mysql6.jpg">
-<meta property="og:updated_time" content="2019-05-10T15:39:53.250Z">
+<meta property="og:updated_time" content="2019-05-12T10:09:30.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL客户端任意文件读取">
-<meta name="twitter:description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞">
+<meta name="twitter:description" content="适用场景1、当入侵了一个MySQL数据库的时候(发现里面没有什么数据)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞2、做一个恶意的MySQL服务器，只要有客户端连接，就读取MySQL客户端任意文件">
 <meta name="twitter:image" content="https://k-ring.github.io/img/mysql1.jpg">
 
 
@@ -371,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,230 字
+                  1,237 字
                 </span>
               
 
@@ -408,9 +408,10 @@
       
 
       
-        <h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>1、当入侵了一个MySQL数据库的时候(<del>发现里面没有什么数据</del>)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞<br><a id="more"></a><br><strong>2、做一个恶意的MySQL服务器，读取MySQL客户端任意文件</strong></p>
+        <h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>1、当入侵了一个MySQL数据库的时候(<del>发现里面没有什么数据</del>)，如果可以直接从服务器端导入任意文件数据到数据库中，就可以达到任意文件读取漏洞<br><strong>2、做一个恶意的MySQL服务器，只要有客户端连接，就读取MySQL客户端任意文件</strong></p>
+<a id="more"></a>
 <h3 id="MySQL导入和导出"><a href="#MySQL导入和导出" class="headerlink" title="MySQL导入和导出"></a>MySQL导入和导出</h3><p><strong>1、outfile</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select [table_data] into outfile [filename];</span><br></pre></td></tr></table></figure></p>
-<p>通常当我们有足够权限可以执行这条命令的时候，如果知道web的绝对路径，就意味着我们可以直接导出一个webshell到指定的目录下。<br>同样的还存在一条语句可以将文件数据导入到数据表中：  </p>
+<p>通常如果存在SQL注入并且有写入权限的时候，如果知道web的绝对路径，就意味着我们可以直接导出一个webshell到指定的目录下。<br>同样的还存在一条语句可以将文件数据导入到数据表中：  </p>
 <p><strong>2、load data infile</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">load data infile [filename] into table [table_name] fields terminated by [分隔符];</span><br><span class="line"></span><br><span class="line">load data local infile [filename] into table [table_name] fields terminated by [分隔符];</span><br></pre></td></tr></table></figure></p>
 <p>load data infile 是从服务器端导入文件数据<br>load data local infile 是从客户端导入文件数据  </p>
 <h4 id="客户端操作的任意文件读取"><a href="#客户端操作的任意文件读取" class="headerlink" title="客户端操作的任意文件读取"></a>客户端操作的任意文件读取</h4><p>测试环境：<br>ubuntu：16.04.2<br>MySQL：5.7.25  </p>
