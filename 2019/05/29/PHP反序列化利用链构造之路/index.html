@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dsfohIaX&quot;),             narrow: false,             autoplay: false,">
+<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-VmslMGXE&quot;),             narrow: false,             autoplay: false,             s">
 <meta name="keywords" content="PHP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP反序列化利用链构造之路">
 <meta property="og:url" content="http://yoursite.com/2019/05/29/PHP反序列化利用链构造之路/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dsfohIaX&quot;),             narrow: false,             autoplay: false,">
+<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-VmslMGXE&quot;),             narrow: false,             autoplay: false,             s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-29T10:49:55.295Z">
+<meta property="og:updated_time" content="2019-05-31T13:47:29.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP反序列化利用链构造之路">
-<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dsfohIaX&quot;),             narrow: false,             autoplay: false,">
+<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-VmslMGXE&quot;),             narrow: false,             autoplay: false,             s">
 
 
 
@@ -404,12 +404,12 @@
 
       
         
-        <div id="aplayer-dsfohIaX" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-VmslMGXE" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-dsfohIaX"),
+            element: document.getElementById("aplayer-VmslMGXE"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -426,6 +426,7 @@
         </script>
 <h3 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h3><p>序列化就是通过serialize()把一个对象转成字符串，方便传递和使用。  </p>
 <p>反序列化就是使用unserialize()将序列化的字符串恢复。  </p>
+<a id="more"></a>
 <p>测试代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">grm</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> $serv = <span class="string">"gurenmeng"</span>;</span><br><span class="line">	<span class="keyword">public</span> $num = <span class="number">123456</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> grm();</span><br><span class="line"><span class="keyword">echo</span> serialize($obj);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>序列化结果：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">3</span>:<span class="string">"grm"</span>:<span class="number">2</span>:&#123;s:<span class="number">4</span>:<span class="string">"serv"</span>;s:<span class="number">9</span>:<span class="string">"gurenmeng"</span>;s:<span class="number">3</span>:<span class="string">"num"</span>;i:<span class="number">123456</span>;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>解读一下：<br>花括号外面的 <code>O</code> 代表 <code>object</code>，<code>3</code> 表示类名 <code>grm</code> 长度为 <code>3</code>，<code>2</code> 表示里面有两个属性，第一个属性是长度为<code>4</code>的<code>serv</code>，值为长度为<code>9</code>的字符串<code>gurenmeng</code>；第二个属性是长度为<code>3</code>的<code>num</code>，值为<code>int</code>型的<code>123456</code>。</p>

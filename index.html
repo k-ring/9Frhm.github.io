@@ -582,12 +582,12 @@
 
       
         
-          <div id="aplayer-rOZpgSEX" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+          <div id="aplayer-IjJTLeuj" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-rOZpgSEX"),
+            element: document.getElementById("aplayer-IjJTLeuj"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -779,16 +779,28 @@
 
       
         
-          
-          
-        
-            
-        
-        
+          <div id="aplayer-VmslMGXE" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-dsfohIaX"),
-          
-          ...
+            element: document.getElementById("aplayer-VmslMGXE"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "Stand my ground",
+              author: "Within Temptation",
+              url: "https://link.hhtjim.com/163/20715598.mp3",
+              pic: "https://k-ring.github.io/img/music.jpg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+<h3 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h3><p>序列化就是通过serialize()把一个对象转成字符串，方便传递和使用。  </p>
+<p>反序列化就是使用unserialize()将序列化的字符串恢复。  </p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/29/PHP反序列化利用链构造之路/#more" rel="contents">
@@ -1904,7 +1916,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/DDCTF2019 部分web/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -1923,7 +1935,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/20/DDCTF2019 部分web/" itemprop="url">DDCTF2019 web签到题</a></h1>
+                <a class="post-title-link" href="/2019/04/20/DDCTF2019 MISC wireshark/" itemprop="url">DDCTF2019 MISC wireshark</a></h1>
         
 
         <div class="post-meta">
@@ -1989,7 +2001,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,949 字
+                  373 字
                 </span>
               
 
@@ -2005,7 +2017,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  20 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -2027,10 +2039,10 @@
 
       
         
-          <h4 id="滴"><a href="#滴" class="headerlink" title="滴~"></a>滴~</h4><p>打开网站，看到url有一个jpg参数，是一个base64加密的字符串，查看源码，图片是以数据流的形式展示输出  </p>
+          <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/20/DDCTF2019 部分web/#more" rel="contents">
+            <a class="btn" href="/2019/04/20/DDCTF2019 MISC wireshark/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
