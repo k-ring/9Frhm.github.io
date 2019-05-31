@@ -77,13 +77,13 @@
 
 
 
-<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-IjJTLeuj&quot;),             narrow: false,             autoplay: false,             s">
+<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-CHTqcXuS&quot;),             narrow: false,             autoplay: false,             s">
 <meta name="keywords" content="SSRF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对万金油gopher协议的理解与应用">
 <meta property="og:url" content="http://yoursite.com/2019/05/30/对万金油gopher协议的理解与应用/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-IjJTLeuj&quot;),             narrow: false,             autoplay: false,             s">
+<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-CHTqcXuS&quot;),             narrow: false,             autoplay: false,             s">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://k-ring.github.io/img/go1.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go2.jpg">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://k-ring.github.io/img/go8.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go9.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go10.jpg">
-<meta property="og:updated_time" content="2019-05-31T13:45:04.026Z">
+<meta property="og:updated_time" content="2019-05-31T13:50:32.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对万金油gopher协议的理解与应用">
-<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-IjJTLeuj&quot;),             narrow: false,             autoplay: false,             s">
+<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-CHTqcXuS&quot;),             narrow: false,             autoplay: false,             s">
 <meta name="twitter:image" content="https://k-ring.github.io/img/go1.jpg">
 
 
@@ -415,12 +415,12 @@
 
       
         
-        <div id="aplayer-IjJTLeuj" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-CHTqcXuS" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-IjJTLeuj"),
+            element: document.getElementById("aplayer-CHTqcXuS"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -435,7 +435,10 @@
           window.aplayers || (window.aplayers = []);
           window.aplayers.push(ap);
         </script>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前不理解他们为什么要将gopher协议称为万金油，那个时候对gopher一无所知，但是在ctf和实际挖洞过程中总是能碰到ssrf，再Google一下gopher常见的运用场景<br><img src="https://k-ring.github.io/img/go1.jpg" alt><br>让我觉得有必要认识一下这位万金油。<br><a id="more"></a><br>通过我看的一些文章，我大概理解到万金油的意思应该就是在某些场景它的应用非常灵活和广泛，通过构造我们想要发送的数据包，利用gopher协议发送，就能实现我们想要的请求(我乱说的，我也不知道)。  </p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前不理解他们为什么要将gopher协议称为万金油，那个时候对gopher一无所知，但是在ctf和实际挖洞过程中总是能碰到ssrf，再Google一下gopher常见的运用场景    </p>
+<a id="more"></a>
+<p><img src="https://k-ring.github.io/img/go1.jpg" alt><br>让我觉得有必要认识一下这位万金油。  </p>
+<p>通过我看的一些文章，我大概理解到万金油的意思应该就是在某些场景它的应用非常灵活和广泛，通过构造我们想要发送的数据包，利用gopher协议发送，就能实现我们想要的请求(我乱说的，我也不知道)。  </p>
 <p>比如，利用gopher实现：GET请求，POST请求，内网的redis，mysql(以及各类关系型数据库)未授权访问，以及MongoDB，Memcache等  </p>
 <h3 id="gopher协议"><a href="#gopher协议" class="headerlink" title="gopher协议"></a>gopher协议</h3><p>gopher协议的格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:70/_ + TCP/IP数据</span><br></pre></td></tr></table></figure></p>
 <p>gopher的默认端口为70，如果没有指定端口，比如<code>gopher://127.0.0.1/_test</code>默认是发送给70端口的<br><img src="https://k-ring.github.io/img/go2.jpg" alt>    </p>
