@@ -81,11 +81,11 @@
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python学习的简单笔记">
-<meta property="og:url" content="http://yoursite.com/2019/05/24/python学习的简单笔记/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/06/06/python学习的简单笔记/index.html">
 <meta property="og:site_name" content="故人梦">
 <meta property="og:description" content="简单的记录了一些python的一些基础知识，方便以后查阅">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-06T09:27:19.274Z">
+<meta property="og:updated_time" content="2019-06-06T09:31:38.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python学习的简单笔记">
 <meta name="twitter:description" content="简单的记录了一些python的一些基础知识，方便以后查阅">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/24/python学习的简单笔记/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/06/python学习的简单笔记/">
 
 
 
@@ -281,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/python学习的简单笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/06/python学习的简单笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -310,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-24T00:00:00+08:00">
-                2019-05-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-06T00:00:00+08:00">
+                2019-06-06
               </time>
             
 
@@ -364,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,058 字
+                  4,049 字
                 </span>
               
 
@@ -531,7 +531,49 @@
 </tr>
 </tbody>
 </table>
-<h3 id="python中的错误和异常"><a href="#python中的错误和异常" class="headerlink" title="python中的错误和异常"></a>python中的错误和异常</h3><p>部分常见的异常代码和原因<br>| 异常代码          | 原因                       |<br>| —————– | ————————– |<br>| BaseException     | 所有异常的基类             |<br>| NameError         | 尝试访问一个未申明的变量   |<br>| ZeroDivisionError | 除数为0                    |<br>| SyntaxError       | python解释器语法错误       |<br>| IndexError        | 请求的索引超出序列范围     |<br>| KeyError          | 请求一个不存在的字典关键字 |<br>| IOError           | 输入/输出错误              |<br>| AttributeError    | 尝试访问未知的对象属性     |<br>|                   |                            |</p>
+<h3 id="python中的错误和异常"><a href="#python中的错误和异常" class="headerlink" title="python中的错误和异常"></a>python中的错误和异常</h3><p>部分常见的异常代码和原因</p>
+<table>
+<thead>
+<tr>
+<th>异常代码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BaseException</td>
+<td>所有异常的基类</td>
+</tr>
+<tr>
+<td>NameError</td>
+<td>尝试访问一个未申明的变量</td>
+</tr>
+<tr>
+<td>ZeroDivisionError</td>
+<td>除数为0</td>
+</tr>
+<tr>
+<td>SyntaxError</td>
+<td>python解释器语法错误</td>
+</tr>
+<tr>
+<td>IndexError</td>
+<td>请求的索引超出序列范围</td>
+</tr>
+<tr>
+<td>KeyError</td>
+<td>请求一个不存在的字典关键字</td>
+</tr>
+<tr>
+<td>IOError</td>
+<td>输入/输出错误</td>
+</tr>
+<tr>
+<td>AttributeError</td>
+<td>尝试访问未知的对象属性</td>
+</tr>
+</tbody>
+</table>
 <p>由于BaseException在异常继承树结构中属于最顶层，因此我们可以通过BaseException捕获所有的异常<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># action</span></span><br><span class="line"><span class="keyword">except</span> BaseException, e:</span><br><span class="line">    <span class="comment"># action for error</span></span><br><span class="line">    <span class="comment"># pass</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="try-finally-try-except-finally-try-except-else-finally"><a href="#try-finally-try-except-finally-try-except-else-finally" class="headerlink" title="try-finally, try-except-finally, try-except-else-finally"></a>try-finally, try-except-finally, try-except-else-finally</h4><p><strong>finally无论如何都会执行</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># A</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="comment"># B</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 执行A，B</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># A</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="comment"># B</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="comment"># C</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 执行A，C 或 A，B，C</span></span><br></pre></td></tr></table></figure>
@@ -685,8 +727,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/同源策略以及出现的各类安全问题/" rel="next" title="同源策略以及出现的各类安全问题">
-                <i class="fa fa-chevron-left"></i> 同源策略以及出现的各类安全问题
+              <a href="/2019/05/31/对万金油gopher协议的理解与应用/" rel="next" title="对万金油gopher协议的理解与应用">
+                <i class="fa fa-chevron-left"></i> 对万金油gopher协议的理解与应用
               </a>
             
           </div>
@@ -694,10 +736,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/28/第三届强网杯writeup/" rel="prev" title="第三届强网杯writeup">
-                第三届强网杯writeup <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
