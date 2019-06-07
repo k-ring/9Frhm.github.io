@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="故人梦">
 <meta property="og:description" content="文字处理，网页填表，数据抓取，新闻列表，数据清洗等，这些都需要正则，正则表达式为高级的文本模式匹配，以及搜索-替换等功能提供了基础。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T10:07:10.389Z">
+<meta property="og:updated_time" content="2019-06-07T10:10:13.012Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则(re)的初窥门径">
 <meta name="twitter:description" content="文字处理，网页填表，数据抓取，新闻列表，数据清洗等，这些都需要正则，正则表达式为高级的文本模式匹配，以及搜索-替换等功能提供了基础。">
@@ -364,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,903 字
+                  1,900 字
                 </span>
               
 
@@ -531,7 +531,61 @@
 </tr>
 </tbody>
 </table>
-<h3 id="re模块中的核心函数和方法"><a href="#re模块中的核心函数和方法" class="headerlink" title="re模块中的核心函数和方法"></a>re模块中的核心函数和方法</h3><p>常用的函数和方法：<br>| 函数或方法                        | 描述                                                         |<br>| ——————————— | ———————————————————— |<br>| compile(pattern, flags=0)         | 对正则表达式的pattern进行编译，返回一个regex对象             |<br>| re模块的函数和regex对象的方法     | #                                                           |<br>| match(patter, string, flags=0)    | 用正则表达式模式pattern匹配字符串string，flags是可选标识(后面几个函数同样)，如果匹配成功，返回一个匹配对象，苟泽返回None |<br>| search(pattern, string, flags=0)  | 在字符串string中搜索正则表达式模式pattern的第一次出现，如果匹配成功返回一个匹配对象，否则返回None |<br>| findall(pattern, string)          | 在字符串string中搜索正则表达式pattern的所有(非重复)出现，返回一个匹配对象的列表 |<br>| finditer(pattern, string)         | 和findall()相同，但返回的不是列表而是一个迭代器：对于每个匹配，该迭代器返回一个匹配对象 |<br>| split(pattern, string, max=0)     | 根据正则表达式pattern中的分隔符把字符串string分割为一个列表，返回成功匹配的列表 |<br>| sub(pattern, rep1, string, max=0) | 把字符串string中所有匹配正则表达式pattern的地方替换成字符串rep1(subn()还会返回一个表示替换次数的数值) |<br>| 匹配对象的方法                    | #                                                           |<br>| group(num=0)                      | 返回全部匹配对象                                             |<br>| groups()                          | 返回一个包含全部匹配的子组的元组(如果没有匹配成功，就返回一个空元祖) |</p>
+<h3 id="re模块中的核心函数和方法"><a href="#re模块中的核心函数和方法" class="headerlink" title="re模块中的核心函数和方法"></a>re模块中的核心函数和方法</h3><p>常用的函数和方法：    </p>
+<table>
+<thead>
+<tr>
+<th>函数或方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>compile(pattern, flags=0)</td>
+<td>对正则表达式的pattern进行编译，返回一个regex对象</td>
+</tr>
+<tr>
+<td>re模块的函数和regex对象的方法</td>
+<td>#</td>
+</tr>
+<tr>
+<td>match(patter, string, flags=0)</td>
+<td>用正则表达式模式pattern匹配字符串string，flags是可选标识(后面几个函数同样)，如果匹配成功，返回一个匹配对象，否则返回None</td>
+</tr>
+<tr>
+<td>search(pattern, string, flags=0)</td>
+<td>在字符串string中搜索正则表达式模式pattern的第一次出现，如果匹配成功返回一个匹配对象，否则返回None</td>
+</tr>
+<tr>
+<td>findall(pattern, string)</td>
+<td>在字符串string中搜索正则表达式pattern的所有(非重复)出现，返回一个匹配对象的列表</td>
+</tr>
+<tr>
+<td>finditer(pattern, string)</td>
+<td>和findall()相同，但返回的不是列表而是一个迭代器：对于每个匹配，该迭代器返回一个匹配对象</td>
+</tr>
+<tr>
+<td>split(pattern, string, max=0)</td>
+<td>根据正则表达式pattern中的分隔符把字符串string分割为一个列表，返回成功匹配的列表</td>
+</tr>
+<tr>
+<td>sub(pattern, rep1, string, max=0)</td>
+<td>把字符串string中所有匹配正则表达式pattern的地方替换成字符串rep1(subn()还会返回一个表示替换次数的数值)</td>
+</tr>
+<tr>
+<td>匹配对象的方法</td>
+<td>#</td>
+</tr>
+<tr>
+<td>group(num=0)</td>
+<td>返回全部匹配对象</td>
+</tr>
+<tr>
+<td>groups()</td>
+<td>返回一个包含全部匹配的子组的元组(如果没有匹配成功，就返回一个空元祖)</td>
+</tr>
+</tbody>
+</table>
 <h4 id="预编译compile-的使用"><a href="#预编译compile-的使用" class="headerlink" title="预编译compile()的使用"></a>预编译compile()的使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re1 = re.compile(<span class="string">'[0-9]+'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result = re1.findall(<span class="string">'te12312st2333'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result</span><br><span class="line">[<span class="string">'12312'</span>, <span class="string">'2333'</span>]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <p>在匹配对象类似的时候可以先进行预编译，这样不但可以节省查询缓存，还能提升代码性能。  </p>
 <h4 id="match-匹配字符串"><a href="#match-匹配字符串" class="headerlink" title="match()匹配字符串"></a>match()匹配字符串</h4><p>match()函数尝试从<code>字符串的开头</code>开始对模式进行匹配，如果匹配成功，返回一个对象，匹配失败，返回None，举三个例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>result = re.match(<span class="string">'grm'</span>, <span class="string">'grm'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> result <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>: result.group()</span><br><span class="line"><span class="meta">... </span></span><br><span class="line"><span class="string">'grm'</span></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 匹配成功</span></span><br></pre></td></tr></table></figure></p>
