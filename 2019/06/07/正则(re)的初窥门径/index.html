@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="故人梦">
 <meta property="og:description" content="文字处理，网页填表，数据抓取，新闻列表，数据清洗等，这些都需要正则，正则表达式为高级的文本模式匹配，以及搜索-替换等功能提供了基础。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T09:48:30.562Z">
+<meta property="og:updated_time" content="2019-06-07T10:00:36.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则(re)的初窥门径">
 <meta name="twitter:description" content="文字处理，网页填表，数据抓取，新闻列表，数据清洗等，这些都需要正则，正则表达式为高级的文本模式匹配，以及搜索-替换等功能提供了基础。">
@@ -420,11 +420,9 @@
 <td>grm</td>
 </tr>
 <tr>
-<td>re1\</td>
-<td>re2</td>
+<td>re1&#124;re2</td>
 <td>匹配正则表达式re1或re2</td>
-<td>grm\</td>
-<td>bar</td>
+<td>grm&#124;bar</td>
 </tr>
 <tr>
 <td>.</td>
@@ -482,10 +480,7 @@
 <td>[\^grm] 或 [\^A-Za-z0-9]</td>
 </tr>
 <tr>
-<td>(*\</td>
-<td>+\</td>
-<td>?\</td>
-<td>{})?</td>
+<td>(*&#124;+&#124;?&#124;{})?</td>
 <td>用于上面出现的任何”非贪婪”。版本重复匹配次数符号</td>
 <td>.*?[a-z]</td>
 </tr>
