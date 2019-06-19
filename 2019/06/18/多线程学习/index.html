@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="多线程,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="python多线程，通常说的就是关于线程锁的问题，由于要防止公共数据被胡乱修改，需要设置线程锁，但是一旦设置了线程锁，相当于就是单线程，也就是说宏观上看是多线程，实际在底层上的实现就是cpu交替执行，还是单线程。但是如果没有公共数据需要访问或者修改呢，各自完成各自的任务，对其他线程并不会造成什么影响，也就不需要设置线程锁，这样就可以实现并发式的多线程任务执行。在这种情况下，我们需要做的就是要控制并">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程学习">
+<meta property="og:url" content="http://yoursite.com/2019/06/18/多线程学习/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="python多线程，通常说的就是关于线程锁的问题，由于要防止公共数据被胡乱修改，需要设置线程锁，但是一旦设置了线程锁，相当于就是单线程，也就是说宏观上看是多线程，实际在底层上的实现就是cpu交替执行，还是单线程。但是如果没有公共数据需要访问或者修改呢，各自完成各自的任务，对其他线程并不会造成什么影响，也就不需要设置线程锁，这样就可以实现并发式的多线程任务执行。在这种情况下，我们需要做的就是要控制并">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-19T06:15:22.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程学习">
+<meta name="twitter:description" content="python多线程，通常说的就是关于线程锁的问题，由于要防止公共数据被胡乱修改，需要设置线程锁，但是一旦设置了线程锁，相当于就是单线程，也就是说宏观上看是多线程，实际在底层上的实现就是cpu交替执行，还是单线程。但是如果没有公共数据需要访问或者修改呢，各自完成各自的任务，对其他线程并不会造成什么影响，也就不需要设置线程锁，这样就可以实现并发式的多线程任务执行。在这种情况下，我们需要做的就是要控制并">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/18/多线程学习/">
+
+
+
+
+
+  <title>多线程学习 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/18/多线程学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">多线程学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-18T00:00:00+08:00">
+                2019-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,123 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  python多线程，通常说的就是关于线程锁的问题，由于要防止公共数据被胡乱修改，需要设置线程锁，但是一旦设置了线程锁，相当于就是单线程，也就是说宏观上看是多线程，实际在底层上的实现就是cpu交替执行，还是单线程。但是如果没有公共数据需要访问或者修改呢，各自完成各自的任务，对其他线程并不会造成什么影响，也就不需要设置线程锁，这样就可以实现并发式的多线程任务执行。在这种情况下，我们需要做的就是要控制并发式的线程数量。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="多线程实现的两种方式"><a href="#多线程实现的两种方式" class="headerlink" title="多线程实现的两种方式"></a>多线程实现的两种方式</h3><h4 id="继承threading模块的Thread类，重写run-方法"><a href="#继承threading模块的Thread类，重写run-方法" class="headerlink" title="继承threading模块的Thread类，重写run()方法"></a>继承threading模块的Thread类，重写run()方法</h4><p>仿造一个列子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过继承threading类实现多线程</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myThreading</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, thread_name)</span>:</span></span><br><span class="line">		super(myThreading, self).__init__()</span><br><span class="line">		self.name = thread_name</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">		print(<span class="string">"%s is runing..."</span> %self.name)</span><br><span class="line">		time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">		t = myThreading(<span class="string">'t-%s'</span> %str(i))</span><br><span class="line">		t.start()</span><br><span class="line">	t.join()    <span class="comment"># join() 起到一个阻塞的作用，当前线程不执行完，就一直阻塞</span></span><br><span class="line">	print(<span class="string">'all threads are done!'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>关于join()：<br>join() 起到一个阻塞的作用，当前线程不执行完，就一直阻塞<br>上面代码是对最后一个线程进行阻塞  </p>
+<p>如果我这样写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">		t = myThreading(<span class="string">'t-%s'</span> %str(i))</span><br><span class="line">		t.start()</span><br><span class="line">	    t.join()</span><br><span class="line">	print(<span class="string">'all threads are done!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 相当于对每一个线程都进行阻塞(每开启一个线程，只要没执行完，都进行阻塞)，每执行完一个线程之后，才会执行下一个线程</span></span><br></pre></td></tr></table></figure></p>
+<p>这种也就是解决主线程执行完了，然后等待子线程执行结束，再结束主线程。  </p>
+<p>除了通过join()实现，还可以通过守护进程setDaemon(True)的方式来实现这种功能，也就是在子线程创建之后将子线程设置为主线程的守护线程，然后再开始执行子线程。当主线程结束后，守护子线程也会随之结束，整个程序也跟着退出。  </p>
+<p>实现也很简单，就是创建的时候设置<code>setDaemon(True)</code>就可以了：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">	t = myThreading(<span class="string">'t-%s'</span> %str(i))</span><br><span class="line">	t.setDaemon(<span class="literal">True</span>)</span><br><span class="line">	t.start()</span><br><span class="line">sleep(<span class="number">0.5</span>)     <span class="comment"># 预防主线程结束太早，导致子线程还未执行完</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>join()和守护进程的区别：</strong><br>设置join()是进行阻塞，要等子线程结束了之后才结束主线程，如果对每一个线程都设置阻塞的话就相当于是单线程；<br>而守护进程的意思是主线程结束后，守护子线程也会随之结束，整个程序也跟着退出。子线程不一定都执行完了，但只要主线程结束了，后面还没有执行的子线程也不会再执行。<br>这两种方法并不能防止公共数据被胡乱修改，只能起到主线程最后结束或者主线程结束 子线程也会跟着结束的作用。</p>
+<h4 id="实例化threading-Thread对象的时候，将线程要执行的任务函数作为参数传入线程"><a href="#实例化threading-Thread对象的时候，将线程要执行的任务函数作为参数传入线程" class="headerlink" title="实例化threading.Thread对象的时候，将线程要执行的任务函数作为参数传入线程"></a>实例化threading.Thread对象的时候，将线程要执行的任务函数作为参数传入线程</h4><p>一个简单实例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过实例化threading.Thread对象的时候，将线程要执行的任务函数作为参数传入线程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(thread_name)</span>:</span></span><br><span class="line">	print(<span class="string">'t-%s is runing...'</span> %thread_name)</span><br><span class="line">	time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">		t = threading.Thread(target=run, args=(str(i), ))</span><br><span class="line">		t.start()</span><br><span class="line">	t.join()</span><br><span class="line">	print(<span class="string">'all threads are done!'</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="线程锁"><a href="#线程锁" class="headerlink" title="线程锁"></a>线程锁</h3><p>在没有公共数据可以访问，也就是说可以使用多线程的时候我们也需要控制每次线程执行的数量，目的是防止执行的线程数过大，导致程序崩溃，系统瘫痪。      </p>
+<p>线程锁有这几种：  </p>
+<ul>
+<li>Lock 互斥锁    </li>
+<li>RLock 可重入锁  </li>
+<li>Semaphore 信号  </li>
+<li>Event 事件  </li>
+<li>Condition 条件  </li>
+<li>Barrier “阻碍”  </li>
+</ul>
+<p>Lock锁是互斥锁，同一时刻只能执行一个线程，有点鸡肋。  </p>
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><p>类名：BoundedSemaphore。这种锁允许一定数量的线程同时更改数据，它不是互斥锁。比如地铁安检，排队人很多，工作人员只允许一定数量的人进入安检区，其它的人继续排队。<br>关于这个我写了一篇文章：<a href="https://blog.csdn.net/qq_39850969/article/details/86666620" target="_blank" rel="noopener">python多线程semaphore实现线程数控制</a>  </p>
+<p>一个简单的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置semaphore为5，每次执行五个线程，防止线程过大导致系统崩溃</span></span><br><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n, se)</span>:</span></span><br><span class="line">	se.acquire()</span><br><span class="line">	print(<span class="string">'t-%s is runing...'</span> %n)</span><br><span class="line">	time.sleep(<span class="number">1</span>)</span><br><span class="line">	se.release()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	semaphore = threading.BoundedSemaphore(<span class="number">5</span>)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">		t = threading.Thread(target=run, args=(str(i), semaphore))</span><br><span class="line">		t.start()</span><br><span class="line">	t.join()</span><br><span class="line">	print(<span class="string">'all threads are done!'</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="定时器Timer"><a href="#定时器Timer" class="headerlink" title="定时器Timer"></a>定时器Timer</h4><p>定时器Timer类是threading模块中的一个小工具，用于指定n秒后执行某操作。一个简单但很实用的东西。<br>网上给的小例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Timer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"hello, world"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表示1秒后执行hello函数</span></span><br><span class="line">t = Timer(<span class="number">1</span>, hello)</span><br><span class="line">t.start()</span><br></pre></td></tr></table></figure></p>
+<h3 id="队列-Queue"><a href="#队列-Queue" class="headerlink" title="队列(Queue)"></a>队列(Queue)</h3><p>在多线程编程中，队列也是必不可少的一个模块  </p>
+<p>有三种队列类型：  </p>
+<ul>
+<li>FIFO(先进先出)队列, 第一加入队列的任务, 被第一个取出</li>
+<li>LIFO(后进先出)队列,最后加入队列的任务, 被第一个取出(操作类似与栈, 总是从栈顶取出)</li>
+<li>PriorityQueue(优先级)队列, 保持队列数据有序, 最小值被先取出</li>
+</ul>
+<p>类和异常：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line"><span class="comment">#类</span></span><br><span class="line">Queue.Queue(maxsize = <span class="number">0</span>)  <span class="comment">#构造一个FIFO队列,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认)</span></span><br><span class="line"></span><br><span class="line">Queue.LifoQueue(maxsize = <span class="number">0</span>)  <span class="comment">#构造一LIFO队列,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认)</span></span><br><span class="line"></span><br><span class="line">Queue.PriorityQueue(maxsize = <span class="number">0</span>)  <span class="comment">#构造一个优先级队列,,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认). 优先级队列中, 最小值被最先取出</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#异常</span></span><br><span class="line">Queue.Empty  <span class="comment">#当调用非阻塞的get()获取空队列的元素时, 引发异常</span></span><br><span class="line">Queue.Full  <span class="comment">#当调用非阻塞的put()向满队列中添加元素时, 引发异常</span></span><br></pre></td></tr></table></figure></p>
+<p>Queue的方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Queue.empty()  <span class="comment">#如果队列为空, 返回True(注意队列为空时, 并不能保证调用put()不会阻塞); 队列不空返回False(不空时, 不能保证调用get()不会阻塞)</span></span><br><span class="line">Queue.full()  <span class="comment">#如果队列为满, 返回True(不能保证调用get()不会阻塞), 如果队列不满, 返回False(并不能保证调用put()不会阻塞)</span></span><br><span class="line"></span><br><span class="line">Queue.put(item[, block[, timeout]])  <span class="comment">#向队列中放入元素, 如果可选参数block为True并且timeout参数为None(默认), 为阻塞型put(). 如果timeout是正数, 会阻塞timeout时间并引发Queue.Full异常. 如果block为False为非阻塞put</span></span><br><span class="line">Queue.put_nowait(item)  <span class="comment">#等价于put(itme, False)</span></span><br><span class="line"></span><br><span class="line">Queue.get([block[, timeout]])  <span class="comment">#移除列队元素并将元素返回, block = True为阻塞函数, block = False为非阻塞函数. 可能返回Queue.Empty异常</span></span><br><span class="line">Queue.get_nowait()  <span class="comment">#等价于get(False)</span></span><br><span class="line"></span><br><span class="line">Queue.task_done()  <span class="comment">#在完成一项工作之后，Queue.task_done()函数向任务已经完成的队列发送一个信号</span></span><br><span class="line">Queue.join()  <span class="comment">#实际上意味着等到队列为空，再执行别的操作</span></span><br></pre></td></tr></table></figure></p>
+<p>一个简单的队列实例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Queue</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">q = Queue.Queue()   <span class="comment"># 创建一个不限制大小的队列</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">global</span> q</span><br><span class="line"><span class="comment">#	print q.qsize()</span></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">		item = q.get()</span><br><span class="line">		print(<span class="string">"Processing: %s"</span> %item) <span class="comment"># 如果队列不为空，一直获得任务，每q.get()一个任务，队列就会移除该任务</span></span><br><span class="line">		time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="keyword">global</span> q</span><br><span class="line">	threads = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">		q.put(i)    <span class="comment"># 向队列中放入1000个任务，同时还应通过其他方式持续性向队列中添加任务</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):     <span class="comment"># 同时执行5个线程</span></span><br><span class="line">		t = threading.Thread(target=run, args=())</span><br><span class="line">		t.start()      <span class="comment"># 需要理解的就是，这里同时开启了5个线程，5个线程同时在操作一个队列，每当q.get()一个任务时队列里面就会移除该任务，即使5个线程同时操作，也不会重复</span></span><br><span class="line">		threads.append(t)</span><br><span class="line">	<span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">		thread.join()</span><br><span class="line">	q.join()    <span class="comment"># 等待队列为空时再执行其他任务</span></span><br><span class="line">	print(<span class="string">"all threads are done!"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>实现了多线程控制线程数的并发式执行。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/09/网络编程/" rel="next" title="网络编程">
+                <i class="fa fa-chevron-left"></i> 网络编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程实现的两种方式"><span class="nav-number">1.</span> <span class="nav-text">多线程实现的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承threading模块的Thread类，重写run-方法"><span class="nav-number">1.1.</span> <span class="nav-text">继承threading模块的Thread类，重写run()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例化threading-Thread对象的时候，将线程要执行的任务函数作为参数传入线程"><span class="nav-number">1.2.</span> <span class="nav-text">实例化threading.Thread对象的时候，将线程要执行的任务函数作为参数传入线程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程锁"><span class="nav-number">2.</span> <span class="nav-text">线程锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Semaphore"><span class="nav-number">2.1.</span> <span class="nav-text">Semaphore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定时器Timer"><span class="nav-number">2.2.</span> <span class="nav-text">定时器Timer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列-Queue"><span class="nav-number">3.</span> <span class="nav-text">队列(Queue)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">29.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

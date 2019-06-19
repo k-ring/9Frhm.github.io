@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="socket,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在ctf中，通常有一些题目需要通过脚本实现socket连接实现自动接收发送数据包；又或者有些小工具需要使用到socket网络通信，等等。socket的学习变得很重要。">
+<meta name="keywords" content="socket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络编程">
+<meta property="og:url" content="http://yoursite.com/2019/06/09/网络编程/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="在ctf中，通常有一些题目需要通过脚本实现socket连接实现自动接收发送数据包；又或者有些小工具需要使用到socket网络通信，等等。socket的学习变得很重要。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-18T12:56:21.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络编程">
+<meta name="twitter:description" content="在ctf中，通常有一些题目需要通过脚本实现socket连接实现自动接收发送数据包；又或者有些小工具需要使用到socket网络通信，等等。socket的学习变得很重要。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/09/网络编程/">
+
+
+
+
+
+  <title>网络编程 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/09/网络编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-09T00:00:00+08:00">
+                2019-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  884 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  在ctf中，通常有一些题目需要通过脚本实现socket连接实现自动接收发送数据包；又或者有些小工具需要使用到socket网络通信，等等。socket的学习变得很重要。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="网络编程的两种类型"><a href="#网络编程的两种类型" class="headerlink" title="网络编程的两种类型"></a>网络编程的两种类型</h3><p>使用socket.socket()创建套接字：  </p>
+<h4 id="面向连接-TCP-IP"><a href="#面向连接-TCP-IP" class="headerlink" title="面向连接(TCP/IP)"></a>面向连接(TCP/IP)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = socket(AF_INET, SOCK_STREAM)</span><br></pre></td></tr></table></figure>
+<p>2、无连接(UDP/IP)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = socket(AF_INET, SOCK_DGRAM)</span><br></pre></td></tr></table></figure></p>
+<h3 id="套接字对象-内建-方法"><a href="#套接字对象-内建-方法" class="headerlink" title="套接字对象(内建)方法"></a>套接字对象(内建)方法</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务器端套接字函数</td>
+<td>#</td>
+</tr>
+<tr>
+<td>s.bind()</td>
+<td>绑定地址(主机名，端口号对)到套接字</td>
+</tr>
+<tr>
+<td>s.listen()</td>
+<td>开始TCP监听</td>
+</tr>
+<tr>
+<td>s.accept()</td>
+<td>被动接受TCP客户端连接，(阻塞式)等待连接的到来</td>
+</tr>
+<tr>
+<td>客户端套接字函数</td>
+<td>#</td>
+</tr>
+<tr>
+<td>s.connect()</td>
+<td>主动初始化TCP服务器连接</td>
+</tr>
+<tr>
+<td>s.connect_ex()</td>
+<td>connect()函数的扩展版本，出错时返回出错码，而不是抛出异常</td>
+</tr>
+<tr>
+<td>公共用途的套接字函数</td>
+<td>#</td>
+</tr>
+<tr>
+<td>s.recv()</td>
+<td>接受TCP数据</td>
+</tr>
+<tr>
+<td>s.send()</td>
+<td>发送TCP数据</td>
+</tr>
+<tr>
+<td>s.sendall()</td>
+<td>完整发送TCP数据</td>
+</tr>
+<tr>
+<td>s.recvfrom()</td>
+<td>接受UDP数据</td>
+</tr>
+<tr>
+<td>s.sendto()</td>
+<td>发送UDP数据</td>
+</tr>
+<tr>
+<td>s.getpeername()</td>
+<td>连接到当前套接字的远端的地址(TCP连接)</td>
+</tr>
+<tr>
+<td>s.getsockname()</td>
+<td>当前套接字的地址</td>
+</tr>
+<tr>
+<td>s.getsockopt()</td>
+<td>返回指定套接字的参数</td>
+</tr>
+<tr>
+<td>s.setsockopt()</td>
+<td>设置指定套接字的参数</td>
+</tr>
+<tr>
+<td>s.close()</td>
+<td>关闭套接字</td>
+</tr>
+<tr>
+<td>面向模块的套接字函数</td>
+<td>#</td>
+</tr>
+<tr>
+<td>s.setblocking()</td>
+<td>设置套接字的阻塞与非阻塞模式</td>
+</tr>
+<tr>
+<td>s.settimeout()</td>
+<td>设置阻塞套接字操作的超时时间</td>
+</tr>
+<tr>
+<td>s.gettimeout()</td>
+<td>得到阻塞套接字操作的超时时间</td>
+</tr>
+<tr>
+<td>面向文件的套接字函数</td>
+<td>#</td>
+</tr>
+<tr>
+<td>s.fileno()</td>
+<td>套接字的文件描述符</td>
+</tr>
+<tr>
+<td>s.makefile()</td>
+<td>创建一个与该套接字关联的文件对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="简单的单线程TCP服务器端与客户端"><a href="#简单的单线程TCP服务器端与客户端" class="headerlink" title="简单的单线程TCP服务器端与客户端"></a>简单的单线程TCP服务器端与客户端</h3><h4 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"><span class="comment"># tcpserver.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</span><br><span class="line"></span><br><span class="line">host = <span class="string">''</span></span><br><span class="line">port = <span class="number">9998</span></span><br><span class="line">bufsize = <span class="number">1024</span></span><br><span class="line">addr = (host, port)</span><br><span class="line"></span><br><span class="line">tcpS = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">tcpS.bind(addr)</span><br><span class="line">tcpS.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"waiting for connection..."</span></span><br><span class="line">	tcpC, ip = tcpS.accept()</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"...connected from: %s:%s"</span> %(ip[<span class="number">0</span>], ip[<span class="number">1</span>])</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		data = tcpC.recv(bufsize)</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'%s to localhost&gt; %s [%s]'</span> %(ip[<span class="number">0</span>], data, ctime())</span><br><span class="line">		tcpC.send(<span class="string">'%s by xxx.xxx.xxx.xxx'</span> %(data))</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'localhost to %s&gt; %s by xxx.xxx.xxx.xxx [%s]'</span> %(ip[<span class="number">0</span>], data, ctime())</span><br><span class="line">	tcpC.close()</span><br><span class="line">tcpS.close()</span><br></pre></td></tr></table></figure>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"><span class="comment"># tcpcustom.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</span><br><span class="line"></span><br><span class="line">host = <span class="string">'xxx.xxx.xxx.xxx'</span>   <span class="comment"># 服务器端ip地址</span></span><br><span class="line">port = <span class="number">9998</span></span><br><span class="line">bufsize = <span class="number">1024</span></span><br><span class="line">addr = (host, port)</span><br><span class="line"></span><br><span class="line">tcpC = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">tcpC.connect(addr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	data = raw_input(<span class="string">'&gt; '</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">if</span> data == <span class="string">'q!'</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	tcpC.send(data)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'localhost to %s&gt; %s [%s]'</span> %(host, data, ctime())</span><br><span class="line">	data = tcpC.recv(bufsize)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'%s to localhost&gt; %s [%s]'</span> %(host, data, ctime())</span><br><span class="line">tcpC.close()</span><br></pre></td></tr></table></figure>
+<h3 id="简单的单线程UDP服务器端与客户端"><a href="#简单的单线程UDP服务器端与客户端" class="headerlink" title="简单的单线程UDP服务器端与客户端"></a>简单的单线程UDP服务器端与客户端</h3><h4 id="服务器端-1"><a href="#服务器端-1" class="headerlink" title="服务器端"></a>服务器端</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"><span class="comment"># udpserver.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</span><br><span class="line"></span><br><span class="line">host = <span class="string">''</span></span><br><span class="line">port = <span class="number">8888</span></span><br><span class="line">bufsize = <span class="number">1024</span></span><br><span class="line">addr = (host, port)</span><br><span class="line"></span><br><span class="line">udpS = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line">udpS.bind(addr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"waiting for massage..."</span></span><br><span class="line">	data, ip = udpS.recvfrom(bufsize)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"from %s:%s&gt; %s [%s]"</span> %(ip[<span class="number">0</span>], ip[<span class="number">1</span>], data, ctime())</span><br><span class="line">	udpS.sendto(<span class="string">'%s %s'</span> %(data, ctime()), ip)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"to %s:%s&gt; %s %s [%s]"</span> %(ip[<span class="number">0</span>], ip[<span class="number">1</span>], data, ctime() ctime())</span><br><span class="line">udpS.close()</span><br></pre></td></tr></table></figure>
+<h4 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf8 -*-</span></span><br><span class="line"><span class="comment"># udpcustom.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * </span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</span><br><span class="line"></span><br><span class="line">host = <span class="string">'211.159.177.185'</span></span><br><span class="line">port = <span class="number">8888</span></span><br><span class="line">bufsize = <span class="number">1024</span></span><br><span class="line">addr = (host, port)</span><br><span class="line"></span><br><span class="line">udpC = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	data = raw_input(<span class="string">"&gt; "</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">if</span> data == <span class="string">'q!'</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	udpC.sendto(data, addr)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"to %s&gt; %s [%s]"</span> %(host, data, ctime())</span><br><span class="line">	data, ip = udpC.recvfrom(bufsize)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">"from %s:%s&gt; %s [%s]"</span> %(ip[<span class="number">0</span>], ip[<span class="number">1</span>], data, ctime())</span><br><span class="line">udpC.close()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/socket/" rel="tag"># socket</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/正则(re)的初窥门径/" rel="next" title="正则(re)的初窥门径">
+                <i class="fa fa-chevron-left"></i> 正则(re)的初窥门径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/18/多线程学习/" rel="prev" title="多线程学习">
+                多线程学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络编程的两种类型"><span class="nav-number">1.</span> <span class="nav-text">网络编程的两种类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#面向连接-TCP-IP"><span class="nav-number">1.1.</span> <span class="nav-text">面向连接(TCP/IP)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套接字对象-内建-方法"><span class="nav-number">2.</span> <span class="nav-text">套接字对象(内建)方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的单线程TCP服务器端与客户端"><span class="nav-number">3.</span> <span class="nav-text">简单的单线程TCP服务器端与客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器端"><span class="nav-number">3.1.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端"><span class="nav-number">3.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的单线程UDP服务器端与客户端"><span class="nav-number">4.</span> <span class="nav-text">简单的单线程UDP服务器端与客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器端-1"><span class="nav-number">4.1.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端-1"><span class="nav-number">4.2.</span> <span class="nav-text">客户端</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">29.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
