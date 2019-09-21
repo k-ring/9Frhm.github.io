@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="XSS,">
+  <meta name="keywords" content="PHP,">
 
 
 
@@ -77,24 +77,22 @@
 
 
 
-<meta name="description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
-<meta name="keywords" content="XSS">
+<meta name="description" content="文件上传中.htaccess 和 .user.ini配置文件的妙用，在很多情况下可以绕过文件上传限制。">
+<meta name="keywords" content="PHP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DOM型XSS的简单认识">
-<meta property="og:url" content="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/index.html">
+<meta property="og:title" content=".htaccess和.user.ini配置文件妙用">
+<meta property="og:url" content="http://yoursite.com/2019/09/21/配置文件妙用/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
+<meta property="og:description" content="文件上传中.htaccess 和 .user.ini配置文件的妙用，在很多情况下可以绕过文件上传限制。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://k-ring.github.io/img/htmldom.gif">
-<meta property="og:image" content="https://k-ring.github.io/img/xss1.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/xss2.png">
-<meta property="og:image" content="https://k-ring.github.io/img/xss3.jpg">
-<meta property="og:image" content="https://k-ring.github.io/img/xss4.jpg">
-<meta property="og:updated_time" content="2019-05-29T10:37:10.567Z">
+<meta property="og:image" content="https://k-ring.github.io/img/htaccess1.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/htaccess2.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/htaccess3.jpg">
+<meta property="og:updated_time" content="2019-09-21T00:46:30.471Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DOM型XSS的简单认识">
-<meta name="twitter:description" content="虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。">
-<meta name="twitter:image" content="http://k-ring.github.io/img/htmldom.gif">
+<meta name="twitter:title" content=".htaccess和.user.ini配置文件妙用">
+<meta name="twitter:description" content="文件上传中.htaccess 和 .user.ini配置文件的妙用，在很多情况下可以绕过文件上传限制。">
+<meta name="twitter:image" content="https://k-ring.github.io/img/htaccess1.jpg">
 
 
 
@@ -124,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/21/配置文件妙用/">
 
 
 
 
 
-  <title>DOM型XSS的简单认识 | 故人梦</title>
+  <title>.htaccess和.user.ini配置文件妙用 | 故人梦</title>
   
 
 
@@ -287,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/DOM型XSS的简单认识/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/21/配置文件妙用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -304,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">DOM型XSS的简单认识</h1>
+          <h1 class="post-title" itemprop="name headline">.htaccess和.user.ini配置文件妙用</h1>
         
 
         <div class="post-meta">
@@ -316,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-07T00:00:00+08:00">
-                2019-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-21T00:00:00+08:00">
+                2019-09-21
               </time>
             
 
@@ -339,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/漏洞/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞</span>
                   </a>
                 </span>
 
@@ -370,7 +368,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  571 字
+                  838 字
                 </span>
               
 
@@ -386,7 +384,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -394,7 +392,7 @@
 
           
               <div class="post-description">
-                  虽然说DOM型XSS危害性一般情况下不大，但是作为一个学习者来说，这些东西还是应该知道的。
+                  文件上传中.htaccess 和 .user.ini配置文件的妙用，在很多情况下可以绕过文件上传限制。
               </div>
           
 
@@ -411,19 +409,25 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>以前一直以为self-xss就是所谓的DOM-XSS，直到有一次挖掘漏洞的时候对一个学长说了我认为self-xss就是DOM-XSS，结果被无情地嘲讽了一次。好吧，我还不知道什么是DOM，这里就简单记录一下DOM-XSS。</p>
-<h3 id="什么是DOM"><a href="#什么是DOM" class="headerlink" title="什么是DOM"></a>什么是DOM</h3><p>我从js相关书籍和百度上面了解到的就是：文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。  </p>
-<p>简而言之就是：一个web页面是一个文档，DOM将这个文档解析成一个结构树，然后调用DOM提供的编程接口就可以操作这个结构树上的节点和对象。  </p>
-<p>这里用HTML DOM树作为例子：直接看图，直接明了<br><img src="http://k-ring.github.io/img/htmldom.gif" alt></p>
-<h3 id="简单的DOM-XSS例子"><a href="#简单的DOM-XSS例子" class="headerlink" title="简单的DOM-XSS例子"></a>简单的DOM-XSS例子</h3><p>先举一个小小的例子，更加直观的了解什么是DOM-XSS。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DOM-XSS.html</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="keyword">var</span> text = location.hash.substr(<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">eval</span>(text);</span><br><span class="line">		&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p><code>payload: http://127.0.0.1/DOM-XSS.html#alert(1)</code><br><img src="https://k-ring.github.io/img/xss1.jpg" alt></p>
-<p>在location这个接口当中，hash表示获取url中#以及后面的部分，location对象属性：<br><img src="https://k-ring.github.io/img/xss2.png" alt></p>
-<h3 id="常见基于DOM的XSS的api"><a href="#常见基于DOM的XSS的api" class="headerlink" title="常见基于DOM的XSS的api"></a>常见基于DOM的XSS的api</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">document.location</span><br><span class="line">document.URL</span><br><span class="line">document.URLUnencoded</span><br><span class="line">document.referrer</span><br><span class="line">window.location</span><br><span class="line">window.name</span><br><span class="line">documen.write</span><br><span class="line">innerHTML属性</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>通过构造一些特殊的payload，插入恶意代码。<br>具体这些DOM接口作用测试一下就知道了。  </p>
-<p>刚好dz有一个DOM-XSS：<br><img src="https://k-ring.github.io/img/xss3.jpg" alt><br>分析它的源代码：<br><img src="https://k-ring.github.io/img/xss4.jpg" alt><br>源码中一行：<br><code>&lt;body onmousedown=&quot;setvalue(document.getElementById(&#39;colorhex&#39;))&quot; scrolling=&quot;no&quot;&gt;</code><br>只要鼠标点击页面就执行setvalue()这个函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setvalue</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(varname) &#123;</span><br><span class="line">		parent.$(varname).style.backgroundColor = setv;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(varnamev) &#123;</span><br><span class="line">		parent.$(varnamev).value = setv;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(fun) <span class="built_in">eval</span>(<span class="string">'parent.'</span>+fun+<span class="string">'("'</span>+setv+<span class="string">'")'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于varname, varnames的参数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">varname = location.search.substr(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> varnames = varname.split(<span class="string">'|'</span>);</span><br><span class="line">varname = varnames[<span class="number">0</span>];</span><br><span class="line">varnamev = varnames[<span class="number">1</span>];</span><br><span class="line">fun = varnames[<span class="number">2</span>] || <span class="string">''</span>;</span><br></pre></td></tr></table></figure></p>
-<p>构造payload：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload: http:<span class="comment">//www.xxx.com/static/image/admincp/getcolor.htm?||a;alert(document.cookie)</span></span><br><span class="line"></span><br><span class="line">payload效果: <span class="built_in">eval</span>(<span class="string">'parent.a;alert(document.cookie)("")'</span>);</span><br></pre></td></tr></table></figure></p>
+        <h3 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h3><p>httpd-conf是Apache的系统配置文件，一个全局的配置文件，对整个web服务起作用；而.htaccess也是Apache的配置文件，不过相当于一个局部配置文件，只对该文件所在目录下的文件起作用。</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>在绕过文件上传的限制中，通常在Apache全局配置文件httpd.conf中有这样一条配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php .phtml</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/htaccess1.jpg" alt></p>
+<p>这条配置的意思就是将.php、.phtml文件后缀的文件当做php文件执行，如果开启了这条配置，就可以上传.phtml文件在执行php代码，这也就是为什么在文件上传时可以尝试上传.phtml，不过在高版本中这条配置默认是关闭的，也就是只能解析.php文件后缀。  </p>
+<p>或者这条配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SetHandler application/x-httpd-php</span><br></pre></td></tr></table></figure></p>
+<p>将所有文件都解析为php文件。  </p>
+<p>通常全局文件我们都是不可更改的，而Apache还有一个局部配置文件.htaccess，这个配置文件只对该目录所在的web目录起作用，例如：我们在www目录下有一个.htaccess配置文件，配置内容为 <code>AddType application/x-httpd-php .jpg</code> ，将jpg文件当做PHP文件解析。这样就可以直接解析jpg后缀的webshell。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// .htaccess</span><br><span class="line">AddType application/x-httpd-php .jpg</span><br><span class="line"></span><br><span class="line">// 1.jpg</span><br><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>访问1.jpg，当做PHP解析。  </p>
+<h4 id="局限"><a href="#局限" class="headerlink" title="局限"></a>局限</h4><p>.htaccess配置文件只在Apache服务器中起作用。  </p>
+<h3 id="user-ini"><a href="#user-ini" class="headerlink" title=".user.ini"></a>.user.ini</h3><p>php.ini是php的一个全局配置文件，对整个web服务起作用；而.user.ini和.htaccess一样是目录的配置文件，.user.ini就是用户自定义的一个php.ini，通常用这个文件来构造后门和隐藏后门。</p>
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p>php配置项中有两个配置可以起到一些作用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file = &lt;filename&gt;         //包含在文件头</span><br><span class="line">auto_append_file = &lt;filename&gt;          //包含在文件尾</span><br></pre></td></tr></table></figure></p>
+<p>这两个配置项的作用相当于一个文件包含，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// .user.ini</span><br><span class="line">auto_prepend_file = 1.jpg</span><br><span class="line"></span><br><span class="line">// 1.jpg</span><br><span class="line">&lt;?php phpinfo();?&gt;</span><br><span class="line"></span><br><span class="line">// 11.php</span><br></pre></td></tr></table></figure></p>
+<p>也就是在一个目录下有.user.ini这个配置文件，配置内容为上，有1.jpg，同时该目录下还需要有.php后缀的文件，<code>auto_prepend_file = 1.jpg</code> 这个配置的意思就是在当前目录下的.php文件包含1.jpg这个图片，在此处相当于在11.php文件头插入了 <code>require(&#39;1.jpg&#39;)</code> 这条语句，也就是说相当于文件包含。<br>另一条配置包含在文件尾，如果遇到了exit语句的话就会失效。</p>
+<p><img src="https://k-ring.github.io/img/htaccess2.jpg" alt></p>
+<p><img src="https://k-ring.github.io/img/htaccess3.jpg" alt>  </p>
+<p>.user.ini使用范围很广，不仅限于Apache服务器，同样适用于Nginx服务器，只要服务器启用了fastcgi模式(通常非线程安全模式使用的就是fastcgi模式)。  </p>
+<h4 id="局限-1"><a href="#局限-1" class="headerlink" title="局限"></a>局限</h4><p>在.user.ini中使用这条配置的使用也说了是在同目录下的其他.php文件中包含配置中所指定的文件，也就是说需要该目录下存在.php文件，通常在文件上传中，一般是专门有一个目录用来存在图片，可能小概率会存在.php 文件。  </p>
+<p>但是有时可以使用 <code>../</code> 来将文件上传到其他目录，达到一个利用的效果。  </p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://juejin.im/post/5aa1160f6fb9a028c812710e" target="_blank" rel="noopener">.user.ini文件构成的PHP后门</a><br><a href="https://xz.aliyun.com/t/6091" target="_blank" rel="noopener">从SUCTF 2019 CheckIn 浅谈.user.ini的利用</a></p>
 
       
     </div>
@@ -441,7 +445,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/XSS/" rel="tag"># XSS</a>
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
           
         </div>
       
@@ -454,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/26/送给三月的自己/" rel="next" title="送给三月的自己">
-                <i class="fa fa-chevron-left"></i> 送给三月的自己
+              <a href="/2019/08/08/XXE注入学习/" rel="next" title="XXE注入学习">
+                <i class="fa fa-chevron-left"></i> XXE注入学习
               </a>
             
           </div>
@@ -463,10 +467,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/10/MySQL客户端任意文件读取/" rel="prev" title="MySQL客户端任意文件读取">
-                MySQL客户端任意文件读取 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -598,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是DOM"><span class="nav-number">2.</span> <span class="nav-text">什么是DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的DOM-XSS例子"><span class="nav-number">3.</span> <span class="nav-text">简单的DOM-XSS例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见基于DOM的XSS的api"><span class="nav-number">4.</span> <span class="nav-text">常见基于DOM的XSS的api</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#htaccess"><span class="nav-number">1.</span> <span class="nav-text">.htaccess</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">1.1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局限"><span class="nav-number">1.2.</span> <span class="nav-text">局限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user-ini"><span class="nav-number">2.</span> <span class="nav-text">.user.ini</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-1"><span class="nav-number">2.1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局限-1"><span class="nav-number">2.2.</span> <span class="nav-text">局限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>

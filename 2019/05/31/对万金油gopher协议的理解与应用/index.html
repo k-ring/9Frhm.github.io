@@ -77,13 +77,13 @@
 
 
 
-<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dSGfbbzd&quot;),             narrow: false,             autoplay: false,             s">
+<meta name="description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-noWMqpLP&quot;),             narrow: false,             autoplay: false,             s">
 <meta name="keywords" content="SSRF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对万金油gopher协议的理解与应用">
 <meta property="og:url" content="http://yoursite.com/2019/05/31/对万金油gopher协议的理解与应用/index.html">
 <meta property="og:site_name" content="故人梦">
-<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dSGfbbzd&quot;),             narrow: false,             autoplay: false,             s">
+<meta property="og:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-noWMqpLP&quot;),             narrow: false,             autoplay: false,             s">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://k-ring.github.io/img/go1.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go2.jpg">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://k-ring.github.io/img/go8.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go9.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/go10.jpg">
-<meta property="og:updated_time" content="2019-06-01T01:11:23.404Z">
+<meta property="og:updated_time" content="2019-09-01T09:03:38.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对万金油gopher协议的理解与应用">
-<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-dSGfbbzd&quot;),             narrow: false,             autoplay: false,             s">
+<meta name="twitter:description" content="var ap = new APlayer({             element: document.getElementById(&quot;aplayer-noWMqpLP&quot;),             narrow: false,             autoplay: false,             s">
 <meta name="twitter:image" content="https://k-ring.github.io/img/go1.jpg">
 
 
@@ -415,12 +415,12 @@
 
       
         
-        <div id="aplayer-dSGfbbzd" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-noWMqpLP" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-dSGfbbzd"),
+            element: document.getElementById("aplayer-noWMqpLP"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -445,7 +445,7 @@
 <p>这里的<code>_</code>是一种数据连接格式，不一定是<code>_</code>，其他任意字符都行，例如这里以<code>1</code>作为连接字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# curl gopher://127.0.0.1/1test</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://k-ring.github.io/img/go3.jpg" alt>  </p>
 <p>gopher协议的实现：<br>gopher会将后面的数据部分发送给相应的端口，这些数据可以是字符串，也可以是其他的数据请求包，比如GET，POST请求，redis，mysql未授权访问等，同时数据部分必须要进行url编码，这样gopher协议才能正确解析。  </p>
-<h3 id="在实例中认识与实践gopher"><a href="#在实例中认识与实践gopher" class="headerlink" title="在实例中认识与实践gopher"></a>在实例中认识与实践gopher</h3><p>支持gopher协议的有 <code>curl</code> 和 libcurl<code>，本文测试使用</code>curl`。  </p>
+<h3 id="在实例中认识与实践gopher"><a href="#在实例中认识与实践gopher" class="headerlink" title="在实例中认识与实践gopher"></a>在实例中认识与实践gopher</h3><p>支持gopher协议的有 <code>curl</code> 和 <code>libcurl</code>，本文测试使用 <code>curl</code>。  </p>
 <h4 id="对于内网web的GET请求-通常构造gopher用来请求内网"><a href="#对于内网web的GET请求-通常构造gopher用来请求内网" class="headerlink" title="对于内网web的GET请求(通常构造gopher用来请求内网)"></a>对于内网web的GET请求(通常构造gopher用来请求内网)</h4><p>测试代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index.php</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $_GET[<span class="string">'test'</span>];</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>正常请求抓包：<br><img src="https://k-ring.github.io/img/go4.jpg" alt>  </p>
 <p>构造gopher本地请求(将数据包进行url编码)：<br>请求包内容：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /index.php?test=<span class="number">123</span> HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">Pragma: no-cache</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">Upgrade-Insecure-Requests: <span class="number">1</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">74.0</span><span class="number">.3729</span><span class="number">.169</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/webp,image/apng,*<span class="comment">/*;q=0.8,application/signed-exchange;v=b3</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.9</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br></pre></td></tr></table></figure></p>
@@ -503,8 +503,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/30/PHP伪协议用法的简单记录/" rel="next" title="PHP伪协议用法的简单记录">
-                <i class="fa fa-chevron-left"></i> PHP伪协议用法的简单记录
+              <a href="/2019/05/29/PHP反序列化利用链构造之路/" rel="next" title="PHP反序列化利用链构造之路">
+                <i class="fa fa-chevron-left"></i> PHP反序列化利用链构造之路
               </a>
             
           </div>
@@ -681,7 +681,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">35.3k</span>
+    <span title="Site words total count">35.7k</span>
   
 </div>
 
