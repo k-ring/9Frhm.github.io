@@ -4,7 +4,7 @@
 
 
 <html class="theme-next gemini" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -100,7 +100,8 @@
 <meta property="og:image" content="https://k-ring.github.io/img/windows11.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows14.jpg">
 <meta property="og:image" content="https://k-ring.github.io/img/windows15.jpg">
-<meta property="og:updated_time" content="2019-10-12T01:19:58.850Z">
+<meta property="og:image" content="https://k-ring.github.io/img/windows16.jpg">
+<meta property="og:updated_time" content="2019-10-12T01:52:10.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows部分提权方法复现和记录">
 <meta name="twitter:description" content="前言记录并复现提权的常用姿势，方便在以后理解并使用。     为什么要提权？因为一般我们通过web获取到的系统管理权限非常低，比如linux下的话通常就是www权限，这个权限基本限制了我们只能在web目录下执行一些有限的操作。   那么想要获取到系统更多的信息和进行更多的操作，就需要更高的权限。通常常用的两个系统高权限：Linux：root权限Windows：system权限">
@@ -633,6 +634,7 @@
 <p>提权成功的话会返回一个meterpreter会话，但是使用getuid还是低权限用户   </p>
 <p>使用<code>ps</code>查看进程中是否存在SYSTEM权限运行的进程   </p>
 <p>存在这样一个进程   </p>
+<p><img src="https://k-ring.github.io/img/windows16.jpg" alt>  </p>
 <p>4、迁移进程<br>使用<code>migrate</code>命令将进程迁移到SYSTEM权限运行的进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">migrate 8604</span><br></pre></td></tr></table></figure></p>
 <p>或者可以直接使用命令<code>getsystem</code>提升权限   </p>
 <p>5、再使用<code>getuid</code>查看权限，成为了SYSTEM权限    </p>
@@ -857,7 +859,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">43.0k</span>
+    <span title="Site words total count">42.5k</span>
   
 </div>
 
