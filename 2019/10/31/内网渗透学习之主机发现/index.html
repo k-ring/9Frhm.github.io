@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('Enter password') !== ''){
+                alert('Error！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="内网渗透,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内网渗透中主机发现我们在拿到一台主机后，如果目标主机处在一个内网中，为了扩大我们的战线，就要去发现更多的主机，因为主机越多，能拿到的信息就越多，同时出现安全性较弱的系统的概率就越大。    内网IP段通常内网的IP端为12310.0.0.0/8172.16.0.0/12192.168.0.0/16">
+<meta name="keywords" content="内网渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透学习之主机发现">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/内网渗透学习之主机发现/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="内网渗透中主机发现我们在拿到一台主机后，如果目标主机处在一个内网中，为了扩大我们的战线，就要去发现更多的主机，因为主机越多，能拿到的信息就越多，同时出现安全性较弱的系统的概率就越大。    内网IP段通常内网的IP端为12310.0.0.0/8172.16.0.0/12192.168.0.0/16">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://k-ring.github.io/img/domain12.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/domain13.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/domain19.jpg">
+<meta property="og:image" content="https://k-ring.github.io/img/domain20.jpg">
+<meta property="og:updated_time" content="2019-10-31T11:15:16.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内网渗透学习之主机发现">
+<meta name="twitter:description" content="内网渗透中主机发现我们在拿到一台主机后，如果目标主机处在一个内网中，为了扩大我们的战线，就要去发现更多的主机，因为主机越多，能拿到的信息就越多，同时出现安全性较弱的系统的概率就越大。    内网IP段通常内网的IP端为12310.0.0.0/8172.16.0.0/12192.168.0.0/16">
+<meta name="twitter:image" content="https://k-ring.github.io/img/domain12.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/31/内网渗透学习之主机发现/">
+
+
+
+
+
+  <title>内网渗透学习之主机发现 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/内网渗透学习之主机发现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内网渗透学习之主机发现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T00:00:00+08:00">
+                2019-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/内网渗透/" itemprop="url" rel="index">
+                    <span itemprop="name">内网渗透</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,168 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="内网渗透中主机发现"><a href="#内网渗透中主机发现" class="headerlink" title="内网渗透中主机发现"></a>内网渗透中主机发现</h3><p>我们在拿到一台主机后，如果目标主机处在一个内网中，为了扩大我们的战线，就要去发现更多的主机，因为主机越多，能拿到的信息就越多，同时出现安全性较弱的系统的概率就越大。   </p>
+<h3 id="内网IP段"><a href="#内网IP段" class="headerlink" title="内网IP段"></a>内网IP段</h3><p>通常内网的IP端为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10.0.0.0/8</span><br><span class="line">172.16.0.0/12</span><br><span class="line">192.168.0.0/16</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="常用收集IP的方法"><a href="#常用收集IP的方法" class="headerlink" title="常用收集IP的方法"></a>常用收集IP的方法</h3><h4 id="查看主机IP地址"><a href="#查看主机IP地址" class="headerlink" title="查看主机IP地址"></a>查看主机IP地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">ipconfig /all</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">ifconfig -a</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/domain12.jpg" alt><br>可以看到本机的ip地址和子网掩码，知道这台主机所在的网段是一个C段，然后就可以探测所处的这个IP端的存活IP。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.159.0/24</span><br></pre></td></tr></table></figure></p>
+<p>除了主机的IP段，还有一个DNS服务器的IP，DNS服务器通常处于内网中，不一定和本机处在同一个IP段，所以如果没有在一个IP段，也可以扫描DNS服务器的这个IP段。   </p>
+<h4 id="查看路由表"><a href="#查看路由表" class="headerlink" title="查看路由表"></a>查看路由表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">route print</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">route -n</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/domain13.jpg" alt>   </p>
+<p>在路由表中也可以发现存在内网中的IP段。   </p>
+<h4 id="查看本地的连接信息"><a href="#查看本地的连接信息" class="headerlink" title="查看本地的连接信息"></a>查看本地的连接信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">netstat -ano</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">netstat -anp</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/domain19.jpg" alt><br>看这里的连接信息是否有内网主机访问本主机   </p>
+<h4 id="利用net命令"><a href="#利用net命令" class="headerlink" title="利用net命令"></a>利用net命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net view</span><br></pre></td></tr></table></figure>
+<p>显示一个计算机上共享资源的列表，可以获取到一些主机名，我这里测试显示了<code>gurenmeng.com</code>域下的所有域成员主机的主机名，包括域控，然后ping一下这些主机名就可以获得主机的IP地址<br><img src="https://k-ring.github.io/img/domain20.jpg" alt>   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">net session</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">who</span><br></pre></td></tr></table></figure>
+<p>也可以使用上述命令查看管理员登录在线的情况，也会显示IP地址，但是windows使用这条命令需要的权限较高，这里就没图展示了。    </p>
+<h4 id="查看DNS是否存在DNS域传输漏洞"><a href="#查看DNS是否存在DNS域传输漏洞" class="headerlink" title="查看DNS是否存在DNS域传输漏洞"></a>查看DNS是否存在DNS域传输漏洞</h4><p>进入内网后，查看DNS是否存在DNS域传输漏洞，如果存在这个漏洞的话，我们就可以获取到比较全的域名列表。<br>利用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all         //找到dns服务器ip</span><br><span class="line"></span><br><span class="line">nslookup     //进入交互式命令行</span><br><span class="line"></span><br><span class="line">&gt; server [IP]    //设置服务ip</span><br><span class="line">&gt; ls [IP]      //尝试列举DNS域名缓存列表</span><br></pre></td></tr></table></figure></p>
+<h4 id="生成主机名字典"><a href="#生成主机名字典" class="headerlink" title="生成主机名字典"></a>生成主机名字典</h4><p>通常我们ping域内的主机名会得到IP地址，当我们收集到一些主机名之后，可以根据它的规则生成一份主机名字典，然后通过DNS去解析这些名字，获取到他们的IP。   </p>
+<h4 id="利用域控"><a href="#利用域控" class="headerlink" title="利用域控"></a>利用域控</h4><p>如果有一台域控的主机权限，可以使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dsquery computer     查询域内所有主机信息</span><br><span class="line">dsquery server       查询域控</span><br></pre></td></tr></table></figure></p>
+<h3 id="扫描存活主机"><a href="#扫描存活主机" class="headerlink" title="扫描存活主机"></a>扫描存活主机</h3><p>当使用前面的命令收集到差不多IP段时，可以自己写一些小脚本来扫描这些IP段内存活的主机。<br>可以通过ping这个命令来检测主机的网络连通性，以此来判断主机是否存活<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">ping -n 1 127.0.0.1</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">ping -c 1 127.0.0.1</span><br></pre></td></tr></table></figure></p>
+<p>使用python编写了一个简易的扫描器：<br>源代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pingForIp.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ping</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, ip0, ip1, sem)</span>:</span></span><br><span class="line">		threading.Thread.__init__(self)</span><br><span class="line">		self.ip0 = ip0</span><br><span class="line">		self.ip1 = ip1</span><br><span class="line">		self.sem = sem</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span>                     <span class="comment"># 执行ping请求方法</span></span><br><span class="line">		self.sem.acquire()</span><br><span class="line">		f = open(<span class="string">"ips.txt"</span>, <span class="string">"a"</span>)</span><br><span class="line">		ip = self.ip0 + <span class="string">"."</span> + self.ip1</span><br><span class="line">		result = os.popen(<span class="string">"ping -w 500 -n 1 "</span> + ip)     <span class="comment"># 执行ping，每个请求执行500ms </span></span><br><span class="line">		flag = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> result:</span><br><span class="line">			<span class="keyword">if</span> <span class="string">"TTL"</span> <span class="keyword">in</span> j:                              <span class="comment"># 如果返回信息中存在TTL表示存活</span></span><br><span class="line">				flag += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> flag == <span class="number">0</span>:</span><br><span class="line">			print(<span class="string">"[-] "</span>+ip+<span class="string">" is die"</span>)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">"\033[0;32m[+] "</span>+ip+<span class="string">" is alive\033[0m"</span>)</span><br><span class="line">			f.write(ip+<span class="string">"\n"</span>)</span><br><span class="line">			f.close()</span><br><span class="line">		sem.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		ip0 = sys.argv[<span class="number">1</span>]</span><br><span class="line">		start = int(sys.argv[<span class="number">2</span>])</span><br><span class="line">		end = int(sys.argv[<span class="number">3</span>])</span><br><span class="line">		<span class="keyword">if</span> len(sys.argv) == <span class="number">5</span>:</span><br><span class="line">			sem = threading.BoundedSemaphore(int(sys.argv[<span class="number">4</span>]))     <span class="comment"># 设置线程锁</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			sem = threading.BoundedSemaphore(<span class="number">5</span>)                    <span class="comment"># 默认5个线程</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(start, end):</span><br><span class="line">			t = ping(ip0, str(i), sem)</span><br><span class="line">			t.start()</span><br><span class="line">		t.join()</span><br><span class="line">		print(<span class="string">"ALL IP's scanned and saved in ./ips.txt!"</span>)</span><br><span class="line">	<span class="keyword">except</span>:</span><br><span class="line">		print(<span class="string">"""Usage: python3 pingForIp.py 192.168.100 1 256 &lt;10&gt;\n</span></span><br><span class="line"><span class="string">			1 表示ip开始位置</span></span><br><span class="line"><span class="string">			256 表示ip结束位置</span></span><br><span class="line"><span class="string">			10 表示线程，默认为5个线程"""</span>)</span><br><span class="line">		sys.exit()</span><br></pre></td></tr></table></figure></p>
+<p>因为一般内网主机为windows，带python环境的不多，所以将这个py文件使用python扩展pyinstaller编译成exe文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller.exe pingForIp.py -F</span><br></pre></td></tr></table></figure></p>
+<p>然后在disk里会生成exe文件。   </p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="http://www.myh0st.cn/index.php/archives/268/" target="_blank" rel="noopener">内网渗透主机发现的技巧</a>  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/内网渗透/" rel="tag"># 内网渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/27/内网渗透学习之域环境搭建/" rel="next" title="内网渗透学习之域环境搭建">
+                <i class="fa fa-chevron-left"></i> 内网渗透学习之域环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内网渗透中主机发现"><span class="nav-number">1.</span> <span class="nav-text">内网渗透中主机发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内网IP段"><span class="nav-number">2.</span> <span class="nav-text">内网IP段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用收集IP的方法"><span class="nav-number">3.</span> <span class="nav-text">常用收集IP的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看主机IP地址"><span class="nav-number">3.1.</span> <span class="nav-text">查看主机IP地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看路由表"><span class="nav-number">3.2.</span> <span class="nav-text">查看路由表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看本地的连接信息"><span class="nav-number">3.3.</span> <span class="nav-text">查看本地的连接信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用net命令"><span class="nav-number">3.4.</span> <span class="nav-text">利用net命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看DNS是否存在DNS域传输漏洞"><span class="nav-number">3.5.</span> <span class="nav-text">查看DNS是否存在DNS域传输漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成主机名字典"><span class="nav-number">3.6.</span> <span class="nav-text">生成主机名字典</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用域控"><span class="nav-number">3.7.</span> <span class="nav-text">利用域控</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描存活主机"><span class="nav-number">4.</span> <span class="nav-text">扫描存活主机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">45.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
