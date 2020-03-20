@@ -292,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/SQL注入杂记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/xpath注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="故人梦">
@@ -311,7 +311,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/01/SQL注入杂记/" itemprop="url">SQL注入杂记</a></h1>
+                <a class="post-title-link" href="/2019/08/01/xpath注入/" itemprop="url">Xpath注入学习</a></h1>
         
 
         <div class="post-meta">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,768 字
+                  1,194 字
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  21 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -415,10 +415,13 @@
 
       
         
-          走了一遍sqli-labs，简单记录一下其中一些知识点(持续更新SQL注入相关的小trick)
+          <h3 id="了解XPATH注入"><a href="#了解XPATH注入" class="headerlink" title="了解XPATH注入"></a>了解XPATH注入</h3><p>XPath 是一门在 XML 文档中查找信息的语言。  </p>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。  </p>
+<p>也和SQL注入原理类似，都是进行语句拼接，闭合源码中原本中的查询语句，拼接注入其他的XPATH查询语句。  </p>
+<p>这里需要和SQL注入区分的是 <strong>xpath是通过注入特殊的路径表达式，可以看到XML文件中的所有节点的信息，从而达到敏感信息泄露的危害，也可以使用XPATH注入绕过用户认证。</strong> 而不是影响数据库。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/01/SQL注入杂记/">
+            <a class="btn" href="/2019/08/01/xpath注入/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1300,12 +1303,12 @@
 
       
         
-          <div id="aplayer-aXrCLZks" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+          <div id="aplayer-HYiPfVvb" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-aXrCLZks"),
+            element: document.getElementById("aplayer-HYiPfVvb"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -1674,12 +1677,12 @@
 
       
         
-          <div id="aplayer-JHSMQrtA" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+          <div id="aplayer-zSlRJJBf" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-JHSMQrtA"),
+            element: document.getElementById("aplayer-zSlRJJBf"),
             narrow: false,
             autoplay: false,
             showlrc: false,
